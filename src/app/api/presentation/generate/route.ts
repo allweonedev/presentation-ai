@@ -1,10 +1,10 @@
 import { LangChainAdapter } from "ai";
 import { NextResponse } from "next/server";
 import { auth } from "@/server/auth";
-import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
+import { getLlama4Model } from "@/lib/llama4-local-api";
 
 interface SlidesRequest {
   title: string; // Presentation title
@@ -166,11 +166,7 @@ For each outline point:
 Now create a complete XML presentation with {TOTAL_SLIDES} slides that significantly expands on the outline.
 `;
 
-const model = new ChatOpenAI({
-  modelName: "gpt-4o-mini",
-  temperature: 0.7,
-  streaming: true,
-});
+const stringOutputParser = new StringOutputParser();
 
 export async function POST(req: Request) {
   try {
@@ -189,9 +185,14 @@ export async function POST(req: Request) {
       );
     }
 
+    // Get the appropriate Llama 4 model (local or Together.ai)
+    const llm = await getLlama4Model({
+      temperature: 0.7,
+      streaming: true,
+    });
+
     const prompt = PromptTemplate.fromTemplate(slidesTemplate);
-    const stringOutputParser = new StringOutputParser();
-    const chain = RunnableSequence.from([prompt, model, stringOutputParser]);
+    const chain = RunnableSequence.from([prompt, llm, stringOutputParser]);
 
     const stream = await chain.stream({
       TITLE: title,

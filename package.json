@@ -10,7 +10,10 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "pinokio:download": "cd pinokio && node -e \"require('./llama4-local.js').download(require('pinokio-kernel'))\"",
+    "pinokio:start": "cd pinokio && node -e \"require('./llama4-local.js').start(require('pinokio-kernel'))\"",
+    "pinokio:stop": "cd pinokio && node -e \"require('./llama4-local.js').stop(require('pinokio-kernel'))\""
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.1.5",

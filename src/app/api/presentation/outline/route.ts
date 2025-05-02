@@ -1,9 +1,10 @@
 import { LangChainAdapter } from "ai";
 import { NextResponse } from "next/server";
 import { auth } from "@/server/auth";
-import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
+import { StringOutputParser } from "@langchain/core/output_parsers";
+import { getLlama4Model } from "@/lib/llama4-local-api";
 
 interface OutlineRequest {
   prompt: string;
@@ -45,14 +46,7 @@ Make sure the topics:
 7. Keep each bullet point brief - just one sentence per point
 8. Include exactly 2-3 bullet points per topic (not more, not less)`;
 
-const outlineChain = RunnableSequence.from([
-  PromptTemplate.fromTemplate(outlineTemplate),
-  new ChatOpenAI({
-    modelName: "gpt-4o-mini",
-    temperature: 0.7,
-    streaming: true,
-  }),
-]);
+const stringOutputParser = new StringOutputParser();
 
 export async function POST(req: Request) {
   try {
@@ -70,6 +64,18 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
+
+    // Get the appropriate Llama 4 model (local or Together.ai)
+    const llm = await getLlama4Model({
+      temperature: 0.7,
+      streaming: true,
+    });
+
+    const outlineChain = RunnableSequence.from([
+      PromptTemplate.fromTemplate(outlineTemplate),
+      llm,
+      stringOutputParser,
+    ]);
 
     const stream = await outlineChain.stream({
       prompt,

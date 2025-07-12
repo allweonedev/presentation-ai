@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:17.5-alpine3.22
+    container_name: presentation-ai-postgres
+    restart: unless-stopped
+    env_file: .env
+    expose:
+      - 5432
+    volumes:
+      - presentation-ai-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  presentation-ai:
+    build:
+      context: .
+    container_name: presentation-ai-app
+    env_file: .env
+    restart: on-failure
+    ports:
+      - 3000:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "pnpm db:push && pnpm dev"
+
+volumes:
+  presentation-ai-postgres-data:

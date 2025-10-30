@@ -35,5 +35,8 @@ npx prisma db push --skip-generate --accept-data-loss || echo "⚠️  DB schema
 
 echo "🎯 Starting server on port ${PORT:-3000}..."
 
+# Export HOSTNAME for Next.js standalone to bind to all interfaces
+export HOSTNAME="0.0.0.0"
+
 # Start the Next.js standalone server
 exec node server.js

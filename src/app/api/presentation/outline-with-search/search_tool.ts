@@ -3,7 +3,7 @@ import { tavily } from "@tavily/core";
 import { type Tool } from "ai";
 import z from "zod";
 
-const tavilyService = tavily({ apiKey: env.TAVILY_API_KEY });
+const tavilyService = env.TAVILY_API_KEY ? tavily({ apiKey: env.TAVILY_API_KEY }) : null;
 
 export const search_tool: Tool = {
   description:
@@ -14,6 +14,11 @@ export const search_tool: Tool = {
   execute: async ({ query }: { query: string }) => {
     try {
       console.log("🔍 Executing web search:", query);
+      
+      if (!tavilyService) {
+        console.warn("⚠️ Tavily API key not configured, search disabled");
+        return JSON.stringify({ error: "Search service not configured", query });
+      }
       
       // Add timeout to prevent hanging
       const timeoutPromise = new Promise((_, reject) => 

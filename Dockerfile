@@ -63,6 +63,10 @@ COPY --from=build /app/public ./public
 # If your app uses Prisma at runtime, keep schema available (optional)
 COPY --from=build /app/prisma ./prisma
 
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Expose the port (Easypanel will map this)
 EXPOSE 3000
 
@@ -70,5 +74,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD node -e "require('http').request({host:'127.0.0.1', port: process.env.PORT || 3000, path:'/api/health'}, res=>{process.exit(res.statusCode===200?0:1)}).on('error',()=>process.exit(1)).end()"
 
-# Start the server produced by Next.js standalone output
-CMD ["node", "server.js"]
+# Start using entrypoint that validates env vars
+ENTRYPOINT ["docker-entrypoint.sh"]

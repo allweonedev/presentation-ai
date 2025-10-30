@@ -24,7 +24,7 @@ export async function extractContentFromUrl(url: string) {
     // Basic HTML parsing to extract title and main content
     // This is a simplified implementation - in production you'd want more robust parsing
     const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-    const title = titleMatch ? titleMatch[1].trim() : 'Untitled Page';
+    const title = titleMatch?.[1]?.trim() ?? 'Untitled Page';
 
     // Extract text content from body (very basic)
     const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);

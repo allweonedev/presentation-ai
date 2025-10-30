@@ -109,7 +109,7 @@ export default function PresentationGenerateWithIdPage() {
       );
 
       if (presentationData.presentation?.outline) {
-        setOutline(presentationData.presentation.outline);
+        setOutline(presentationData.presentation.outline as string[]);
       }
 
       // Load search results if available

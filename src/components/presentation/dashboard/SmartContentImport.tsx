@@ -25,7 +25,7 @@ export function SmartContentImport() {
       const result = await extractContentFromUrl(url);
 
       if (result.success) {
-        const processedContent = await processImportedContent(result.content, result.title);
+        const processedContent = await processImportedContent(result.content || '', result.title || 'Imported Content');
         setPresentationInput(processedContent);
         toast.success(`Content imported from "${result.title}"`);
         setUrl("");

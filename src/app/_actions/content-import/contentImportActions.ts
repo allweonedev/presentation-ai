@@ -31,7 +31,7 @@ export async function extractContentFromUrl(url: string) {
     let content = '';
     if (bodyMatch?.[1]) {
       // Remove scripts and styles
-      content = bodyMatch[1]
+      content = bodyMatch[1]!
         .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
         .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
         .replace(/<[^>]+>/g, ' ')

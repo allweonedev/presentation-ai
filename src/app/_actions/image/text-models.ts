@@ -1,4 +1,4 @@
-tion export interface PollinationsTextModel {
+export interface PollinationsTextModel {
   id: string;
   name: string;
   description?: string;

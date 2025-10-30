@@ -152,7 +152,7 @@ export const EXAMPLE_PROMPTS = [
   },
 ];
 
-export function PresentationExamples() {
+export function PresentationExamples({ isModal = false, onExampleSelect }: { isModal?: boolean; onExampleSelect?: () => void } = {}) {
   const [examples, setExamples] = useState(EXAMPLE_PROMPTS.slice(0, 6));
   const { setNumSlides, setLanguage, setPageStyle, setPresentationInput } =
     usePresentationState();
@@ -172,14 +172,17 @@ export function PresentationExamples() {
   const presentationsPages = data?.pages;
   const hasPresentations = !!presentationsPages?.[0]?.items?.length;
 
-  // Don't show examples if presentations are still loading OR if there are presentations
-  if (isPresentationsLoading || hasPresentations) return null;
+  // Don't show examples if presentations are still loading OR if there are presentations (only in dashboard mode)
+  if (!isModal && (isPresentationsLoading || hasPresentations)) return null;
 
   const handleExampleClick = (example: (typeof EXAMPLE_PROMPTS)[0]) => {
     setPresentationInput(example.title);
     setNumSlides(example.slides);
     setLanguage(example.lang);
     setPageStyle(example.style);
+    if (onExampleSelect) {
+      onExampleSelect();
+    }
   };
 
   const handleShuffle = () => {

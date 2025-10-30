@@ -1,24 +1,16 @@
 "use server";
 
 import { utapi } from "@/app/api/uploadthing/core";
-import { env } from "@/env";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import Together from "together-ai";
 import { UTFile } from "uploadthing/server";
+import { POLLINATIONS_MODELS, type PollinationsModel } from "./models";
 
-const together = new Together({ apiKey: env.TOGETHER_AI_API_KEY });
-
-export type ImageModelList =
-  | "black-forest-labs/FLUX1.1-pro"
-  | "black-forest-labs/FLUX.1-schnell"
-  | "black-forest-labs/FLUX.1-schnell-Free"
-  | "black-forest-labs/FLUX.1-pro"
-  | "black-forest-labs/FLUX.1-dev";
+export type ImageModelList = PollinationsModel["id"];
 
 export async function generateImageAction(
   prompt: string,
-  model: ImageModelList = "black-forest-labs/FLUX.1-schnell-Free",
+  model: ImageModelList = "flux",
 ) {
   // Get the current session
   const session = await auth();
@@ -29,37 +21,18 @@ export async function generateImageAction(
   }
 
   try {
-    console.log(`Generating image with model: ${model}`);
+    console.log(`Generating image with Pollinations AI using model: ${model}`);
 
-    // Generate the image using Together AI
-    const response = (await together.images.create({
-      model: model,
-      prompt: prompt,
-      width: 1024,
-      height: 768,
-      steps: model.includes("schnell") ? 4 : 28, // Fewer steps for schnell models
-      n: 1,
-    })) as unknown as {
-      id: string;
-      model: string;
-      object: string;
-      data: {
-        url: string;
-      }[];
-    };
-
-    const imageUrl = response.data[0]?.url;
-
-    if (!imageUrl) {
-      throw new Error("Failed to generate image");
-    }
+    // Encode the prompt for URL
+    const encodedPrompt = encodeURIComponent(prompt);
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=768&model=${model}`;
 
     console.log(`Generated image URL: ${imageUrl}`);
 
-    // Download the image from Together AI URL
+    // Download the image from Pollinations AI URL
     const imageResponse = await fetch(imageUrl);
     if (!imageResponse.ok) {
-      throw new Error("Failed to download image from Together AI");
+      throw new Error("Failed to download image from Pollinations AI");
     }
 
     const imageBlob = await imageResponse.blob();
@@ -86,7 +59,7 @@ export async function generateImageAction(
     // Store in database with the permanent URL
     const generatedImage = await db.generatedImage.create({
       data: {
-        url: permanentUrl, // Store the UploadThing URL instead of the Together AI URL
+        url: permanentUrl, // Store the UploadThing URL
         prompt: prompt,
         userId: session.user.id,
       },

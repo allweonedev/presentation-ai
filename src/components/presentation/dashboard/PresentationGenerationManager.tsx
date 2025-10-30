@@ -194,11 +194,29 @@ export function PresentationGenerationManager() {
     const lastMessage = messages[messages.length - 1];
     if (!lastMessage) return;
 
+    console.log("🔍 Processing last message:", {
+      role: lastMessage.role,
+      contentLength: lastMessage.content?.length || 0,
+      contentPreview: lastMessage.content?.substring(0, 200) || "",
+      contentFull: lastMessage.content, // Log full content to see what we're getting
+      hasParts: !!lastMessage.parts,
+      partsCount: lastMessage.parts?.length || 0,
+    });
+
     // Extract search results from the last message only (much more efficient)
     if (webSearchEnabled && lastMessage.parts) {
       const searchResults: Array<{ query: string; results: unknown[] }> = [];
+      let fullTextContent = "";
+
+      console.log("🔎 Processing message parts:", lastMessage.parts.length);
 
       for (const part of lastMessage.parts) {
+        // Collect text parts
+        if (part.type === "text" && part.text) {
+          console.log("📄 Text part:", part.text.substring(0, 500));
+          fullTextContent += part.text;
+        }
+        
         if (part.type === "tool-invocation" && part.toolInvocation) {
           const invocation = part.toolInvocation;
           if (
@@ -235,6 +253,20 @@ export function PresentationGenerationManager() {
       if (searchResults.length > 0) {
         searchResultsBufferRef.current = searchResults;
       }
+
+      // If we have text content from parts, use that instead of message.content
+      // This is important because with web search, the full text is in parts, not content
+      if (fullTextContent.length > 0) {
+        console.log("📝 Full text content stats:", {
+          length: fullTextContent.length,
+          preview: fullTextContent.substring(0, 200),
+          hasThinkTag: fullTextContent.includes("<think>"),
+          hasThinkEndTag: fullTextContent.includes("</think>"),
+          hasTitleTag: fullTextContent.includes("<TITLE>"),
+          hasHashTag: fullTextContent.includes("# "),
+        });
+        lastMessage.content = fullTextContent;
+      }
     }
 
     // Extract outline from the last assistant message
@@ -249,6 +281,13 @@ export function PresentationGenerationManager() {
         ? thinkingExtract.content
         : lastMessage.content;
 
+      console.log("🧹 Clean content after thinking extraction:", {
+        length: cleanContent.length,
+        preview: cleanContent.substring(0, 300),
+        hasTitle: cleanContent.includes("<TITLE>"),
+        hasHash: cleanContent.includes("# "),
+      });
+
       // Only extract title if we haven't done it yet
       if (!titleExtractedRef.current) {
         const { title, cleanContent: extractedCleanContent } =
@@ -256,13 +295,31 @@ export function PresentationGenerationManager() {
 
         cleanContent = extractedCleanContent;
 
+        console.log("📋 Title extraction result:", {
+          titleFound: !!title,
+          title: title || "none",
+          remainingContentLength: cleanContent.length,
+          remainingPreview: cleanContent.substring(0, 200),
+        });
+
         // Set the title if found and mark as extracted
         if (title) {
           setCurrentPresentation(currentPresentationId, title);
           titleExtractedRef.current = true;
         } else {
-          // Title not found yet, don't process outline
-          return;
+          // If no title tag found but we have content with markdown sections, continue anyway
+          // This handles cases where the model doesn't include <TITLE> tags
+          if (cleanContent.includes("# ") && cleanContent.length > 100) {
+            console.log("⚠️  No title found but have outline content, continuing with fallback title");
+            // Use the presentation input as fallback title
+            const fallbackTitle = presentationInput.substring(0, 50) || "Untitled Presentation";
+            setCurrentPresentation(currentPresentationId, fallbackTitle);
+            titleExtractedRef.current = true;
+          } else {
+            // Title not found yet and no outline content, don't process outline
+            console.log("⚠️  No title found yet, skipping outline processing");
+            return;
+          }
         }
       } else {
         // Title already extracted, just remove it from content if it exists
@@ -275,6 +332,12 @@ export function PresentationGenerationManager() {
         sections.length > 0
           ? sections.map((section) => `# ${section}`.trim())
           : [];
+
+      console.log("📝 Outline parsing result:", {
+        sectionsFound: sections.length,
+        outlineItemsCount: outlineItems.length,
+        firstItem: outlineItems[0]?.substring(0, 100) || "none",
+      });
 
       if (outlineItems.length > 0) {
         outlineBufferRef.current = outlineItems;
@@ -314,7 +377,23 @@ export function PresentationGenerationManager() {
       modelProvider,
       modelId,
     },
-    onFinish: () => {
+    onFinish: (message) => {
+      console.log("✅ Outline generation finished!", {
+        messageContent: message.content?.substring(0, 200) || "",
+        messageLength: message.content?.length || 0,
+        hasTitle: message.content?.includes("<TITLE>") || false,
+        hasThinking: message.content?.includes("<think>") || false,
+        hasHash: message.content?.includes("# ") || false,
+      });
+      
+      // Force one final processing of the message to ensure we capture the complete content
+      if (outlineMessages.length > 0) {
+        console.log("🔄 Processing final message on finish...");
+        processMessages(outlineMessages);
+        // Force immediate RAF update to flush buffers
+        updateOutlineWithRAF();
+      }
+      
       setIsGeneratingOutline(false);
       setShouldStartOutlineGeneration(false);
       setShouldStartPresentationGeneration(false);
@@ -327,6 +406,13 @@ export function PresentationGenerationManager() {
         theme,
         imageSource,
       } = usePresentationState.getState();
+
+      console.log("📊 Final state:", {
+        hasOutline: outline.length > 0,
+        outlineCount: outline.length,
+        hasSearchResults: searchResults.length > 0,
+        title: currentPresentationTitle,
+      });
 
       if (currentPresentationId) {
         void updatePresentation({
@@ -347,6 +433,7 @@ export function PresentationGenerationManager() {
       }
     },
     onError: (error) => {
+      console.error("❌ Outline generation error:", error);
       toast.error("Failed to generate outline: " + error.message);
       resetGeneration();
 
@@ -357,6 +444,10 @@ export function PresentationGenerationManager() {
       }
     },
   });
+
+  // Track the last message content to detect when streaming stops
+  const lastMessageContentRef = useRef<string>("");
+  const stuckTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Lightweight useEffect that only schedules RAF updates
   useEffect(() => {
@@ -372,8 +463,43 @@ export function PresentationGenerationManager() {
       if (outlineRafIdRef.current === null) {
         outlineRafIdRef.current = requestAnimationFrame(updateOutlineWithRAF);
       }
+
+      // Detect if stream is stuck - if content hasn't changed in 5 seconds, force complete
+      const lastMessage = outlineMessages[outlineMessages.length - 1];
+      const currentContent = lastMessage?.content || "";
+      
+      if (isGeneratingOutline && lastMessage?.role === "assistant") {
+        // Clear existing timeout
+        if (stuckTimeoutRef.current) {
+          clearTimeout(stuckTimeoutRef.current);
+        }
+
+        // If content hasn't changed, set a timeout to force completion
+        if (currentContent === lastMessageContentRef.current && currentContent.length > 50) {
+          console.log("⚠️  Stream appears stuck, setting timeout to force completion...");
+          stuckTimeoutRef.current = setTimeout(() => {
+            console.log("⏰ Forcing stream completion due to inactivity");
+            setIsGeneratingOutline(false);
+            setShouldStartOutlineGeneration(false);
+            
+            // Trigger one final RAF update to ensure buffers are flushed
+            if (outlineRafIdRef.current === null) {
+              outlineRafIdRef.current = requestAnimationFrame(updateOutlineWithRAF);
+            }
+          }, 5000); // 5 second timeout
+        } else {
+          lastMessageContentRef.current = currentContent;
+        }
+      }
     }
-  }, [outlineMessages, webSearchEnabled]);
+
+    // Cleanup timeout on unmount
+    return () => {
+      if (stuckTimeoutRef.current) {
+        clearTimeout(stuckTimeoutRef.current);
+      }
+    };
+  }, [outlineMessages, webSearchEnabled, isGeneratingOutline]);
 
   // Watch for outline generation start
   useEffect(() => {

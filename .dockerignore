@@ -1,0 +1,25 @@
+# docker build context ignores
+node_modules
+.next/cache
+.next/types
+.next/trace
+.turbo
+
+dist
+build
+
+.git
+.gitignore
+.vscode
+.idea
+
+Dockerfile*
+docker-compose*
+
+.env
+.env.*
+!.env.example
+
+pnpm-debug.log*
+npm-debug.log*
+yarn-error.log*

@@ -44,7 +44,7 @@ export async function createPresentation({
             imageSource,
             presentationStyle,
             language,
-            outline: outline,
+            outline: outline || [],
           },
         },
       },

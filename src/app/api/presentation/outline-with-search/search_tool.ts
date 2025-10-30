@@ -13,11 +13,21 @@ export const search_tool: Tool = {
   }),
   execute: async ({ query }: { query: string }) => {
     try {
-      const response = await tavilyService.search(query, { max_results: 5 });
+      console.log("🔍 Executing web search:", query);
+      
+      // Add timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Search timeout')), 10000) // 10 second timeout
+      );
+      
+      const searchPromise = tavilyService.search(query, { max_results: 3 });
+      
+      const response = await Promise.race([searchPromise, timeoutPromise]);
+      console.log("✅ Search completed:", query);
       return JSON.stringify(response);
     } catch (error) {
-      console.error("Search error:", error);
-      return "Search failed";
+      console.error("❌ Search error:", error);
+      return JSON.stringify({ error: "Search failed", query });
     }
   },
 };

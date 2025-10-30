@@ -25,6 +25,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 FROM base AS deps
 # Copy only manifest files to leverage Docker layer caching
 COPY package.json pnpm-lock.yaml ./
+COPY prisma ./prisma
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
 

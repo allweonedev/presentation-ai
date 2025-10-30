@@ -27,10 +27,13 @@ if [ -z "$OPENROUTER_API_KEY" ]; then
 fi
 
 echo "✅ Environment variables validated"
-echo "🎯 Starting server on port ${PORT:-3000}..."
 
-# Run Prisma migrations/push if needed (optional)
-# npx prisma db push --skip-generate || echo "⚠️  DB push failed or already up to date"
+# Initialize database schema
+echo "📊 Initializing database schema..."
+cd /app
+npx prisma db push --skip-generate --accept-data-loss || echo "⚠️  DB schema sync failed or already up to date"
+
+echo "🎯 Starting server on port ${PORT:-3000}..."
 
 # Start the Next.js standalone server
 exec node server.js

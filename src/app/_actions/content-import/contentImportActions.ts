@@ -29,7 +29,7 @@ export async function extractContentFromUrl(url: string) {
     // Extract text content from body (very basic)
     const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
     let content = '';
-    if (bodyMatch) {
+    if (bodyMatch?.[1]) {
       // Remove scripts and styles
       content = bodyMatch[1]
         .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')

@@ -37,6 +37,8 @@ COPY . .
 # Ensure Prisma client is generated during build (postinstall handles it, but safe to re-run)
 RUN pnpm prisma generate || true
 RUN pnpm build
+# Create empty public folder if it doesn't exist to avoid copy errors
+RUN mkdir -p public
 
 # --- Runtime Image ---
 FROM node:${NODE_VERSION}-bookworm-slim AS runner
@@ -55,6 +57,7 @@ RUN apt-get update -y \
 # Copy standalone server output and static assets
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
+# Copy public folder (created as empty in build if it doesn't exist)
 COPY --from=build /app/public ./public
 
 # If your app uses Prisma at runtime, keep schema available (optional)

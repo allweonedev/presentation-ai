@@ -337,6 +337,6 @@ Need help or have questions?
 
 ---
 
-**Built with ❤️ by the ALLWEONE™ Team**
+**Built with ❤️ by the ALLWEONE® Team**
 
 **[⭐ Star us on GitHub](https://github.com/allweonedev/presentation-ai)**

@@ -60,6 +60,15 @@ export async function createPresentation({
     };
   } catch (error) {
     console.error(error);
+    const code = (error as { code?: string }).code;
+    // P2003 = Foreign key constraint failed (likely userId doesn't exist)
+    if (code === "P2003") {
+      return {
+        success: false,
+        message:
+          "Your account isn\'t initialized for this database. Please sign out and sign back in, then try again.",
+      };
+    }
     return {
       success: false,
       message: "Failed to create presentation",

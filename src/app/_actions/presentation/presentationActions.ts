@@ -28,7 +28,7 @@ export async function createPresentation({
   if (!session?.user) {
     throw new Error("Unauthorized");
   }
-  const userId = session.user.id;
+  let userId = session.user.id;
 
   try {
     const presentation = await db.$transaction(async (tx) => {

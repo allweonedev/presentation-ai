@@ -396,7 +396,9 @@ export function PresentationGenerationManager() {
       
       setIsGeneratingOutline(false);
       setShouldStartOutlineGeneration(false);
-      setShouldStartPresentationGeneration(false);
+  // Automatically trigger presentation generation after outline completes
+  // so users don't get stuck with only an outline.
+  setShouldStartPresentationGeneration(true);
 
       const {
         currentPresentationId,

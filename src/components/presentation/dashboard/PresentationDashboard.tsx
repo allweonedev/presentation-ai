@@ -68,10 +68,22 @@ export function PresentationDashboard({
         setIsGeneratingOutline(false);
         toast.error(result.message || "Failed to create presentation");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       setIsGeneratingOutline(false);
       console.error("Error creating presentation:", error);
-      toast.error("Failed to create presentation");
+      const message = (error as Error)?.message || "";
+      // Common Next.js deployment scenario: server action id mismatch after a fresh deploy
+      if (message.includes("UnrecognizedActionError") || message.includes("failed-to-find-server-action")) {
+        toast.error(
+          "App just updated. Please hard refresh (Ctrl/Cmd+Shift+R) to sync and try again.",
+        );
+        // Optionally auto-reload after a brief delay to recover seamlessly
+        setTimeout(() => {
+          if (typeof window !== "undefined") window.location.reload();
+        }, 1200);
+      } else {
+        toast.error("Failed to create presentation");
+      }
     }
   };
 

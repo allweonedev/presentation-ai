@@ -32,6 +32,7 @@ export default function PresentationGenerateWithIdPage() {
     setCurrentPresentation,
     setPresentationInput,
     startPresentationGeneration,
+    startOutlineGeneration,
     isGeneratingPresentation,
     isGeneratingOutline,
     outlineThinking,
@@ -173,6 +174,16 @@ export default function PresentationGenerateWithIdPage() {
       // Set language if available
       if (presentationData.presentation?.language) {
         setLanguage(presentationData.presentation.language);
+      }
+
+      // Auto-start outline generation when visiting this page directly (or after reload)
+      // Conditions: we have an input/title, outline is empty, and nothing is currently generating
+      const state = usePresentationState.getState();
+      const hasInput = (state.presentationInput || "").trim().length > 0;
+      const hasOutline = Array.isArray(state.outline) && state.outline.length > 0;
+      if (hasInput && !hasOutline && !state.isGeneratingOutline) {
+        // Kick off outline generation
+        startOutlineGeneration();
       }
     }
   }, [

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { usePresentationState } from "@/states/presentation-state";
 import { AlertCircle, Globe } from "lucide-react";
+import { useEffect } from "react";
 
 export function WebSearchToggle() {
   const { webSearchEnabled, setWebSearchEnabled, isGeneratingOutline, modelId } =
@@ -15,6 +16,12 @@ export function WebSearchToggle() {
 
   // Some models don't work well with tool calling (web search)
   const isIncompatibleModel = modelId?.includes("minimax") || modelId?.includes("pollinations");
+
+  useEffect(() => {
+    if (isIncompatibleModel && webSearchEnabled) {
+      setWebSearchEnabled(false);
+    }
+  }, [isIncompatibleModel, webSearchEnabled, setWebSearchEnabled]);
 
   return (
     <TooltipProvider>

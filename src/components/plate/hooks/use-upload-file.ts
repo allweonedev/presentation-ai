@@ -63,13 +63,16 @@ export function useUploadFile({
 
       // Mock upload for unauthenticated users
       // toast.info('User not logged in. Mocking upload process.');
+      const fallbackUrl = URL.createObjectURL(file);
+
       const mockUploadedFile = {
         key: "mock-key-0",
         appUrl: `https://mock-app-url.com/${file.name}`,
+        ufsUrl: fallbackUrl,
         name: file.name,
         size: file.size,
         type: file.type,
-        url: URL.createObjectURL(file),
+        url: fallbackUrl,
       } as UploadedFile;
 
       // Simulate upload progress

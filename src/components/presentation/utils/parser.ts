@@ -669,6 +669,10 @@ export class SlideParser {
       case "TIMELINE":
         return this.createTimeline(node);
 
+      case "TITLE":
+        // Treat TITLE tags as heading content so slides get their titles rendered cleanly
+        return this.createHeading("h2", node);
+
       default:
         console.warn(`Unknown top-level tag: ${tag}`);
         return null;

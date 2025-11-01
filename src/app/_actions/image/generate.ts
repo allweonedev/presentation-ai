@@ -29,10 +29,49 @@ export async function generateImageAction(
 
     console.log(`Generated image URL: ${imageUrl}`);
 
-    // Download the image from Pollinations AI URL
-    const imageResponse = await fetch(imageUrl);
-    if (!imageResponse.ok) {
-      throw new Error("Failed to download image from Pollinations AI");
+    // Download the image from Pollinations AI URL with simple retries
+    const maxAttempts = 3;
+    let imageResponse: Response | null = null;
+    let lastError: unknown;
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      try {
+        const response = await fetch(imageUrl, {
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`Pollinations responded with status ${response.status}`);
+        }
+
+        imageResponse = response;
+        break;
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        lastError = fetchError;
+        console.warn(
+          `Pollinations download attempt ${attempt} failed`,
+          fetchError,
+        );
+
+        if (attempt < maxAttempts) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, 500 * attempt),
+          );
+        }
+      }
+    }
+
+    if (!imageResponse) {
+      throw new Error(
+        lastError instanceof Error
+          ? lastError.message
+          : "Failed to download image from Pollinations AI",
+      );
     }
 
     const imageBlob = await imageResponse.blob();

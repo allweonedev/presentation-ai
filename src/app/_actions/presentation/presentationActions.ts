@@ -31,26 +31,77 @@ export async function createPresentation({
   const userId = session.user.id;
 
   try {
-    const presentation = await db.baseDocument.create({
-      data: {
-        type: "PRESENTATION",
-        documentType: "presentation",
-        title: title ?? "Untitled Presentation",
-        userId,
-        presentation: {
-          create: {
-            content: content as unknown as InputJsonValue,
-            theme: theme,
-            imageSource,
-            presentationStyle,
-            language,
-            outline: outline || [],
+    const presentation = await db.$transaction(async (tx) => {
+      // Ensure the user record exists in the database. In some deployments
+      // the session may contain a user id that doesn't yet exist in the
+      // local SQLite DB (stateless JWTs or moved DBs). Create a minimal
+      // user row if missing so the foreign key on BaseDocument won't fail.
+      const existingUser = await tx.user.findUnique({ where: { id: userId } });
+      if (!existingUser) {
+        await tx.user.create({
+          data: {
+            id: userId,
+            name: session.user.name ?? undefined,
+            email: (session.user as any).email ?? undefined,
+            image: session.user.image ?? undefined,
+            role: "USER",
+            hasAccess: false,
           },
+        });
+      }
+
+      const baseDocument = await tx.baseDocument.create({
+        data: {
+          type: "PRESENTATION",
+          documentType: "presentation",
+          title: title ?? "Untitled Presentation",
+          userId,
         },
-      },
-      include: {
-        presentation: true,
-      },
+      });
+
+      const presentationData: {
+        id: string;
+        content: InputJsonValue;
+        theme: string;
+        outline: InputJsonValue;
+        imageSource?: string;
+        presentationStyle?: string;
+        language?: string;
+      } = {
+        id: baseDocument.id,
+        content: content as unknown as InputJsonValue,
+        theme,
+        outline: (outline ?? []) as unknown as InputJsonValue,
+      };
+
+      if (typeof imageSource === "string") {
+        presentationData.imageSource = imageSource;
+      }
+
+      if (typeof presentationStyle === "string") {
+        presentationData.presentationStyle = presentationStyle;
+      }
+
+      if (typeof language === "string") {
+        presentationData.language = language;
+      }
+
+      await tx.presentation.create({
+        data: presentationData,
+      });
+
+      const hydrated = await tx.baseDocument.findUnique({
+        where: { id: baseDocument.id },
+        include: {
+          presentation: true,
+        },
+      });
+
+      if (!hydrated) {
+        throw new Error("Failed to hydrate newly created presentation");
+      }
+
+      return hydrated;
     });
 
     return {
@@ -374,24 +425,85 @@ export async function duplicatePresentation(id: string, newTitle?: string) {
       };
     }
 
+    const originalPresentation = original.presentation;
+
     // Create a new presentation with the same content
-    const duplicated = await db.baseDocument.create({
-      data: {
-        type: "PRESENTATION",
-        documentType: "presentation",
-        title: newTitle ?? `${original.title} (Copy)`,
-        userId: session.user.id,
-        isPublic: false,
-        presentation: {
-          create: {
-            content: original.presentation.content as unknown as InputJsonValue,
-            theme: original.presentation.theme,
+    const duplicated = await db.$transaction(async (tx) => {
+      // Ensure the user row exists before creating the duplicated document
+      const existingUser = await tx.user.findUnique({ where: { id: session.user.id } });
+      if (!existingUser) {
+        await tx.user.create({
+          data: {
+            id: session.user.id,
+            name: session.user.name ?? undefined,
+            email: (session.user as any).email ?? undefined,
+            image: session.user.image ?? undefined,
+            role: "USER",
+            hasAccess: false,
           },
+        });
+      }
+
+      const baseDocument = await tx.baseDocument.create({
+        data: {
+          type: "PRESENTATION",
+          documentType: "presentation",
+          title: newTitle ?? `${original.title} (Copy)`,
+          userId: session.user.id,
+          isPublic: false,
         },
-      },
-      include: {
-        presentation: true,
-      },
+      });
+
+      const presentationData: {
+        id: string;
+        content: InputJsonValue;
+        theme: string;
+        outline: InputJsonValue;
+        imageSource?: string;
+        presentationStyle?: string | null;
+        language?: string | null;
+        prompt?: string | null;
+        searchResults?: InputJsonValue;
+      } = {
+        id: baseDocument.id,
+        content: originalPresentation.content as unknown as InputJsonValue,
+        theme: originalPresentation.theme,
+        outline:
+          (originalPresentation.outline ?? []) as unknown as InputJsonValue,
+      };
+
+      if (originalPresentation.imageSource) {
+        presentationData.imageSource = originalPresentation.imageSource;
+      }
+
+      presentationData.presentationStyle =
+        originalPresentation.presentationStyle ?? null;
+
+      presentationData.language = originalPresentation.language ?? null;
+
+      presentationData.prompt = originalPresentation.prompt ?? null;
+
+      if (originalPresentation.searchResults) {
+        presentationData.searchResults =
+          originalPresentation.searchResults as unknown as InputJsonValue;
+      }
+
+      await tx.presentation.create({
+        data: presentationData,
+      });
+
+      const hydrated = await tx.baseDocument.findUnique({
+        where: { id: baseDocument.id },
+        include: {
+          presentation: true,
+        },
+      });
+
+      if (!hydrated) {
+        throw new Error("Failed to hydrate duplicated presentation");
+      }
+
+      return hydrated;
     });
 
     return {

@@ -44,6 +44,13 @@ export function SmartContentImport() {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    // Check file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    if (file.size > maxSize) {
+      toast.error("File size must be less than 10MB");
+      return;
+    }
+
     // Check file type
     const allowedTypes = ['application/pdf', 'text/plain', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
     if (!allowedTypes.includes(file.type)) {
@@ -52,23 +59,34 @@ export function SmartContentImport() {
     }
 
     try {
-      // TODO: Implement actual file content extraction
-      // For now, read text files directly
       let content = '';
+      
       if (file.type === 'text/plain') {
         content = await file.text();
-      } else {
-        // Placeholder for PDF/Word processing
-        content = `[File content extraction for ${file.name} will be implemented]`;
+      } else if (file.type === 'application/pdf') {
+        // For PDF files, we need to implement PDF parsing
+        // For now, provide a helpful message
+        content = `PDF Import: ${file.name}\n\nNote: PDF content extraction is being developed. For now, please copy the text from your PDF and paste it directly, or use the URL import feature if the PDF is available online.`;
+      } else if (file.type.includes('word')) {
+        // For Word documents, similar approach
+        content = `Word Document Import: ${file.name}\n\nNote: Word document content extraction is being developed. For now, please copy the text from your document and paste it directly, or save as a text file and upload again.`;
       }
 
       const processedContent = await processImportedContent(content, file.name);
       setPresentationInput(processedContent);
-      toast.success(`File "${file.name}" imported successfully!`);
+      
+      if (content.includes('Note:')) {
+        toast.info(`File "${file.name}" received. ${file.type === 'text/plain' ? 'Content imported!' : 'See the input area for next steps.'}`);
+      } else {
+        toast.success(`File "${file.name}" imported successfully!`);
+      }
     } catch (error) {
       toast.error("Failed to process file");
       console.error("File upload error:", error);
     }
+
+    // Clear the input
+    event.target.value = '';
   };
 
   return (

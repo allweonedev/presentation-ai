@@ -21,28 +21,42 @@ export const search_tool: Tool = {
         return JSON.stringify({ 
           error: "Search service not configured", 
           message: "TAVILY_API_KEY environment variable is not set",
-          query 
+          query,
+          results: [],
+          fallback: true
         });
       }
       
       // Add timeout to prevent hanging
-      const timeoutPromise = new Promise((_, reject) => 
+      const timeoutPromise = new Promise<never>((_, reject) => 
         setTimeout(() => reject(new Error('Search timeout after 15 seconds')), 15000)
       );
       
-      const searchPromise = tavilyService.search(query, { max_results: 3 });
+      const searchPromise = tavilyService.search(query, { 
+        max_results: 3,
+        search_depth: "basic",
+        include_answer: false,
+        include_raw_content: false
+      });
       
       const response = await Promise.race([searchPromise, timeoutPromise]);
       console.log("✅ Search completed for query:", query);
       console.log("📊 Search results count:", (response as any)?.results?.length || 0);
-      return JSON.stringify(response);
+      return JSON.stringify({
+        ...response,
+        query,
+        success: true,
+        fallback: false
+      });
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
       console.error("❌ Search error for query:", query, "Error:", errorMsg);
       return JSON.stringify({ 
         error: "Search failed", 
         message: errorMsg,
-        query 
+        query,
+        results: [],
+        fallback: true
       });
     }
   },

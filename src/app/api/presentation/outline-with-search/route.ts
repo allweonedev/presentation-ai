@@ -2,6 +2,7 @@ import { modelPicker } from "@/lib/model-picker";
 import { auth } from "@/server/auth";
 import { streamText } from "ai";
 import { NextResponse } from "next/server";
+import { env } from "@/env";
 import { search_tool } from "./search_tool";
 
 interface OutlineRequest {
@@ -130,6 +131,15 @@ export async function POST(req: Request) {
       });
       console.log("📝 Falling back to outline without web search");
     }
+
+    // Log environment check
+    console.log("🔧 Environment check:", {
+      hasTavilyKey: !!env.TAVILY_API_KEY,
+      tavilyKeyPrefix: env.TAVILY_API_KEY ? env.TAVILY_API_KEY.substring(0, 10) + "..." : "none",
+      supportsTools,
+      modelProvider,
+      modelId
+    });
 
     const streamConfig: Parameters<typeof streamText>[0] = {
       model,

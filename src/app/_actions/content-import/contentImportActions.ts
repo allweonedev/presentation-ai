@@ -9,23 +9,37 @@ export async function extractContentFromUrl(url: string) {
 
     console.log('🔗 Extracting content from:', url);
 
+    // Add URL validation for common issues
+    const urlObj = new URL(url);
+    
+    // Skip certain domains that typically block scraping
+    const blockedDomains = ['facebook.com', 'twitter.com', 'instagram.com', 'linkedin.com'];
+    if (blockedDomains.some(domain => urlObj.hostname.includes(domain))) {
+      throw new Error(`Content extraction from ${urlObj.hostname} is not supported. Please try copying the content directly.`);
+    }
+
     // Fetch with timeout and better headers
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 second timeout
 
     const response = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
       },
       signal: controller.signal,
+      redirect: 'follow', // Follow redirects
     });
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch URL (status ${response.status})`);
+      throw new Error(`Failed to fetch URL (status ${response.status}): ${response.statusText}`);
     }
 
     const html = await response.text();

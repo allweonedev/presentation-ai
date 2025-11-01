@@ -36,11 +36,15 @@ export async function generateImageAction(
 
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      // Increase timeout to 30 seconds - Pollinations can be slow
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
 
       try {
         const response = await fetch(imageUrl, {
           signal: controller.signal,
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; PresentationAI/1.0)',
+          },
         });
         clearTimeout(timeoutId);
 
@@ -54,24 +58,31 @@ export async function generateImageAction(
         clearTimeout(timeoutId);
         lastError = fetchError;
         console.warn(
-          `Pollinations download attempt ${attempt} failed`,
-          fetchError,
+          `Pollinations download attempt ${attempt}/${maxAttempts} failed:`,
+          fetchError instanceof Error ? fetchError.message : String(fetchError),
         );
 
+        // Longer backoff between retries
         if (attempt < maxAttempts) {
           await new Promise((resolve) =>
-            setTimeout(resolve, 500 * attempt),
+            setTimeout(resolve, 1000 * attempt),
           );
         }
       }
     }
 
     if (!imageResponse) {
-      throw new Error(
-        lastError instanceof Error
-          ? lastError.message
-          : "Failed to download image from Pollinations AI",
-      );
+      const errorMessage = lastError instanceof Error
+        ? lastError.message
+        : "Failed to download image from Pollinations AI";
+      
+      console.error(`❌ All ${maxAttempts} attempts failed:`, errorMessage);
+      
+      // Return a graceful error instead of throwing
+      return {
+        success: false,
+        error: `Pollinations AI is temporarily unavailable: ${errorMessage}. Please try again in a moment.`,
+      };
     }
 
     const imageBlob = await imageResponse.blob();

@@ -38,16 +38,35 @@ export async function createPresentation({
       // user row if missing so the foreign key on BaseDocument won't fail.
       const existingUser = await tx.user.findUnique({ where: { id: userId } });
       if (!existingUser) {
-        await tx.user.create({
-          data: {
-            id: userId,
-            name: session.user.name ?? undefined,
-            email: (session.user as any).email ?? undefined,
-            image: session.user.image ?? undefined,
-            role: "USER",
-            hasAccess: false,
-          },
-        });
+        // Before creating, check if a user with this email exists (NextAuth may have created it)
+        const sessionEmail = (session.user as any).email as string | undefined;
+        const userByEmail = sessionEmail
+          ? await tx.user.findUnique({ where: { email: sessionEmail } })
+          : null;
+
+        if (userByEmail) {
+          // User exists with this email but different ID - this shouldn't happen with proper NextAuth setup
+          // but log it and use the existing user's ID
+          console.warn(
+            `⚠️ User ID mismatch: session has ${userId}, but DB has ${userByEmail.id} for email ${sessionEmail}`,
+          );
+          // Use the existing user's ID for this operation
+          // Update userId to match DB
+          const actualUserId = userByEmail.id;
+          userId = actualUserId;
+        } else {
+          // Safe to create new user
+          await tx.user.create({
+            data: {
+              id: userId,
+              name: session.user.name ?? undefined,
+              email: sessionEmail,
+              image: session.user.image ?? undefined,
+              role: "USER",
+              hasAccess: false,
+            },
+          });
+        }
       }
 
       const baseDocument = await tx.baseDocument.create({
@@ -430,18 +449,33 @@ export async function duplicatePresentation(id: string, newTitle?: string) {
     // Create a new presentation with the same content
     const duplicated = await db.$transaction(async (tx) => {
       // Ensure the user row exists before creating the duplicated document
-      const existingUser = await tx.user.findUnique({ where: { id: session.user.id } });
+      let actualUserId = session.user.id;
+      const existingUser = await tx.user.findUnique({ where: { id: actualUserId } });
       if (!existingUser) {
-        await tx.user.create({
-          data: {
-            id: session.user.id,
-            name: session.user.name ?? undefined,
-            email: (session.user as any).email ?? undefined,
-            image: session.user.image ?? undefined,
-            role: "USER",
-            hasAccess: false,
-          },
-        });
+        // Check if user exists by email (NextAuth may have created with different ID)
+        const sessionEmail = (session.user as any).email as string | undefined;
+        const userByEmail = sessionEmail
+          ? await tx.user.findUnique({ where: { email: sessionEmail } })
+          : null;
+
+        if (userByEmail) {
+          console.warn(
+            `⚠️ User ID mismatch in duplicate: session has ${actualUserId}, but DB has ${userByEmail.id}`,
+          );
+          actualUserId = userByEmail.id;
+        } else {
+          // Safe to create new user
+          await tx.user.create({
+            data: {
+              id: actualUserId,
+              name: session.user.name ?? undefined,
+              email: sessionEmail,
+              image: session.user.image ?? undefined,
+              role: "USER",
+              hasAccess: false,
+            },
+          });
+        }
       }
 
       const baseDocument = await tx.baseDocument.create({
@@ -449,7 +483,7 @@ export async function duplicatePresentation(id: string, newTitle?: string) {
           type: "PRESENTATION",
           documentType: "presentation",
           title: newTitle ?? `${original.title} (Copy)`,
-          userId: session.user.id,
+          userId: actualUserId,
           isPublic: false,
         },
       });

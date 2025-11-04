@@ -326,7 +326,9 @@ Special thanks to the following projects and organizations:
 - [Next.js](https://nextjs.org/) for the React framework
 - All our open-source [contributors](https://github.com/allweonedev/presentation-ai/graphs/contributors)
 
-## 💬 Support
+## 💬 Support and Sponsors
+
+https://github.com/sponsors/allweonedev
 
 Need help or have questions?
 

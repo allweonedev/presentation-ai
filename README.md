@@ -342,3 +342,6 @@ Need help or have questions?
 **Built with ❤️ by the ALLWEONE® Team**
 
 **[⭐ Star us on GitHub](https://github.com/allweonedev/presentation-ai)**
+
+
+[![Star History Chart](https://api.star-history.com/svg?repos=allweonedev/presentation-ai&type=date&legend=top-left)](https://www.star-history.com/#allweonedev/presentation-ai&type=date&legend=top-left)

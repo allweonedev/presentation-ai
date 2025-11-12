@@ -76,7 +76,7 @@ export default function PresentationHeader({ title }: PresentationHeaderProps) {
       {/* Left section with breadcrumb navigation */}
       <div className="flex items-center gap-2">
         <Link
-          href="/presentations"
+          href="/presentation"
           className="text-muted-foreground hover:text-foreground"
         >
           <Brain className="h-5 w-5"></Brain>

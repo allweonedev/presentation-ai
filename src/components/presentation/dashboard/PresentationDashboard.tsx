@@ -2,6 +2,7 @@
 
 import { createEmptyPresentation } from "@/app/_actions/presentation/presentationActions";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { usePresentationState } from "@/states/presentation-state";
 import { Wand2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,7 @@ import { PresentationHeader } from "./PresentationHeader";
 import { PresentationInput } from "./PresentationInput";
 import { PresentationsSidebar } from "./PresentationsSidebar";
 import { RecentPresentations } from "./RecentPresentations";
+import { SmartContentImport } from "./SmartContentImport";
 
 export function PresentationDashboard({
   sidebarSide,
@@ -28,6 +30,8 @@ export function PresentationDashboard({
     language,
     theme,
     setShouldStartOutlineGeneration,
+    showTemplates,
+    setShowTemplates,
   } = usePresentationState();
 
   useEffect(() => {
@@ -64,10 +68,22 @@ export function PresentationDashboard({
         setIsGeneratingOutline(false);
         toast.error(result.message || "Failed to create presentation");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       setIsGeneratingOutline(false);
       console.error("Error creating presentation:", error);
-      toast.error("Failed to create presentation");
+      const message = (error as Error)?.message || "";
+      // Common Next.js deployment scenario: server action id mismatch after a fresh deploy
+      if (message.includes("UnrecognizedActionError") || message.includes("failed-to-find-server-action")) {
+        toast.error(
+          "App just updated. Please hard refresh (Ctrl/Cmd+Shift+R) to sync and try again.",
+        );
+        // Optionally auto-reload after a brief delay to recover seamlessly
+        setTimeout(() => {
+          if (typeof window !== "undefined") window.location.reload();
+        }, 1200);
+      } else {
+        toast.error("Failed to create presentation");
+      }
     }
   };
 
@@ -79,6 +95,7 @@ export function PresentationDashboard({
 
         <div className="space-y-8">
           <PresentationInput handleGenerate={handleGenerate} />
+          <SmartContentImport />
           <PresentationControls />
 
           <div className="flex items-center justify-end">
@@ -99,6 +116,17 @@ export function PresentationDashboard({
         <PresentationExamples />
         <RecentPresentations />
       </div>
+
+      <Dialog open={showTemplates} onOpenChange={setShowTemplates}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Presentation Templates</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            <PresentationExamples isModal={true} onExampleSelect={() => setShowTemplates(false)} />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -16,6 +16,10 @@
 # production
 /build
 
+# docker
+Dockerfile*
+docker-compose*
+
 # misc
 .DS_Store
 *.pem
@@ -28,6 +32,15 @@ yarn-error.log*
 # local env files
 .env.local
 .env
+# keep example env tracked
+!.env.example
+
+# editors
+.idea/
+.vscode/
+
+# prisma local db files
+prisma/*.db
 # vercel
 .vercel
 

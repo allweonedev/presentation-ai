@@ -1,5 +1,7 @@
 "use client";
 
+import { fetchOpenRouterModels, fetchGroqModels, fetchPollinationsTextModels, type OpenRouterModel } from "@/app/_actions/models/openrouter";
+import { fetchPollinationsModels, type PollinationsModel } from "@/app/_actions/image/models";
 import {
   Select,
   SelectContent,
@@ -8,6 +10,8 @@ import {
   SelectLabel,
   SelectTrigger,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
 import {
   fallbackModels,
   getSelectedModel,
@@ -15,18 +19,26 @@ import {
   useLocalModels,
 } from "@/hooks/presentation/useLocalModels";
 import { usePresentationState } from "@/states/presentation-state";
-import { Bot, Cpu, Loader2, Monitor } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { Bot, Cpu, Image, Loader2, Monitor, Search } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export function ModelPicker({
   shouldShowLabel = true,
 }: {
   shouldShowLabel?: boolean;
 }) {
-  const { modelProvider, setModelProvider, modelId, setModelId } =
+  const { modelProvider, setModelProvider, modelId, setModelId, imageModel, setImageModel } =
     usePresentationState();
 
-  const { data: modelsData, isLoading, isInitialLoad } = useLocalModels();
+  const [openRouterModels, setOpenRouterModels] = useState<OpenRouterModel[]>([]);
+  const [groqModels, setGroqModels] = useState<OpenRouterModel[]>([]);
+  const [pollinationsTextModels, setPollinationsTextModels] = useState<OpenRouterModel[]>([]);
+  const [pollinationsModels, setPollinationsModels] = useState<PollinationsModel[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFreeOnly, setShowFreeOnly] = useState(false);
+  const [loadingModels, setLoadingModels] = useState(true);
+
+  const { data: localModelsData, isLoading, isInitialLoad } = useLocalModels();
   const hasRestoredFromStorage = useRef(false);
 
   // Load saved model selection from localStorage on mount
@@ -36,7 +48,7 @@ export function ModelPicker({
       if (savedModel) {
         console.log("Restoring model from localStorage:", savedModel);
         setModelProvider(
-          savedModel.modelProvider as "openai" | "ollama" | "lmstudio",
+          savedModel.modelProvider as "openai" | "ollama" | "lmstudio" | "openrouter" | "groq" | "pollinations",
         );
         setModelId(savedModel.modelId);
       }
@@ -44,14 +56,66 @@ export function ModelPicker({
     }
   }, [setModelProvider, setModelId]);
 
+  // Load models on mount
+  useEffect(() => {
+    const loadModels = async () => {
+      try {
+        const [openRouter, groq, pollinationsText, pollinationsImage] = await Promise.all([
+          fetchOpenRouterModels(),
+          fetchGroqModels(),
+          fetchPollinationsTextModels(),
+          fetchPollinationsModels(),
+        ]);
+        setOpenRouterModels(openRouter);
+        setGroqModels(groq);
+        setPollinationsTextModels(pollinationsText);
+        setPollinationsModels(pollinationsImage);
+      } catch (error) {
+        console.error("Failed to load models:", error);
+      } finally {
+        setLoadingModels(false);
+      }
+    };
+    loadModels();
+  }, []);
+
   // Use cached data if available, otherwise show fallback
-  const displayData = modelsData || {
+  const displayData = localModelsData || {
     localModels: fallbackModels,
     downloadableModels: [],
     showDownloadable: true,
   };
 
   const { localModels, downloadableModels, showDownloadable } = displayData;
+
+  // Filter models based on search and free toggle
+  const filteredOpenRouterModels = openRouterModels.filter((model) => {
+    const matchesSearch = model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         model.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFreeFilter = !showFreeOnly || model.isFree;
+    return matchesSearch && matchesFreeFilter;
+  });
+
+  const filteredGroqModels = groqModels.filter((model) => {
+    const matchesSearch = model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         model.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFreeFilter = !showFreeOnly || model.isFree;
+    return matchesSearch && matchesFreeFilter;
+  });
+
+  const filteredPollinationsTextModels = pollinationsTextModels.filter((model) => {
+    const matchesSearch = model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         model.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFreeFilter = !showFreeOnly || model.isFree;
+    return matchesSearch && matchesFreeFilter;
+  });
+
+  const filteredPollinationsModels = pollinationsModels.filter((model) => {
+    const matchesSearch = model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         model.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFreeFilter = !showFreeOnly || model.isFree;
+    return matchesSearch && matchesFreeFilter;
+  });
 
   // Group models by provider
   const ollamaModels = localModels.filter(
@@ -88,13 +152,55 @@ export function ModelPicker({
       return `ollama-${modelId}`;
     } else if (modelProvider === "lmstudio") {
       return `lmstudio-${modelId}`;
+    } else if (modelProvider === "openrouter") {
+      return `openrouter-${modelId}`;
+    } else if (modelProvider === "groq") {
+      return `groq-${modelId}`;
+    } else if (modelProvider === "pollinations") {
+      return `pollinations-${modelId}`;
     }
-    return modelProvider;
+    return `openrouter-openai/gpt-4o-mini`; // Default
   };
 
   // Get current model option for display
   const getCurrentModelOption = () => {
     const currentValue = getCurrentModelValue();
+
+    if (currentValue.startsWith("openrouter-")) {
+      const modelId = currentValue.replace("openrouter-", "");
+      const model = openRouterModels.find((m) => m.id === modelId);
+      return {
+        label: model?.name || "OpenRouter Model",
+        icon: Bot,
+      };
+    }
+
+    if (currentValue.startsWith("groq-")) {
+      const modelId = currentValue.replace("groq-", "");
+      const model = groqModels.find((m) => m.id === modelId);
+      return {
+        label: model?.name || "Groq Model",
+        icon: Bot,
+      };
+    }
+
+    if (currentValue.startsWith("pollinations-")) {
+      const modelId = currentValue.replace("pollinations-", "");
+      // Check text models first
+      const textModel = pollinationsTextModels.find((m) => m.id === modelId);
+      if (textModel) {
+        return {
+          label: textModel.name || "Pollinations Text Model",
+          icon: Bot,
+        };
+      }
+      // Then check image models
+      const imageModel = pollinationsModels.find((m) => m.id === modelId);
+      return {
+        label: imageModel?.name || "Pollinations Image Model",
+        icon: Image,
+      };
+    }
 
     if (currentValue === "openai") {
       return {
@@ -149,6 +255,32 @@ export function ModelPicker({
       setModelId(model);
       setSelectedModel("lmstudio", model);
       console.log("Saved to localStorage: lmstudio,", model);
+    } else if (value.startsWith("openrouter-")) {
+      const model = value.replace("openrouter-", "");
+      setModelProvider("openrouter");
+      setModelId(model);
+      setSelectedModel("openrouter", model);
+      console.log("Saved to localStorage: openrouter,", model);
+    } else if (value.startsWith("groq-")) {
+      const model = value.replace("groq-", "");
+      setModelProvider("groq");
+      setModelId(model);
+      setSelectedModel("groq", model);
+      console.log("Saved to localStorage: groq,", model);
+    } else if (value.startsWith("pollinations-")) {
+      const model = value.replace("pollinations-", "");
+      // Check if it's a text model
+      const isTextModel = pollinationsTextModels.some((m) => m.id === model);
+      if (isTextModel) {
+        setModelProvider("pollinations");
+        setModelId(model);
+        setSelectedModel("pollinations", model);
+        console.log("Saved to localStorage: pollinations,", model);
+      } else {
+        // It's an image model
+        setImageModel(model as any);
+        console.log("Set image model to:", model);
+      }
     }
   };
 
@@ -156,9 +288,33 @@ export function ModelPicker({
     <div>
       {shouldShowLabel && (
         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Text Model
+          AI Model
         </label>
       )}
+
+      {/* Search and Free Toggle */}
+      <div className="space-y-2 mb-2">
+        <div className="relative">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search models..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-8"
+          />
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="free-only"
+            checked={showFreeOnly}
+            onCheckedChange={setShowFreeOnly}
+          />
+          <label htmlFor="free-only" className="text-sm text-muted-foreground">
+            Free models only
+          </label>
+        </div>
+      </div>
+
       <Select value={getCurrentModelValue()} onValueChange={handleModelChange}>
         <SelectTrigger className="overflow-hidden">
           <div className="flex items-center gap-2 min-w-0">
@@ -174,7 +330,7 @@ export function ModelPicker({
         </SelectTrigger>
         <SelectContent>
           {/* Loading indicator when fetching models */}
-          {isLoading && !isInitialLoad && (
+          {(isLoading || loadingModels) && !isInitialLoad && (
             <SelectGroup>
               <SelectLabel>Loading Models</SelectLabel>
               <SelectItem value="loading" disabled>
@@ -193,21 +349,116 @@ export function ModelPicker({
             </SelectGroup>
           )}
 
-          {/* OpenAI Group */}
-          <SelectGroup>
-            <SelectLabel>Cloud Models</SelectLabel>
-            <SelectItem value="openai">
-              <div className="flex items-center gap-3">
-                <Bot className="h-4 w-4 flex-shrink-0" />
-                <div className="flex flex-col min-w-0">
-                  <span className="truncate text-sm">GPT-4o-mini</span>
-                  <span className="text-xs text-muted-foreground truncate">
-                    Cloud-based AI model
-                  </span>
-                </div>
-              </div>
-            </SelectItem>
-          </SelectGroup>
+          {/* OpenRouter Models */}
+          {filteredOpenRouterModels.length > 0 && (
+            <SelectGroup>
+              <SelectLabel>Text Models (OpenRouter)</SelectLabel>
+              {filteredOpenRouterModels.map((model) => (
+                <SelectItem key={`openrouter-${model.id}`} value={`openrouter-${model.id}`}>
+                  <div className="flex items-center gap-3">
+                    <Bot className="h-4 w-4 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="truncate text-sm">{model.name}</span>
+                        {model.isFree && (
+                          <span className="text-xs bg-green-100 text-green-800 px-1 py-0.5 rounded">
+                            Free
+                          </span>
+                        )}
+                      </div>
+                      {model.description && (
+                        <span className="text-xs text-muted-foreground truncate">
+                          {model.description}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          )}
+
+          {/* Groq Models */}
+          {filteredGroqModels.length > 0 && (
+            <SelectGroup>
+              <SelectLabel>Text Models (Groq)</SelectLabel>
+              {filteredGroqModels.map((model) => (
+                <SelectItem key={`groq-${model.id}`} value={`groq-${model.id}`}>
+                  <div className="flex items-center gap-3">
+                    <Bot className="h-4 w-4 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="truncate text-sm">{model.name}</span>
+                      </div>
+                      {model.description && (
+                        <span className="text-xs text-muted-foreground truncate">
+                          {model.description}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          )}
+
+          {/* Pollinations Text Models */}
+          {filteredPollinationsTextModels.length > 0 && (
+            <SelectGroup>
+              <SelectLabel>Text Models (Pollinations)</SelectLabel>
+              {filteredPollinationsTextModels.map((model) => (
+                <SelectItem key={`pollinations-${model.id}`} value={`pollinations-${model.id}`}>
+                  <div className="flex items-center gap-3">
+                    <Bot className="h-4 w-4 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="truncate text-sm">{model.name}</span>
+                        {model.isFree && (
+                          <span className="text-xs bg-green-100 text-green-800 px-1 py-0.5 rounded">
+                            Free
+                          </span>
+                        )}
+                      </div>
+                      {model.description && (
+                        <span className="text-xs text-muted-foreground truncate">
+                          {model.description}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          )}
+
+          {/* Pollinations Image Models */}
+          {filteredPollinationsModels.length > 0 && (
+            <SelectGroup>
+              <SelectLabel>Image Models (Pollinations)</SelectLabel>
+              {filteredPollinationsModels.map((model) => (
+                <SelectItem key={`pollinations-${model.id}`} value={`pollinations-${model.id}`}>
+                  <div className="flex items-center gap-3">
+                    <Image className="h-4 w-4 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="truncate text-sm">{model.name}</span>
+                        {model.isFree && (
+                          <span className="text-xs bg-green-100 text-green-800 px-1 py-0.5 rounded">
+                            Free
+                          </span>
+                        )}
+                      </div>
+                      {model.description && (
+                        <span className="text-xs text-muted-foreground truncate">
+                          {model.description}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          )}
 
           {/* Local Ollama Models */}
           {ollamaModels.length > 0 && (

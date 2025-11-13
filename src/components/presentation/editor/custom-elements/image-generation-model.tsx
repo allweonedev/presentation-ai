@@ -2,6 +2,7 @@ import {
   generateImageAction,
   type ImageModelList,
 } from "@/app/_actions/image/generate";
+import { fetchPollinationsModels, type PollinationsModel } from "@/app/_actions/image/models";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,25 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { ImagePlugin } from "@platejs/media/react";
 import { useEditorRef } from "platejs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
-const MODEL_OPTIONS = [
-  {
-    label: "FLUX Fast",
-    value: "black-forest-labs/FLUX.1-schnell-Free",
-  },
-  {
-    label: "FLUX Developer",
-    value: "black-forest-labs/FLUX.1-dev",
-  },
-  {
-    label: "FLUX Premium",
-    value: "black-forest-labs/FLUX1.1-pro",
-  },
-];
 
 export function GenerateImageDialogContent({
   setOpen,
@@ -52,9 +39,33 @@ export function GenerateImageDialogContent({
 }) {
   const editor = useEditorRef();
   const [prompt, setPrompt] = useState("");
-  const [selectedModel, setSelectedModel] = useState<ImageModelList>(
-    "black-forest-labs/FLUX.1-schnell-Free",
-  );
+  const [selectedModel, setSelectedModel] = useState<ImageModelList>("flux");
+  const [models, setModels] = useState<PollinationsModel[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFreeOnly, setShowFreeOnly] = useState(true);
+  const [loadingModels, setLoadingModels] = useState(true);
+
+  useEffect(() => {
+    const loadModels = async () => {
+      try {
+        const fetchedModels = await fetchPollinationsModels();
+        setModels(fetchedModels);
+      } catch (error) {
+        console.error("Failed to load models:", error);
+        toast.error("Failed to load image models");
+      } finally {
+        setLoadingModels(false);
+      }
+    };
+    loadModels();
+  }, []);
+
+  const filteredModels = models.filter((model) => {
+    const matchesSearch = model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         model.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFreeFilter = !showFreeOnly || model.isFree;
+    return matchesSearch && matchesFreeFilter;
+  });
 
   const generateImage = async () => {
     if (!prompt.trim()) {
@@ -115,6 +126,55 @@ export function GenerateImageDialogContent({
           />
         </div>
 
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="model-search">Model</Label>
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="free-only" className="text-sm">Free only</Label>
+              <Switch
+                id="free-only"
+                checked={showFreeOnly}
+                onCheckedChange={setShowFreeOnly}
+              />
+            </div>
+          </div>
+
+          <Input
+            id="model-search"
+            placeholder="Search models..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            disabled={isGenerating || loadingModels}
+          />
+
+          <Select
+            value={selectedModel}
+            onValueChange={(value) => setSelectedModel(value as ImageModelList)}
+            disabled={isGenerating || loadingModels}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={loadingModels ? "Loading models..." : "Select a model"} />
+            </SelectTrigger>
+            <SelectContent>
+              {filteredModels.map((model) => (
+                <SelectItem key={model.id} value={model.id}>
+                  <div className="flex items-center justify-between w-full">
+                    <span>{model.name}</span>
+                    {model.isFree && (
+                      <span className="ml-2 text-xs bg-green-100 text-green-800 px-1 py-0.5 rounded">
+                        Free
+                      </span>
+                    )}
+                  </div>
+                  {model.description && (
+                    <span className="text-xs text-gray-500 block">{model.description}</span>
+                  )}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
         {isGenerating && (
           <div className="mt-4 space-y-3">
             <div className="h-64 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-gray-800" />
@@ -126,22 +186,6 @@ export function GenerateImageDialogContent({
       </div>
 
       <AlertDialogFooter>
-        <Select
-          value={selectedModel}
-          onValueChange={(value) => setSelectedModel(value as ImageModelList)}
-          disabled={isGenerating}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a model" />
-          </SelectTrigger>
-          <SelectContent>
-            {MODEL_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
         <div className="flex gap-2">
           <AlertDialogCancel disabled={isGenerating}>Cancel</AlertDialogCancel>
           <AlertDialogAction
@@ -149,7 +193,7 @@ export function GenerateImageDialogContent({
               e.preventDefault();
               void generateImage();
             }}
-            disabled={isGenerating}
+            disabled={isGenerating || loadingModels}
           >
             {isGenerating ? "Generating..." : "Generate"}
           </AlertDialogAction>

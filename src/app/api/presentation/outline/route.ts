@@ -93,6 +93,13 @@ export async function POST(req: Request) {
       day: "numeric",
     });
 
+    console.log("📝 Outline generation starting:", {
+      provider: modelProvider,
+      model: modelId,
+      numberOfCards,
+      language: actualLanguage,
+    });
+
     const model = modelPicker(modelProvider, modelId);
 
     // Format the prompt with template variables
@@ -107,6 +114,7 @@ export async function POST(req: Request) {
       prompt: formattedPrompt,
     });
 
+    console.log("✅ Outline generation streaming started");
     return result.toDataStreamResponse();
   } catch (error) {
     console.error("Error in outline generation:", error);

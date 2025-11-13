@@ -172,7 +172,7 @@ export default function PresentationPage() {
 
       // Set outline
       if (presentationData.presentation?.outline) {
-        setOutline(presentationData.presentation.outline);
+        setOutline(presentationData.presentation.outline as string[]);
       }
 
       // Set theme if available

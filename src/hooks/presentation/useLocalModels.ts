@@ -15,9 +15,18 @@ interface LMStudioResponse {
   data?: Array<{ id: string }>;
 }
 
+// Utility: detect if we can safely call localhost from the browser
+function isLocalBrowser(): boolean {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname;
+  return host === "localhost" || host === "127.0.0.1";
+}
+
 // Fetch models from Ollama
 async function fetchOllamaModels(): Promise<ModelInfo[]> {
   try {
+    // In production (Easypanel), don't call localhost from the browser
+    if (!isLocalBrowser()) return [];
     const response = await fetch("http://localhost:11434/api/tags");
     if (!response.ok) {
       throw new Error("Ollama not available");
@@ -42,6 +51,8 @@ async function fetchOllamaModels(): Promise<ModelInfo[]> {
 // Fetch models from LM Studio
 async function fetchLMStudioModels(): Promise<ModelInfo[]> {
   try {
+    // In production (Easypanel), don't call localhost from the browser
+    if (!isLocalBrowser()) return [];
     const response = await fetch("http://localhost:1234/v1/models");
 
     const data = (await response.json()) as LMStudioResponse;

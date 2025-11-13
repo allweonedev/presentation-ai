@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
+    provider = "sqlite"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+    url      = "file:./dev.db"
 }
 
 // Necessary for Next auth
@@ -45,9 +45,9 @@ model User {
     image         String?
     createdAt     DateTime  @default(now())
     updatedAt     DateTime  @default(now()) @updatedAt
-    headline      String?   @db.VarChar(100)
-    bio           String?   @db.Text
-    interests     String[]
+    headline      String?
+    bio           String?
+    interests     Json?
     location      String?
     website       String?
     accounts      Account[]
@@ -103,7 +103,7 @@ model Presentation {
     prompt            String? // The prompt used for generating the presentation
     presentationStyle String? // The style of the presentation
     language          String?      @default("en-US") // The language of the presentation
-    outline           String[] // Store the presentation outline
+    outline           Json? // Store the presentation outline
     searchResults     Json? // Store the search results
     base              BaseDocument @relation(fields: [id], references: [id], onDelete: Cascade)
     templateId        String?

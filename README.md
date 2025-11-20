@@ -7,7 +7,7 @@
 
 > ⭐ **Help us reach more developers and grow the ALLWEONE community. Star this repo!**
 
-An open-source, AI-powered presentation generator inspired by Gamma.app that creates beautiful, customizable slides in minutes. This tool is part of the broader ALLWEONE AI platform.
+An open-source, AI-powered presentation generator alternative to Gamma.app that creates beautiful, customizable slides in minutes. This tool is part of the broader ALLWEONE AI platform.
 
 <https://github.com/user-attachments/assets/a21dbd49-75b8-4822-bcec-a75b581d9c60>
 

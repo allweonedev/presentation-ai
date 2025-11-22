@@ -7,13 +7,13 @@
     "build": "next build --turbo",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "dev": "next dev --turbo",
+    "dev": "next dev --turbo -p 7888",
     "postinstall": "prisma generate",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "check": "biome check .",
     "check:fix": "biome check --write .",
-    "start": "next start",
+    "start": "next start -p ${PORT:-3000}",
     "type": "tsc --noEmit"
   },
   "dependencies": {

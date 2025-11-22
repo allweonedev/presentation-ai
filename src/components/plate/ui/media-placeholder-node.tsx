@@ -94,6 +94,13 @@ export const PlaceholderElement = withHOC(
       if (!uploadedFile) return;
 
       const path = editor.api.findPath(element);
+      const resolvedUrl =
+        uploadedFile.ufsUrl ?? uploadedFile.appUrl ?? uploadedFile.url;
+
+      if (!resolvedUrl) {
+        api.placeholder.removeUploadingFile(element.id as string);
+        return;
+      }
 
       editor.tf.withoutSaving(() => {
         editor.tf.removeNodes({ at: path });
@@ -106,7 +113,7 @@ export const PlaceholderElement = withHOC(
           name: element.mediaType === KEYS.file ? uploadedFile.name : "",
           placeholderId: element.id as string,
           type: element.mediaType!,
-          url: uploadedFile.url,
+          url: resolvedUrl,
         };
 
         editor.tf.insertNodes(node, { at: path });

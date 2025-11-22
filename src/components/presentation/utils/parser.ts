@@ -362,10 +362,13 @@ export class SlideParser {
       // If we found another SECTION starting before this one ends
       else if (nextSectionIdx !== -1) {
         // Force close the current section
-        const partialSection = this.buffer.substring(
+        let partialSection = this.buffer.substring(
           sectionStartIdx,
           nextSectionIdx,
         );
+
+        // Fix malformed tags like "CYCLE</SECTION>" by ensuring proper closing
+        partialSection = this.fixMalformedTags(partialSection);
 
         // Check if it has actual content
         if (
@@ -377,7 +380,11 @@ export class SlideParser {
           partialSection.includes("<TIMELINE>") ||
           partialSection.includes("<P>") ||
           partialSection.includes("<ICON>") ||
-          partialSection.includes("<IMG")
+          partialSection.includes("<IMG") ||
+          partialSection.includes("<CYCLE>") ||
+          partialSection.includes("<STAIRCASE>") ||
+          partialSection.includes("<BULLETS>") ||
+          partialSection.includes("<ICONS>")
         ) {
           // Add a closing tag and process it
           this.completedSections.push(partialSection + "</SECTION>");
@@ -668,6 +675,10 @@ export class SlideParser {
 
       case "TIMELINE":
         return this.createTimeline(node);
+
+      case "TITLE":
+        // Treat TITLE tags as heading content so slides get their titles rendered cleanly
+        return this.createHeading("h2", node);
 
       default:
         console.warn(`Unknown top-level tag: ${tag}`);
@@ -1666,6 +1677,17 @@ export class SlideParser {
       ...(size ? { size } : {}),
       children: finalChildren,
     } as unknown as PlateNode;
+  }
+
+  /**
+   * Fix malformed tags in XML content
+   */
+  private fixMalformedTags(xml: string): string {
+    // Fix common malformed patterns like "CYCLE</SECTION>" -> "<CYCLE></CYCLE></SECTION>"
+    return xml
+      .replace(/([A-Z]+)<\/SECTION>/g, "<$1></$1></SECTION>")
+      .replace(/([A-Z]+)(?![>\s])/g, "<$1>")
+      .replace(/<\/([A-Z]+)(?![>\s])/g, "</$1>");
   }
 
   /**

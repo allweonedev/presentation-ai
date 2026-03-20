@@ -363,6 +363,13 @@ const pushHistorySnapshot = (
   }
 };
 
+const getPresentModeResetState = () => ({
+  isPresenting: false,
+  isPresentingLoading: false,
+  presentingScaleLocks: {},
+  shouldShowExitHeader: false,
+});
+
 export const usePresentationState = create<PresentationState>((set, get) => ({
   currentPresentationId: null,
   currentPresentationTitle: null,
@@ -703,12 +710,11 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
   setScenario: (scenario) => set({ scenario }),
   setSavingStatus: (status) => set({ savingStatus: status }),
   setIsPresenting: (isPresenting) =>
-    set(() => ({
-      isPresenting,
-      ...(isPresenting
-        ? {}
-        : { isPresentingLoading: false, presentingScaleLocks: {} }),
-    })),
+    set(() =>
+      isPresenting
+        ? { isPresenting: true, shouldShowExitHeader: false }
+        : getPresentModeResetState(),
+    ),
   setIsPresentingLoading: (isLoading) =>
     set({ isPresentingLoading: isLoading }),
   setPresentingScaleLock: (slideId, locked) =>
@@ -772,6 +778,7 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
   },
   startOutlineGeneration: () =>
     set({
+      ...getPresentModeResetState(),
       shouldStartOutlineGeneration: true,
       isGeneratingOutline: true,
       shouldStartPresentationGeneration: false,
@@ -785,11 +792,13 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
     set((state) =>
       state.outline.some((item) => item.trim().length > 0)
         ? {
+            ...getPresentModeResetState(),
             shouldStartPresentationGeneration: true,
             isGeneratingPresentation: true,
             slides: [],
           }
         : {
+            ...getPresentModeResetState(),
             shouldStartPresentationGeneration: false,
             isGeneratingPresentation: false,
           },
@@ -798,11 +807,13 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
     set((state) =>
       state.outline.some((item) => item.trim().length > 0)
         ? {
+            ...getPresentModeResetState(),
             shouldStartImageSlideGeneration: true,
             isGeneratingPresentation: true,
             slides: [],
           }
         : {
+            ...getPresentModeResetState(),
             shouldStartImageSlideGeneration: false,
             isGeneratingPresentation: false,
           },
@@ -820,6 +831,7 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
   // Reset everything except ID and current input when starting new outline generation
   resetForNewGeneration: () =>
     set(() => ({
+      ...getPresentModeResetState(),
       thumbnailUrl: undefined,
       outline: [],
       searchResults: [],
@@ -833,6 +845,7 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
   // Comprehensive reset when navigating back to /presentations page
   resetPresentationState: () =>
     set(() => ({
+      ...getPresentModeResetState(),
       // Clear presentation-specific state
       currentPresentationId: null,
       currentPresentationTitle: null,
@@ -867,8 +880,6 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
       isRightPanelCollapsed: false,
       currentSlideId: null,
       savingStatus: "idle",
-      isPresentingLoading: false,
-      presentingScaleLocks: {},
       generatedImageCache: {},
       selectedSlideTemplates: [],
       outlineTemplateOverrides: {},

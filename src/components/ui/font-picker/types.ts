@@ -13,6 +13,7 @@ export interface FontPickerProps extends React.ComponentPropsWithoutRef<"div"> {
   value?: (value: string) => void;
   fontsLoaded?: (fontsLoaded: boolean) => void;
   fontsLoadedTimeout?: number;
+  selectClassName?: string;
 }
 
 export interface Font {

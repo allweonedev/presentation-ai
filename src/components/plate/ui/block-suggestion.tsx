@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: This use requires any */
 "use client";
 
 import * as React from "react";
@@ -92,7 +91,7 @@ export function BlockSuggestion({ element }: { element: TSuggestionElement }) {
   return (
     <div
       className={cn(
-        "z-1 pointer-events-none absolute inset-0 border-2 border-brand/[0.8] transition-opacity",
+        "pointer-events-none absolute inset-0 z-1 border-2 border-brand/80 transition-opacity",
         isRemove && "border-gray-300",
       )}
       contentEditable={false}
@@ -146,10 +145,13 @@ export function BlockSuggestionCard({
         <div className="relative flex items-center">
           {/* Replace to your own backend or refer to potion */}
           <Avatar className="size-5">
-            <AvatarImage alt={userInfo?.name} src={userInfo?.avatarUrl} />
+            <AvatarImage
+              alt={userInfo?.name ?? undefined}
+              src={userInfo?.avatarUrl ?? undefined}
+            />
             <AvatarFallback>{userInfo?.name?.[0]}</AvatarFallback>
           </Avatar>
-          <h4 className="mx-2 text-sm font-semibold leading-none">
+          <h4 className="mx-2 text-sm leading-none font-semibold">
             {userInfo?.name}
           </h4>
           <div className="text-xs leading-none text-muted-foreground/80">
@@ -159,7 +161,7 @@ export function BlockSuggestionCard({
           </div>
         </div>
 
-        <div className="relative mb-4 mt-1 pl-[32px]">
+        <div className="relative mt-1 mb-4 pl-[32px]">
           <div className="flex flex-col gap-2">
             {suggestion.type === "remove" &&
               suggestionText2Array(suggestion.text!).map((text, index) => (
@@ -244,7 +246,7 @@ export function BlockSuggestionCard({
         ))}
 
         {hovering && (
-          <div className="absolute right-4 top-4 flex gap-2">
+          <div className="absolute top-4 right-4 flex gap-2">
             <Button
               variant="ghost"
               className="size-6 p-1 text-muted-foreground"
@@ -345,14 +347,14 @@ export const useResolveSuggestion = (
       if (!PathApi.equals(path, blockPath)) return;
 
       const entries = [
-        ...editor.api.nodes<TElement | TSuggestionText>({
+        ...editor.api.nodes({
           at: [],
           mode: "all",
           match: (n) =>
             (n[KEYS.suggestion] && n[getSuggestionKey(id)]) ||
             api.suggestion.nodeId(n as TElement) === id,
         }),
-      ];
+      ] as NodeEntry<TElement | TSuggestionText>[];
 
       // move line break to the end
       entries.sort(([, path1], [, path2]) => {
@@ -361,25 +363,26 @@ export const useResolveSuggestion = (
 
       let newText = "";
       let text = "";
-      let properties: any = {};
-      let newProperties: any = {};
+      let properties: Record<string, unknown> = {};
+      let newProperties: Record<string, unknown> = {};
 
       // overlapping suggestion
       entries.forEach(([node]) => {
         if (TextApi.isText(node)) {
-          const dataList = api.suggestion.dataList(node);
+          const suggestionTextNode = node as TSuggestionText;
+          const dataList = api.suggestion.dataList(suggestionTextNode);
 
           dataList.forEach((data) => {
             if (data.id !== id) return;
 
             switch (data.type) {
               case "insert": {
-                newText += node.text;
+                newText += suggestionTextNode.text;
 
                 break;
               }
               case "remove": {
-                text += node.text;
+                text += suggestionTextNode.text;
 
                 break;
               }
@@ -394,7 +397,7 @@ export const useResolveSuggestion = (
                   ...data.newProperties,
                 };
 
-                newText += node.text;
+                newText += suggestionTextNode.text;
 
                 break;
               }
@@ -427,7 +430,7 @@ export const useResolveSuggestion = (
 
       // const comments = data?.discussions.find((d) => d.id === id)?.comments;
       const comments =
-        discussions.find((s: TDiscussion) => s.id === id)?.comments || [];
+        (discussions as TDiscussion[]).find((s) => s.id === id)?.comments || [];
       const createdAt = new Date(nodeData.createdAt);
 
       const keyId = getSuggestionKey(id);

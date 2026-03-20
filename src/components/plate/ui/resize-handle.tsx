@@ -22,8 +22,8 @@ export const mediaResizeHandleVariants = cva(
   {
     variants: {
       direction: {
-        left: "-left-3 -ml-3 pl-3",
-        right: "-right-3 -mr-3 items-end pr-3",
+        left: "-left-3 -ml-3 cursor-e-resize pl-3",
+        right: "-right-3 -mr-3 cursor-w-resize items-end pr-3",
       },
     },
   },
@@ -64,11 +64,11 @@ export function ResizeHandle({
   );
 }
 
-const resizableVariants = cva("", {
+const resizableVariants = cva("flex w-full", {
   variants: {
     align: {
       center: "mx-auto",
-      left: "mr-auto",
+      left: "ml-0",
       right: "ml-auto",
     },
   },

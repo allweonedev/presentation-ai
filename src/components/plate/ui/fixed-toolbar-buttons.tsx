@@ -5,7 +5,6 @@ import {
   BaselineIcon,
   BoldIcon,
   Code2Icon,
-  HighlighterIcon,
   ItalicIcon,
   PaintBucketIcon,
   StrikethroughIcon,
@@ -15,6 +14,8 @@ import {
 import { KEYS } from "platejs";
 import { useEditorReadOnly } from "platejs/react";
 
+import { useNotesState } from "@/states/notes-state";
+import { cn } from "@/lib/utils";
 import { AIToolbarButton } from "./ai-toolbar-button";
 import { AlignToolbarButton } from "./align-toolbar-button";
 import { CommentToolbarButton } from "./comment-toolbar-button";
@@ -22,6 +23,7 @@ import { EmojiToolbarButton } from "./emoji-toolbar-button";
 import { ExportToolbarButton } from "./export-toolbar-button";
 import { FontColorToolbarButton } from "./font-color-toolbar-button";
 import { FontSizeToolbarButton } from "./font-size-toolbar-button";
+import { HighlightToolbarButton } from "./highlight-toolbar-button";
 import { RedoToolbarButton, UndoToolbarButton } from "./history-toolbar-button";
 import { ImportToolbarButton } from "./import-toolbar-button";
 import {
@@ -41,16 +43,27 @@ import { MediaToolbarButton } from "./media-toolbar-button";
 import { ModeToolbarButton } from "./mode-toolbar-button";
 import { MoreToolbarButton } from "./more-toolbar-button";
 import { TableToolbarButton } from "./table-toolbar-button";
+import { TextToDiagramToolbarButton } from "./text-to-diagram-toolbar-button";
 import { ToggleToolbarButton } from "./toggle-toolbar-button";
+import { SuggestionToolbarButton } from "./suggestion-toolbar-button";
 import { ToolbarGroup } from "./toolbar";
 import { TurnIntoToolbarButton } from "./turn-into-toolbar-button";
 
 export function FixedToolbarButtons() {
   const readOnly = useEditorReadOnly();
+  const isGenerating = useNotesState((state) => state.isGenerating);
+  const shouldHideEditingActions = readOnly && !isGenerating;
+  const isToolbarInteractionDisabled = isGenerating;
 
   return (
-    <div className="flex w-full">
-      {!readOnly && (
+    <div
+      aria-disabled={isToolbarInteractionDisabled}
+      className={cn(
+        "flex w-full",
+        isToolbarInteractionDisabled && "pointer-events-none opacity-50",
+      )}
+    >
+      {!shouldHideEditingActions && (
         <>
           <ToolbarGroup>
             <UndoToolbarButton />
@@ -61,6 +74,8 @@ export function FixedToolbarButtons() {
             <AIToolbarButton tooltip="AI commands">
               <WandSparklesIcon />
             </AIToolbarButton>
+
+            <TextToDiagramToolbarButton />
           </ToolbarGroup>
 
           <ToolbarGroup>
@@ -129,6 +144,8 @@ export function FixedToolbarButtons() {
             <LinkToolbarButton />
             <TableToolbarButton />
             <EmojiToolbarButton />
+            <CommentToolbarButton />
+            <SuggestionToolbarButton />
           </ToolbarGroup>
 
           <ToolbarGroup>
@@ -153,10 +170,7 @@ export function FixedToolbarButtons() {
       <div className="grow" />
 
       <ToolbarGroup>
-        <MarkToolbarButton nodeType={KEYS.highlight} tooltip="Highlight">
-          <HighlighterIcon />
-        </MarkToolbarButton>
-        <CommentToolbarButton />
+        <HighlightToolbarButton />
       </ToolbarGroup>
 
       <ToolbarGroup>

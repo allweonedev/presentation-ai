@@ -1,11 +1,5 @@
-import {
-  type SlateElementProps,
-  type TCaptionProps,
-  type TImageElement,
-  type TResizableProps,
-} from "platejs";
-
-import { NodeApi, SlateElement } from "platejs";
+import { type TCaptionProps, type TImageElement, type TResizableProps, NodeApi } from "platejs";
+import { type SlateElementProps, SlateElement } from "platejs/static";
 
 import { cn } from "@/lib/utils";
 
@@ -18,7 +12,7 @@ export function ImageElementStatic(
     <SlateElement {...props} className="py-2.5">
       <figure className="group relative m-0 inline-block" style={{ width }}>
         <div
-          className="relative min-w-[92px] max-w-full"
+          className="relative max-w-full min-w-[92px]"
           style={{ textAlign: align }}
         >
           {/** biome-ignore lint/performance/noImgElement: This is a valid use case */}
@@ -41,3 +35,5 @@ export function ImageElementStatic(
     </SlateElement>
   );
 }
+
+

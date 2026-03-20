@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: This use requires any */
 import React from "react";
 
 import { MarkdownPlugin } from "@platejs/markdown";
@@ -7,8 +6,7 @@ import { type AnyPluginConfig } from "platejs";
 import {
   createPlateEditor,
   type CreatePlateEditorOptions,
-  type PlateCorePlugin,
-  type TPlateEditor,
+  type PlateEditor,
 } from "platejs/react";
 
 /**
@@ -42,21 +40,13 @@ import {
  * @see {@link createSlateEditor} for a non-React version of editor creation.
  * @see {@link withPlate} for the underlying React-specific enhancement function.
  */
-export function usePlateEditor<
-  V extends Value = Value,
-  P extends AnyPluginConfig = PlateCorePlugin,
-  TEnabled extends boolean | undefined = undefined,
->(
-  options: CreatePlateEditorOptions<V, P> & {
-    enabled?: TEnabled;
+export function usePlateEditor(
+  options: CreatePlateEditorOptions<Value, AnyPluginConfig> & {
+    enabled?: boolean;
     initialMarkdown?: string;
   } = {},
   deps: React.DependencyList = [],
-): TEnabled extends false
-  ? null
-  : TEnabled extends true | undefined
-    ? TPlateEditor<V, P>
-    : TPlateEditor<V, P> | null {
+): ReturnType<typeof createPlateEditor> {
   const [, forceRender] = React.useState({});
   const isMountedRef = React.useRef(false);
 
@@ -67,16 +57,17 @@ export function usePlateEditor<
     };
   }, []);
 
-  const value = !options.initialMarkdown
-    ? options.value
-    : (editor: TPlateEditor) =>
-        editor
-          .getApi(MarkdownPlugin)
-          .markdown.deserialize(options?.initialMarkdown ?? "");
+  const value: CreatePlateEditorOptions<Value, AnyPluginConfig>["value"] =
+    !options.initialMarkdown
+      ? options.value
+      : (editor: PlateEditor) =>
+          editor
+            .getApi(MarkdownPlugin)
+            .markdown.deserialize(options.initialMarkdown ?? "", {
+              withoutMdx: true,
+            });
 
-  return React.useMemo((): any => {
-    if (options.enabled === false) return null;
-
+  return React.useMemo(() => {
     const editor = createPlateEditor({
       ...options,
       value: value,

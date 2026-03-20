@@ -70,8 +70,12 @@ export const PlaceholderElement = withHOC(
     const { openFilePicker } = useFilePicker({
       accept: currentContent!.accept,
       multiple: true,
-      onFilesSelected: ({ plainFiles: updatedFiles }) => {
+      onFilesSelected: (data) => {
+        const updatedFiles = data.plainFiles ?? [];
         const firstFile = updatedFiles[0];
+
+        if (!firstFile) return;
+
         const restFiles = updatedFiles.slice(1);
 
         replaceCurrentPlaceholder(firstFile);
@@ -139,7 +143,7 @@ export const PlaceholderElement = withHOC(
         {(!loading || !isImage) && (
           <div
             className={cn(
-              "flex cursor-pointer select-none items-center rounded-sm bg-muted p-3 pr-9 hover:bg-primary/10",
+              "flex cursor-pointer items-center rounded-sm bg-muted p-3 pr-9 select-none hover:bg-primary/10",
             )}
             onClick={() => !loading && openFilePicker()}
             contentEditable={false}
@@ -147,7 +151,7 @@ export const PlaceholderElement = withHOC(
             <div className="relative mr-3 flex text-muted-foreground/80 [&_svg]:size-6">
               {currentContent!.icon}
             </div>
-            <div className="whitespace-nowrap text-sm text-muted-foreground">
+            <div className="text-sm whitespace-nowrap text-muted-foreground">
               <div>
                 {loading ? uploadingFile?.name : currentContent!.content}
               </div>
@@ -215,7 +219,7 @@ export function ImageProgress({
         src={objectUrl}
       />
       {progress < 100 && (
-        <div className="absolute bottom-1 right-1 flex items-center space-x-2 rounded-full bg-black/50 px-1 py-0.5">
+        <div className="absolute right-1 bottom-1 flex items-center space-x-2 rounded-full bg-black/50 px-1 py-0.5">
           <Loader2Icon className="size-3.5 animate-spin text-muted-foreground" />
           <span className="text-xs font-medium text-white">
             {Math.round(progress)}%

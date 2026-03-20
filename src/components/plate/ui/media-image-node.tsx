@@ -38,6 +38,7 @@ export const ImageElement = withHOC(
                 align,
                 readOnly,
               }}
+              className={cn(!width && "w-full")}
             >
               <ResizeHandle
                 className={mediaResizeHandleVariants({ direction: "left" })}

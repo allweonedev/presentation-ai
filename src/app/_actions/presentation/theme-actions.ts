@@ -3,7 +3,7 @@
 import { utapi } from "@/app/api/uploadthing/core";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { z } from "zod";
+import * as z from "zod";
 
 // Schema for creating/updating a theme
 const themeSchema = z.object({
@@ -29,7 +29,7 @@ export async function createCustomTheme(formData: ThemeFormData) {
 
     const validatedData = themeSchema.parse(formData);
 
-    const newTheme = await db.customTheme.create({
+    const newTheme = await db.presentationTheme.create({
       data: {
         name: validatedData.name,
         description: validatedData.description,
@@ -85,7 +85,7 @@ export async function updateCustomTheme(
     const validatedData = themeSchema.parse(formData);
 
     // Verify ownership
-    const existingTheme = await db.customTheme.findUnique({
+    const existingTheme = await db.presentationTheme.findUnique({
       where: { id: themeId },
     });
 
@@ -97,7 +97,7 @@ export async function updateCustomTheme(
       return { success: false, message: "Not authorized to update this theme" };
     }
 
-    await db.customTheme.update({
+    await db.presentationTheme.update({
       where: { id: themeId },
       data: {
         name: validatedData.name,
@@ -148,7 +148,7 @@ export async function deleteCustomTheme(themeId: string) {
     }
 
     // Verify ownership
-    const existingTheme = await db.customTheme.findUnique({
+    const existingTheme = await db.presentationTheme.findUnique({
       where: { id: themeId },
     });
 
@@ -173,7 +173,7 @@ export async function deleteCustomTheme(themeId: string) {
       }
     }
 
-    await db.customTheme.delete({
+    await db.presentationTheme.delete({
       where: { id: themeId },
     });
 
@@ -203,7 +203,7 @@ export async function getUserCustomThemes() {
       };
     }
 
-    const themes = await db.customTheme.findMany({
+    const themes = await db.presentationTheme.findMany({
       where: {
         userId: session.user.id,
       },
@@ -226,12 +226,16 @@ export async function getUserCustomThemes() {
   }
 }
 
-// Get all public themes
+// Get all public themes, including like counts and user engagement flags
 export async function getPublicCustomThemes() {
   try {
-    const themes = await db.customTheme.findMany({
+    const session = await auth();
+    const userId = session?.user?.id ?? null;
+
+    const themes = await db.presentationTheme.findMany({
       where: {
         isPublic: true,
+        isAdmin: false,
       },
       orderBy: {
         createdAt: "desc",
@@ -242,12 +246,45 @@ export async function getPublicCustomThemes() {
             name: true,
           },
         },
+        _count: {
+          select: {
+            presentationThemeLikes: true,
+          },
+        },
+        presentationThemeLikes: userId
+          ? {
+              where: {
+                userId,
+              },
+              select: {
+                id: true,
+              },
+            }
+          : undefined,
+        favoritePresentationThemes: userId
+          ? {
+              where: {
+                userId,
+              },
+              select: {
+                id: true,
+              },
+            }
+          : undefined,
       },
     });
 
+    const shapedThemes = themes.map((theme) => ({
+      ...theme,
+      name: theme.name,
+      likeCount: theme._count.presentationThemeLikes,
+      isLiked: !!theme.presentationThemeLikes?.length,
+      isFavorite: !!theme.favoritePresentationThemes?.length,
+    }));
+
     return {
       success: true,
-      themes,
+      themes: shapedThemes,
     };
   } catch (error) {
     console.error("Failed to fetch public themes:", error);
@@ -263,7 +300,7 @@ export async function getPublicCustomThemes() {
 // Get a single theme by ID
 export async function getCustomThemeById(themeId: string) {
   try {
-    const theme = await db.customTheme.findUnique({
+    const theme = await db.presentationTheme.findUnique({
       where: { id: themeId },
       include: {
         user: {

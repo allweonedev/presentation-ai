@@ -48,9 +48,7 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="flex items-center justify-center py-2">
-        <div className="h-2 w-[100px] rounded-full bg-muted" />
-      </div>
+      <div className="relative z-20 mx-auto mt-4 mb-2 h-2 w-[100px] shrink-0 rounded-full bg-muted" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -86,7 +84,7 @@ const DrawerTitle = React.forwardRef<
   <DrawerPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-none tracking-tight",
+      "text-lg leading-none font-semibold tracking-tight",
       className,
     )}
     {...props}

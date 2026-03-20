@@ -6,8 +6,8 @@ import { type DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
 
 import { MarkdownPlugin } from "@platejs/markdown";
 import { ArrowUpToLineIcon } from "lucide-react";
-import { getEditorDOMFromHtmlString } from "platejs";
 import { useEditorRef } from "platejs/react";
+import { getEditorDOMFromHtmlString } from "platejs/static";
 import { useFilePicker } from "use-file-picker";
 
 import {
@@ -37,7 +37,9 @@ export function ImportToolbarButton(props: DropdownMenuProps) {
     }
 
     if (type === "markdown") {
-      return editor.getApi(MarkdownPlugin).markdown.deserialize(text);
+      return editor.getApi(MarkdownPlugin).markdown.deserialize(text, {
+        withoutMdx: true,
+      });
     }
 
     return [];
@@ -46,8 +48,13 @@ export function ImportToolbarButton(props: DropdownMenuProps) {
   const { openFilePicker: openMdFilePicker } = useFilePicker({
     accept: [".md", ".mdx"],
     multiple: false,
-    onFilesSelected: async ({ plainFiles }) => {
-      const text = await plainFiles[0].text();
+    onFilesSelected: async (data) => {
+      const selectedFile = data.plainFiles?.[0];
+      if (!selectedFile) {
+        return;
+      }
+
+      const text = await selectedFile.text();
 
       const nodes = getFileNodes(text, "markdown");
 
@@ -58,8 +65,13 @@ export function ImportToolbarButton(props: DropdownMenuProps) {
   const { openFilePicker: openHtmlFilePicker } = useFilePicker({
     accept: ["text/html"],
     multiple: false,
-    onFilesSelected: async ({ plainFiles }) => {
-      const text = await plainFiles[0].text();
+    onFilesSelected: async (data) => {
+      const selectedFile = data.plainFiles?.[0];
+      if (!selectedFile) {
+        return;
+      }
+
+      const text = await selectedFile.text();
 
       const nodes = getFileNodes(text, "html");
 
@@ -97,3 +109,5 @@ export function ImportToolbarButton(props: DropdownMenuProps) {
     </DropdownMenu>
   );
 }
+
+

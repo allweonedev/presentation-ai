@@ -1,6 +1,5 @@
-import { type SlateElementProps, type TDateElement } from "platejs";
-
-import { SlateElement } from "platejs";
+import { type TDateElement } from "platejs";
+import { type SlateElementProps, SlateElement } from "platejs/static";
 
 export function DateElementStatic(props: SlateElementProps<TDateElement>) {
   const { element } = props;
@@ -42,3 +41,5 @@ export function DateElementStatic(props: SlateElementProps<TDateElement>) {
     </SlateElement>
   );
 }
+
+

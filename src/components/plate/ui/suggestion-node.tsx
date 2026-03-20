@@ -5,14 +5,50 @@ import * as React from "react";
 import { type TSuggestionData, type TSuggestionText } from "platejs";
 import { type PlateLeafProps, type RenderNodeWrapper } from "platejs/react";
 
+import { BaseSuggestionPlugin } from "@platejs/suggestion";
+import { cva } from "class-variance-authority";
 import { CornerDownLeftIcon } from "lucide-react";
-import { PlateLeaf, useEditorPlugin, usePluginOption } from "platejs/react";
-
 import {
-  type SuggestionConfig,
-  suggestionPlugin,
-} from "@/components/plate/plugins/suggestion-kit";
+  PlateLeaf,
+  type PlatePlugin,
+  useEditorPlugin,
+  usePluginOption,
+} from "platejs/react";
+
+import { type SuggestionConfig } from "@/components/plate/plugins/suggestion-kit";
 import { cn } from "@/lib/utils";
+
+// Use BaseSuggestionPlugin cast to SuggestionConfig to avoid circular dependency
+// with suggestion-kit.tsx. Plugins are resolved by key at runtime, so this is safe.
+const suggestionPlugin =
+  BaseSuggestionPlugin as unknown as PlatePlugin<SuggestionConfig>;
+
+const suggestionVariants = cva(
+  cn(
+    "bg-emerald-100 text-emerald-700 no-underline transition-colors duration-200",
+  ),
+  {
+    defaultVariants: {
+      insertActive: false,
+      remove: false,
+      removeActive: false,
+    },
+    variants: {
+      insertActive: {
+        false: "",
+        true: "bg-emerald-200/80",
+      },
+      remove: {
+        false: "",
+        true: "bg-red-100 text-red-700",
+      },
+      removeActive: {
+        false: "",
+        true: "bg-red-200/80 no-underline",
+      },
+    },
+  },
+);
 
 export function SuggestionLeaf(props: PlateLeafProps<TSuggestionText>) {
   const { api, setOption } = useEditorPlugin(suggestionPlugin);
@@ -38,10 +74,11 @@ export function SuggestionLeaf(props: PlateLeafProps<TSuggestionText>) {
       {...props}
       as={Component}
       className={cn(
-        "bg-emerald-100 text-emerald-700 no-underline transition-colors duration-200",
-        (hasActive || hasHover) && "bg-emerald-200/80",
-        hasRemove && "bg-red-100 text-red-700",
-        (hasActive || hasHover) && hasRemove && "bg-red-200/80 no-underline",
+        suggestionVariants({
+          insertActive: hasActive || hasHover,
+          remove: hasRemove,
+          removeActive: (hasActive || hasHover) && hasRemove,
+        }),
       )}
       attributes={{
         ...props.attributes,
@@ -53,7 +90,6 @@ export function SuggestionLeaf(props: PlateLeafProps<TSuggestionText>) {
     </PlateLeaf>
   );
 }
-
 export const SuggestionLineBreak: RenderNodeWrapper<SuggestionConfig> = ({
   api,
   element,
@@ -62,24 +98,23 @@ export const SuggestionLineBreak: RenderNodeWrapper<SuggestionConfig> = ({
 
   const suggestionData = element.suggestion;
 
-  if (!suggestionData?.isLineBreak) return;
-
   return function Component({ children }) {
     return (
-      <React.Fragment>
+      <SuggestionLineBreakContent suggestionData={suggestionData}>
         {children}
-        <SuggestionLineBreakContent suggestionData={suggestionData} />
-      </React.Fragment>
+      </SuggestionLineBreakContent>
     );
   };
 };
 
 function SuggestionLineBreakContent({
+  children,
   suggestionData,
 }: {
+  children: React.ReactNode;
   suggestionData: TSuggestionData;
 }) {
-  const { type } = suggestionData;
+  const { isLineBreak, type } = suggestionData;
   const isRemove = type === "remove";
   const isInsert = type === "insert";
 
@@ -90,28 +125,48 @@ function SuggestionLineBreakContent({
   const isHover = hoverSuggestionId === suggestionData.id;
 
   const spanRef = React.useRef<HTMLSpanElement>(null);
+  const { setOption } = useEditorPlugin(suggestionPlugin);
 
   return (
-    <span
-      ref={spanRef}
-      className={cn(
-        "absolute border-b-2 border-b-brand/[.24] bg-brand/[.08] text-justify text-brand/80 no-underline transition-colors duration-200",
-        isInsert &&
-          (isActive || isHover) &&
-          "border-b-brand/[.60] bg-brand/[.13]",
-        isRemove &&
-          "border-b-gray-300 bg-gray-300/25 text-gray-400 line-through",
-        isRemove &&
-          (isActive || isHover) &&
-          "border-b-gray-500 bg-gray-400/25 text-gray-500 no-underline",
+    <>
+      {isLineBreak ? (
+        <>
+          {children}
+          <span
+            ref={spanRef}
+            className={cn(
+              "absolute text-justify",
+              suggestionVariants({
+                insertActive: isInsert && (isActive || isHover),
+                remove: isRemove,
+                removeActive: (isActive || isHover) && isRemove,
+              }),
+            )}
+            style={{
+              bottom: 3.5,
+              height: 21,
+            }}
+            contentEditable={false}
+          >
+            <CornerDownLeftIcon className="mt-0.5 size-4" />
+          </span>
+        </>
+      ) : (
+        <div
+          className={cn(
+            suggestionVariants({
+              insertActive: isInsert && (isActive || isHover),
+              remove: isRemove,
+              removeActive: (isActive || isHover) && isRemove,
+            }),
+          )}
+          onMouseEnter={() => setOption("hoverId", suggestionData.id)}
+          onMouseLeave={() => setOption("hoverId", null)}
+          data-block-suggestion="true"
+        >
+          {children}
+        </div>
       )}
-      style={{
-        bottom: 4.5,
-        height: 21,
-      }}
-      contentEditable={false}
-    >
-      <CornerDownLeftIcon className="mt-0.5 size-4" />
-    </span>
+    </>
   );
 }

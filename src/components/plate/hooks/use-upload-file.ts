@@ -8,15 +8,14 @@ import {
 import { type OurFileRouter } from "@/app/api/uploadthing/core";
 import { uploadFiles } from "@/hooks/globals/useUploadthing";
 import { toast } from "sonner";
-import { z } from "zod";
+import * as z from "zod";
 
 export type UploadedFile<T = unknown> = ClientUploadedFileData<T>;
 
-interface UseUploadFileProps
-  extends Pick<
-    UploadFilesOptions<OurFileRouter["editorUploader"]>,
-    "headers" | "onUploadBegin" | "onUploadProgress" | "skipPolling"
-  > {
+interface UseUploadFileProps extends Pick<
+  UploadFilesOptions<OurFileRouter["editorUploader"]>,
+  "headers" | "onUploadBegin" | "onUploadProgress" | "skipPolling"
+> {
   onUploadComplete?: (file: UploadedFile) => void;
   onUploadError?: (error: unknown) => void;
 }
@@ -59,7 +58,8 @@ export function useUploadFile({
 
       toast.error(message);
 
-      onUploadError?.(error);
+      // Note: We don't call onUploadError here because we'll fall back to mock upload
+      // The toast already notifies the user of the original error
 
       // Mock upload for unauthenticated users
       // toast.info('User not logged in. Mocking upload process.');

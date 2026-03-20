@@ -254,7 +254,7 @@ function ColorCustom({
                 size: "icon",
                 variant: "outline",
               }),
-              "absolute bottom-2 right-2 top-1 flex size-8 items-center justify-center rounded-full",
+              "absolute top-1 right-2 bottom-2 flex size-8 items-center justify-center rounded-full",
             )}
             onSelect={(e) => {
               e.preventDefault();

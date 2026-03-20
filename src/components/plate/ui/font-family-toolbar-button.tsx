@@ -29,7 +29,6 @@ export function FontFamilyToolbarButton() {
     [],
   );
 
-  console.log(fontFamily);
   // 2. Define the function to handle font changes from the picker.
   const handleFontChange = (font: string) => {
     if (!editor || !font) return;
@@ -48,11 +47,12 @@ export function FontFamilyToolbarButton() {
   };
 
   return (
-    <div className="w-40">
+    <div className="min-w-[150px]">
       <FontPicker
         value={handleFontChange}
         defaultValue={fontFamily}
         autoLoad={true}
+        selectClassName="border-0 h-9! py-0 bg-transparent shadow-none hover:bg-accent hover:text-accent-foreground"
       />
     </div>
   );

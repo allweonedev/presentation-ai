@@ -209,7 +209,7 @@ const ProseMirrorEditor: React.FC<ProseMirrorEditorProps> = ({
       <div
         ref={editorRef}
         className={cn(
-          "prose max-w-none dark:prose-invert focus:outline-none focus:ring-0",
+          "prose max-w-none focus:ring-0 focus:outline-hidden dark:prose-invert",
           isEditing ? "cursor-text" : "cursor-default",
           className,
         )}

@@ -192,6 +192,7 @@ interface PresentationState {
   ) => void;
   setSavingStatus: (status: "idle" | "saving" | "saved") => void;
   setIsPresenting: (isPresenting: boolean) => void;
+  resetPresentMode: () => void;
   setIsPresentingLoading: (isLoading: boolean) => void;
   setPresentingScaleLock: (slideId: string, locked: boolean) => void;
   resetPresentingScaleLocks: () => void;
@@ -715,6 +716,7 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
         ? { isPresenting: true, shouldShowExitHeader: false }
         : getPresentModeResetState(),
     ),
+  resetPresentMode: () => set(getPresentModeResetState()),
   setIsPresentingLoading: (isLoading) =>
     set({ isPresentingLoading: isLoading }),
   setPresentingScaleLock: (slideId, locked) =>

@@ -42,6 +42,7 @@ export default function PresentationPage({ readOnly = false }: { readOnly?: bool
   const isPresenting = usePresentationState((s) => s.isPresenting);
   const isReadOnly = usePresentationState((s) => s.isReadOnly);
   const setIsReadOnly = usePresentationState((s) => s.setIsReadOnly);
+  const resetPresentMode = usePresentationState((s) => s.resetPresentMode);
   const isPresentingLoading = usePresentationState(
     (s) => s.isPresentingLoading,
   );
@@ -63,6 +64,10 @@ export default function PresentationPage({ readOnly = false }: { readOnly?: bool
 
   // Track presentation history
   usePresentationHistory();
+
+  useEffect(() => {
+    resetPresentMode();
+  }, [id, resetPresentMode]);
 
   useEffect(() => {
     setIsReadOnly(readOnly);

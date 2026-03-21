@@ -7,4 +7,5 @@ export {
   getPresentModeSlideClasses,
 } from "./present-mode-styles";
 export { PresentModeHeader } from "./PresentModeHeader";
+export { PresentModePhoneOverlay } from "./PresentModePhoneOverlay";
 export { PresentModeProgressBar } from "./PresentModeProgressBar";

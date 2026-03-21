@@ -7,6 +7,7 @@ import {
 } from "@/config/slideFormats";
 import debounce from "lodash.debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { getPresentModeViewportDimensions } from "./usePresentModeOrientation";
 import { resolveAspectRatio, type SlideScalingConfig } from "./scaling";
 
 // Re-export for backward compatibility
@@ -124,7 +125,7 @@ export function useSlideContentScaling(
   // In present mode, only calculate for the active slide
 
   const [scaling, setScaling] = useState<
-    Omit<SlideScalingConfig, "scaledHeight" | "contentRef">
+    Omit<SlideScalingConfig, "scaledHeight" | "contentRef" | "contentHeight">
   >({
     scale: 1,
     slideWidth,
@@ -153,14 +154,8 @@ export function useSlideContentScaling(
     );
 
     if (isPresenting) {
-      const viewportWidth = Math.max(
-        window.innerWidth,
-        Math.round(window.visualViewport?.width ?? 0),
-      );
-      const viewportHeight = Math.max(
-        window.innerHeight,
-        Math.round(window.visualViewport?.height ?? 0),
-      );
+      const { width: viewportWidth, height: viewportHeight } =
+        getPresentModeViewportDimensions();
       const availableWidth = Math.max(1, viewportWidth);
       const widthScale = (availableWidth / slideWidth) * zoomLevel;
 
@@ -416,5 +411,11 @@ export function useSlideContentScaling(
     ? Math.max(0, Math.ceil(measuredContentHeight * (scaling.scale || 1)))
     : undefined;
 
-  return { ...scaling, scaledHeight, contentRef, isScaleLocked };
+  return {
+    ...scaling,
+    scaledHeight,
+    contentHeight: measuredContentHeight,
+    contentRef,
+    isScaleLocked,
+  };
 }

@@ -77,6 +77,7 @@ export interface SlideScalingConfig {
   slideWidth: number;
   fontSize: number;
   scaledHeight?: number;
+  contentHeight: number;
   contentRef: React.RefObject<HTMLDivElement | null>;
   minHeight?: number;
   presentFitScale: number;

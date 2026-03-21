@@ -1,6 +1,7 @@
 "use client";
 
 import { usePresentationNavigation } from "@/hooks/presentation/usePresentationNavigation";
+import { usePresentModeOrientation } from "@/hooks/presentation/usePresentModeOrientation";
 import { usePresentationSlides } from "@/hooks/presentation/usePresentationSlides";
 import { useSlideOperations } from "@/hooks/presentation/useSlideOperations";
 import { usePresentingLoadingGate } from "@/hooks/presentation/usePresentingLoadingGate";
@@ -15,7 +16,11 @@ import { Plus, Presentation } from "lucide-react";
 import { PlateController } from "platejs/react";
 import { Button } from "../../ui/button";
 import { Skeleton } from "../../ui/skeleton";
-import { PresentModeHeader, PresentModeProgressBar } from "../present-mode";
+import {
+  PresentModeHeader,
+  PresentModePhoneOverlay,
+  PresentModeProgressBar,
+} from "../present-mode";
 import { SlideItem } from "./SlideItem";
 
 interface SlidesContainerProps {
@@ -44,19 +49,22 @@ export const SlidesContainer = ({
     (s) => s.shouldShowExitHeader,
   );
 
-  // Use slideIds for rendering to prevent re-renders when slide content changes
   const { slideIds, items, sensors, handleDragStart, handleDragEnd } =
     usePresentationSlides();
   const { addFirstSlide } = useSlideOperations();
 
-  // Use the slide change watcher to automatically save changes (disabled during generation)
   useSlideChangeWatcher({
     debounceDelay: 600,
     enabled: !isGeneratingPresentation && !isReadOnly,
   });
 
-  // Handle presentation navigation (keyboard and mouse)
   usePresentationNavigation();
+  const {
+    isPhoneViewport,
+    shouldForceLandscape,
+    forcedLandscapeRotationDeg,
+  } =
+    usePresentModeOrientation(isPresenting);
 
   const slidesCount = slideIds.length;
 
@@ -123,9 +131,17 @@ export const SlidesContainer = ({
               isGeneratingPresentation={isGeneratingPresentation}
               slidesCount={slidesCount}
               isReadOnly={isReadOnly}
+              forceLandscapePresentMode={isPresenting && shouldForceLandscape}
+              forceLandscapeRotationDeg={forcedLandscapeRotationDeg}
             />
           ))}
 
+          {isPresenting && (
+            <PresentModePhoneOverlay
+              slideIds={slideIds}
+              isPhoneViewport={isPhoneViewport}
+            />
+          )}
           {isPresenting && <PresentModeProgressBar slideIds={slideIds} />}
         </PlateController>
       </SortableContext>

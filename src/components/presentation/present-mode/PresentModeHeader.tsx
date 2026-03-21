@@ -15,7 +15,7 @@ export function PresentModeHeader({
 }: PresentModeHeaderProps) {
   return (
     <div
-      className={`fixed top-0 right-0 left-0 z-1000 transition-all duration-300 ${
+      className={`fixed top-0 right-0 left-0 z-[1000] transition-all duration-300 ${
         showHeader ? "translate-y-0" : "-translate-y-full"
       }`}
     >

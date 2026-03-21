@@ -8,12 +8,10 @@ import WebcamOverlay from "@/components/notebook/presentation/recording/WebcamOv
 import { usePresentationAutoScroll } from "@/hooks/presentation/usePresentationAutoScroll";
 import { usePresentationData } from "@/hooks/presentation/usePresentationData";
 import { usePresentationHistory } from "@/hooks/presentation/usePresentationHistory";
-import { usePresentModeOrientation } from "@/hooks/presentation/usePresentModeOrientation";
 import { type ThemeProperties } from "@/lib/presentation/themes";
 import { cn } from "@/lib/utils";
 import { usePresentationRecordingState } from "@/states/presentation-recording-state";
 import { usePresentationState } from "@/states/presentation-state";
-import { RotateCw } from "lucide-react";
 import { useParams } from "next/navigation";
 import { PlateController } from "platejs/react";
 import { useEffect, useRef } from "react";
@@ -48,8 +46,6 @@ export default function PresentationPage({ readOnly = false }: { readOnly?: bool
   );
   // const activeRightPanel = usePresentationState((s) => s.activeRightPanel);
   const wantsToRecord = usePresentationRecordingState((s) => s.wantsToRecord);
-  const { shouldShowLandscapePrompt } =
-    usePresentModeOrientation(isPresenting);
   // Load presentation data
   const { isLoading, currentThemeData } = usePresentationData(id, readOnly);
 
@@ -128,22 +124,6 @@ export default function PresentationPage({ readOnly = false }: { readOnly?: bool
 
           {/* Unified Right Panel Renderer with animations */}
           {showEditPanels && <RightPanelRenderer />}
-
-          {shouldShowLandscapePrompt && (
-            <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-background/95 px-6 text-center backdrop-blur-sm lg:hidden">
-              <div className="max-w-xs space-y-4 rounded-3xl border border-border/70 bg-background/90 p-6 shadow-xl">
-                <div className="mx-auto flex size-14 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
-                  <RotateCw className="size-6" />
-                </div>
-                <div className="space-y-2">
-                  <h2 className="text-lg font-semibold">Rotate to landscape</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Presentation mode is optimized for landscape on phones.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
         </PlateController>
       </TouchAwareDndProvider>
 

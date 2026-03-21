@@ -13,6 +13,8 @@ interface SlideItemProps {
   isGeneratingPresentation: boolean;
   slidesCount: number;
   isReadOnly?: boolean;
+  forceLandscapePresentMode?: boolean;
+  forceLandscapeRotationDeg?: 90 | -90;
 }
 
 /**
@@ -24,6 +26,8 @@ export const SlideItem = React.memo(function SlideItem({
   isGeneratingPresentation,
   slidesCount,
   isReadOnly = false,
+  forceLandscapePresentMode = false,
+  forceLandscapeRotationDeg = -90,
 }: SlideItemProps) {
   // Each slide item fetches its own data - stable reference unless THIS slide changes
   const slide = usePresentationState((s) =>
@@ -43,6 +47,8 @@ export const SlideItem = React.memo(function SlideItem({
           slideWidth={slide.width}
           slidesCount={slidesCount}
           isReadOnly={isReadOnly}
+          forceLandscapePresentMode={forceLandscapePresentMode}
+          forceLandscapeRotationDeg={forceLandscapeRotationDeg}
         >
           <div
             className={cn(`slide-container-${slide.id}`)}

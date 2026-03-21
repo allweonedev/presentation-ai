@@ -44,7 +44,7 @@ export function getPresentingClasses(
   }
 
   // For presentation/fluid formats, take full width
-  return "min-h-dvh! w-full border-0";
+  return "!min-h-dvh w-full border-0";
 }
 
 /**

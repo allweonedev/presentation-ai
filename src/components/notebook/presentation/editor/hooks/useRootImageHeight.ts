@@ -4,6 +4,8 @@ import { BASE_HEIGHT } from "@/hooks/presentation/useRootImageActions";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { type PlateSlide } from "../../utils/parser";
 
+const PRESENTING_ROOT_IMAGE_MAX_VIEWPORT_RATIO = 0.5;
+
 interface UseRootImageHeightOptions {
   isPresenting: boolean;
   initialContent?: PlateSlide;
@@ -14,12 +16,14 @@ interface UseRootImageHeightReturn {
   shouldCapRootImage: boolean;
   maxRootImageHeight: number | undefined;
   presentingRootImageHeight: number | undefined;
+  presentingMaxRootImageHeight: number | undefined;
 }
 
 /**
- * Hook to cap vertical root images in edit mode so they never exceed half
- * of the slide height. With stacked editor + image layout, that means the
- * image height must not exceed the editor height.
+ * Hook to size vertical root images for edit and present modes.
+ * In edit mode, the image is capped to the editor height so it never exceeds
+ * half of the slide. In present mode, the current ratio-based sizing is
+ * preserved but the final computed height is capped to 50vh.
  */
 export function useRootImageHeight({
   isPresenting,
@@ -69,32 +73,46 @@ export function useRootImageHeight({
     isVerticalRootImageLayout,
   ]);
 
+  const presentingMaxRootImageHeight = useMemo(() => {
+    if (!isPresenting || !isVerticalRootImageLayout || !viewportHeightPx) {
+      return undefined;
+    }
+
+    return Math.round(
+      viewportHeightPx * PRESENTING_ROOT_IMAGE_MAX_VIEWPORT_RATIO,
+    );
+  }, [isPresenting, isVerticalRootImageLayout, viewportHeightPx]);
+
   const presentingRootImageHeight = useMemo(() => {
     if (
       !isPresenting ||
       !isVerticalRootImageLayout ||
-      !rootImageHeightRatio ||
+      rootImageHeightRatio === undefined ||
       !viewportHeightPx
     ) {
       return undefined;
     }
 
-    return Math.round(rootImageHeightRatio * viewportHeightPx);
+    const calculatedHeight = Math.round(rootImageHeightRatio * viewportHeightPx);
+
+    if (!presentingMaxRootImageHeight) {
+      return calculatedHeight;
+    }
+
+    return Math.min(calculatedHeight, presentingMaxRootImageHeight);
   }, [
     isPresenting,
     isVerticalRootImageLayout,
     rootImageHeightRatio,
+    presentingMaxRootImageHeight,
     viewportHeightPx,
   ]);
 
-  // Observe editor height changes
   useEffect(() => {
     if (!isVerticalRootImageLayout) {
       setEditorHeightPx(undefined);
       return;
     }
-
-    if (!shouldCapRootImage) return;
 
     const element = editorRef.current;
     if (!element || typeof ResizeObserver === "undefined") return;
@@ -117,11 +135,9 @@ export function useRootImageHeight({
       observer.disconnect();
     };
   }, [
-    shouldCapRootImage,
     isVerticalRootImageLayout,
     initialContent?.id,
     initialContent?.layoutType,
-    maxRootImageHeight,
   ]);
 
   useEffect(() => {
@@ -158,5 +174,6 @@ export function useRootImageHeight({
     shouldCapRootImage,
     maxRootImageHeight,
     presentingRootImageHeight,
+    presentingMaxRootImageHeight,
   };
 }

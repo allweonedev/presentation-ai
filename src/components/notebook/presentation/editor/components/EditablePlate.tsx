@@ -43,6 +43,7 @@ export function EditablePlate({
     shouldCapRootImage,
     maxRootImageHeight,
     presentingRootImageHeight,
+    presentingMaxRootImageHeight,
   } =
     useRootImageHeight({
       isPresenting,
@@ -95,7 +96,7 @@ export function EditablePlate({
             image={initialContent.rootImage}
             layoutType={initialContent.layoutType}
             slideId={initialContent.id}
-            maxHeightPx={shouldCapRootImage ? maxRootImageHeight : undefined}
+            maxHeightPx={shouldCapRootImage ? maxRootImageHeight : presentingMaxRootImageHeight}
             heightPx={presentingRootImageHeight}
           />
         )}

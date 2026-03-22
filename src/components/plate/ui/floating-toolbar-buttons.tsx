@@ -2,7 +2,6 @@
 
 import {
   BoldIcon,
-  Code2Icon,
   ItalicIcon,
   StrikethroughIcon,
   UnderlineIcon,
@@ -12,11 +11,21 @@ import { KEYS } from "platejs";
 import { useEditorReadOnly } from "platejs/react";
 
 import { AIToolbarButton } from "./ai-toolbar-button";
-import { InlineEquationToolbarButton } from "./equation-toolbar-button";
+import { AlignToolbarButton } from "./align-toolbar-button";
+import { CommentToolbarButton } from "./comment-toolbar-button";
+import { FontColorPickerToolbarButton } from "./font-color-picker-toolbar-button";
 import { FontFamilyToolbarButton } from "./font-family-toolbar-button";
-import { LinkToolbarButton } from "./link-toolbar-button";
+import { FontSizeToolbarButton } from "./font-size-toolbar-button";
+import { HighlightToolbarButton } from "./highlight-toolbar-button";
+import {
+  BulletedListToolbarButton,
+  NumberedListToolbarButton,
+  TodoListToolbarButton,
+} from "./list-toolbar-button";
 import { MarkToolbarButton } from "./mark-toolbar-button";
-import { MoreToolbarButton } from "./more-toolbar-button";
+import { TextCaseToolbarButton } from "./text-case-toolbar-button";
+import { TextToDiagramToolbarButton } from "./text-to-diagram-toolbar-button";
+import { SuggestionToolbarButton } from "./suggestion-toolbar-button";
 import { ToolbarGroup } from "./toolbar";
 import { TurnIntoToolbarButton } from "./turn-into-toolbar-button";
 
@@ -27,18 +36,17 @@ export function FloatingToolbarButtons() {
     <>
       {!readOnly && (
         <>
+          {/* Font Controls Group */}
           <ToolbarGroup>
-            <AIToolbarButton tooltip="AI commands">
-              <WandSparklesIcon />
-              Ask AI
-            </AIToolbarButton>
+            <FontFamilyToolbarButton />
+            <TurnIntoToolbarButton />
+            <FontSizeToolbarButton />
+            <FontColorPickerToolbarButton />
+            <TextCaseToolbarButton />
           </ToolbarGroup>
 
+          {/* Text Formatting Group */}
           <ToolbarGroup>
-            <TurnIntoToolbarButton />
-
-            <FontFamilyToolbarButton />
-
             <MarkToolbarButton nodeType={KEYS.bold} tooltip="Bold (⌘+B)">
               <BoldIcon />
             </MarkToolbarButton>
@@ -60,15 +68,26 @@ export function FloatingToolbarButtons() {
             >
               <StrikethroughIcon />
             </MarkToolbarButton>
+          </ToolbarGroup>
 
-            <MarkToolbarButton nodeType={KEYS.code} tooltip="Code (⌘+E)">
-              <Code2Icon />
-            </MarkToolbarButton>
+          {/* Lists & Quote Group */}
+          <ToolbarGroup>
+            <TodoListToolbarButton />
+            <BulletedListToolbarButton />
+            <NumberedListToolbarButton />
+            <HighlightToolbarButton />
+            <AlignToolbarButton />
+          </ToolbarGroup>
 
-            <InlineEquationToolbarButton />
+          {/* AI & Actions Group */}
+          <ToolbarGroup>
+            <AIToolbarButton tooltip="AI commands">
+              <WandSparklesIcon />
+            </AIToolbarButton>
 
-            <LinkToolbarButton />
-            {!readOnly && <MoreToolbarButton />}
+            <TextToDiagramToolbarButton />
+            <CommentToolbarButton />
+            <SuggestionToolbarButton />
           </ToolbarGroup>
         </>
       )}

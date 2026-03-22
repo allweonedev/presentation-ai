@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { ChevronDown, Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
@@ -36,6 +37,7 @@ export function FontCombobox({
   onSearchChange,
   open,
   onOpenChange,
+  className,
 }: {
   fonts: Font[];
   currentFont: Font;
@@ -45,6 +47,7 @@ export function FontCombobox({
   onSearchChange: (value: string) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  className?: string;
 }) {
   const { visibleFonts, hasMore, isLoadingMore, loadMore } = usePaginatedFonts(
     fonts,
@@ -63,13 +66,16 @@ export function FontCombobox({
   }, [inView, hasMore, isLoadingMore, loadMore]);
 
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
+    <Popover open={open} onOpenChange={onOpenChange} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="h-8 w-full justify-between border-none p-0 font-normal"
+          className={cn(
+            "h-8 w-full justify-between p-0 py-2 font-normal",
+            className,
+          )}
           data-plate-focus="true"
         >
           <div className="flex min-w-0 flex-1 items-center">
@@ -84,12 +90,12 @@ export function FontCombobox({
               />
             </FontPreviews>
           </div>
-          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronDown className="mx-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
         onMouseDown={(e) => e.stopPropagation()}
-        className="w-full p-0"
+        className="ignore-click-outside/toolbar max-h-none w-full overflow-visible p-0"
         align="start"
       >
         <Command shouldFilter={false}>
@@ -98,7 +104,7 @@ export function FontCombobox({
             value={searchValue}
             onValueChange={onSearchChange}
           />
-          <CommandList>
+          <CommandList className="max-h-none overflow-visible">
             <CommandEmpty>{noMatches}</CommandEmpty>
             <CommandGroup>
               <ScrollArea className="h-72">

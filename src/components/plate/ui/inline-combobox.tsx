@@ -226,7 +226,7 @@ const InlineComboboxInput = React.forwardRef<
     <>
       {showTrigger && trigger}
 
-      <span className="relative min-h-[1lh]">
+      <span className="relative min-h-lh">
         <span
           className="invisible overflow-hidden text-nowrap"
           aria-hidden="true"
@@ -237,7 +237,7 @@ const InlineComboboxInput = React.forwardRef<
         <Combobox
           ref={ref}
           className={cn(
-            "absolute left-0 top-0 size-full bg-transparent outline-none",
+            "absolute top-0 left-0 size-full bg-transparent outline-hidden",
             className,
           )}
           value={value}
@@ -271,7 +271,7 @@ const InlineComboboxContent: typeof ComboboxPopover = ({
 };
 
 const comboboxItemVariants = cva(
-  "relative mx-1 flex h-[28px] items-center rounded-sm px-2 text-sm text-foreground outline-none select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative mx-1 flex h-[28px] items-center rounded-sm px-2 text-sm text-foreground outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     defaultVariants: {
       interactive: true,
@@ -367,7 +367,7 @@ function InlineComboboxGroup({
     <ComboboxGroup
       {...props}
       className={cn(
-        "not-last:border-b hidden py-1.5 [&:has([role=option])]:block",
+        "hidden py-1.5 not-last:border-b [&:has([role=option])]:block",
         className,
       )}
     />
@@ -382,7 +382,7 @@ function InlineComboboxGroupLabel({
     <ComboboxGroupLabel
       {...props}
       className={cn(
-        "mb-2 mt-1.5 px-3 text-xs font-medium text-muted-foreground",
+        "mt-1.5 mb-2 px-3 text-xs font-medium text-muted-foreground",
         className,
       )}
     />

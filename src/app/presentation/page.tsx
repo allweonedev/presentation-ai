@@ -1,5 +1,7 @@
-import { PresentationDashboard } from "@/components/presentation/dashboard/PresentationDashboard";
+"use client";
 
-export default function page() {
+import { PresentationDashboard } from "@/components/notebook/presentation/components/PresentationDashboard";
+
+export default function PresentationPage() {
   return <PresentationDashboard />;
 }

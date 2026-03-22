@@ -58,7 +58,7 @@ export function TableToolbarButton(props: DropdownMenuProps) {
       >
         <DropdownMenuGroup>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="gap-2 data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+            <DropdownMenuSubTrigger className="gap-2 data-disabled:pointer-events-none data-disabled:opacity-50">
               <Grid3x3Icon className="size-4" />
               <span>Table</span>
             </DropdownMenuSubTrigger>
@@ -69,7 +69,7 @@ export function TableToolbarButton(props: DropdownMenuProps) {
 
           <DropdownMenuSub>
             <DropdownMenuSubTrigger
-              className="gap-2 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              className="gap-2 data-disabled:pointer-events-none data-disabled:opacity-50"
               disabled={!tableSelected}
             >
               <div className="size-4" />
@@ -103,7 +103,7 @@ export function TableToolbarButton(props: DropdownMenuProps) {
 
           <DropdownMenuSub>
             <DropdownMenuSubTrigger
-              className="gap-2 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              className="gap-2 data-disabled:pointer-events-none data-disabled:opacity-50"
               disabled={!tableSelected}
             >
               <div className="size-4" />
@@ -148,7 +148,7 @@ export function TableToolbarButton(props: DropdownMenuProps) {
 
           <DropdownMenuSub>
             <DropdownMenuSubTrigger
-              className="gap-2 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              className="gap-2 data-disabled:pointer-events-none data-disabled:opacity-50"
               disabled={!tableSelected}
             >
               <div className="size-4" />
@@ -234,7 +234,7 @@ function TablePicker() {
 
   return (
     <div
-      className="flex! m-0 flex-col p-0"
+      className="m-0 flex! flex-col p-0"
       onClick={() => {
         tf.insert.table(tablePicker.size, { select: true });
         editor.tf.focus();

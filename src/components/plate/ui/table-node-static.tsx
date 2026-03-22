@@ -1,13 +1,9 @@
 import type * as React from "react";
 
-import {
-  type SlateElementProps,
-  type TTableCellElement,
-  type TTableElement,
-} from "platejs";
+import { type TTableCellElement, type TTableElement } from "platejs";
+import { type SlateElementProps, SlateElement } from "platejs/static";
 
 import { BaseTablePlugin } from "@platejs/table";
-import { SlateElement } from "platejs";
 
 import { cn } from "@/lib/utils";
 
@@ -99,3 +95,5 @@ export function TableCellHeaderElementStatic(
 ) {
   return <TableCellElementStatic {...props} isHeader />;
 }
+
+

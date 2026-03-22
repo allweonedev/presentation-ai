@@ -14,6 +14,8 @@ import { cn } from "@/lib/utils";
 import debounce from "lodash.debounce";
 import { Plus } from "lucide-react";
 import React from "react";
+import { HexColorPicker } from "react-colorful";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export const DEFAULT_COLORS = [
   {
@@ -463,7 +465,7 @@ function ColorPicker({
   disabled?: boolean;
   children?: React.ReactNode;
 }) {
-  const [customColor, setCustomColor] = React.useState(value);
+  const [_, setCustomColor] = React.useState(value);
   const [localColor, setLocalColor] = React.useState(value);
 
   // Create a debounced version of onChange
@@ -495,7 +497,7 @@ function ColorPicker({
 
   return (
     <div id="color-picker">
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           {children ? (
             children
@@ -512,32 +514,44 @@ function ColorPicker({
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="start"
-          className="ignore-click-outside/toolbar h-96 overflow-y-auto p-3"
+          onWheel={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          data-design-floating-toolbar="true"
+          className="ignore-click-outside/toolbar max-h-96 overflow-y-auto p-3"
         >
           <div className="grid grid-cols-5 gap-2">
             <TooltipProvider>
               {/* Custom color picker - moved to first position */}
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="relative">
-                    <input
-                      type="color"
-                      value={customColor}
-                      onChange={(e) => {
-                        handleColorChange(e.target.value);
-                      }}
-                      className="absolute h-8 w-8 cursor-pointer opacity-0"
-                    />
-                    <button
-                      type="button"
-                      className={cn(
-                        "h-8 w-8 rounded-full border-2 border-dashed border-gray-300 bg-white",
-                        "flex items-center justify-center transition-transform hover:scale-110",
-                      )}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className={cn(
+                          "h-8 w-8 rounded-full border-2 border-dashed border-gray-300 bg-white",
+                          "flex items-center justify-center transition-transform hover:scale-110",
+                        )}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                      >
+                        <Plus className="h-4 w-4 text-gray-500" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      align="start"
+                      data-design-floating-toolbar="true"
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      className="w-auto p-4"
                     >
-                      <Plus className="h-4 w-4 text-gray-500" />
-                    </button>
-                  </div>
+                      <HexColorPicker
+                        color={localColor}
+                        onChange={handleColorChange}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </TooltipTrigger>
                 <TooltipContent>
                   <div className="font-medium">Custom color</div>
@@ -554,6 +568,8 @@ function ColorPicker({
                         localColor === color.value && "ring-2 ring-offset-2",
                       )}
                       style={{ backgroundColor: color.value }}
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
                       onClick={() => handleColorChange(color.value)}
                     >
                       <span className="sr-only">{color.name}</span>

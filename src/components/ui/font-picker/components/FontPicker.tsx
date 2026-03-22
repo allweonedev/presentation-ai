@@ -33,6 +33,7 @@ export default function FontPicker({
   fontsLoaded,
   fontsLoadedTimeout,
   className,
+  selectClassName,
   ...rest
 }: FontPickerProps) {
   const [open, setOpen] = useState(false);
@@ -138,6 +139,7 @@ export default function FontPicker({
       });
     }
 
+    console.log("fontsToLoad", fontsToLoad);
     const fontsToCheck = [...new Set([currentFont.name, ...fontsToLoad])];
 
     const checkFonts = async () => {
@@ -147,15 +149,38 @@ export default function FontPicker({
             checkLoaded({ fontFamily: font, timeout: fontsLoadedTimeout }),
           ),
         );
-        fontsLoaded(!results.some((res) => !res));
+        fontsLoaded?.(!results.some((res) => !res));
       } catch (e) {
         console.error("Error checking if font families loaded", e);
-        fontsLoaded(false);
+        fontsLoaded?.(false);
       }
     };
 
     checkFonts();
   }, [loadFonts, currentFont, fontsLoaded, fontsLoadedTimeout]);
+
+  // When acting as a loader-only component, proactively load all fonts passed in props.
+  useEffect(() => {
+    if (!loaderOnly) return;
+
+    const fontsToLoad: string[] = [];
+    if (typeof loadFonts === "string" && loadFonts) {
+      fontsToLoad.push(loadFonts);
+    } else if (Array.isArray(loadFonts)) {
+      loadFonts.forEach((font) => {
+        const fontName = typeof font === "string" ? font : font?.fontName;
+        if (fontName) fontsToLoad.push(fontName);
+      });
+    }
+
+    // De-duplicate and load each font family via Google Fonts
+    [...new Set(fontsToLoad)].forEach((fontName) => {
+      const font = getFontByName(fontName);
+      if (font) {
+        loadFontFromObject(font, loadAllVariants, getFourVariants);
+      }
+    });
+  }, [loaderOnly, loadFonts, getFontByName, loadAllVariants]);
 
   if (loaderOnly) {
     return null;
@@ -175,6 +200,7 @@ export default function FontPicker({
           onSearchChange={setSearchValue}
           open={open}
           onOpenChange={setOpen}
+          className={selectClassName}
         />
       ) : (
         <FontList

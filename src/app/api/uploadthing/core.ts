@@ -52,6 +52,19 @@ export const ourFileRouter = {
         url: file.ufsUrl,
       };
     }),
+  fontUploader: f({
+    image: { maxFileSize: "4MB" },
+    text: { maxFileSize: "2MB" },
+  })
+    .middleware(async () => {
+      const session = await auth();
+      if (!session) throw new UploadThingError("Unauthorized");
+      return { userId: session.user.id };
+    })
+    .onUploadComplete(async ({ file }) => {
+      const familyName = file.name.replace(/\.[^.]+$/, "");
+      return { familyName };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

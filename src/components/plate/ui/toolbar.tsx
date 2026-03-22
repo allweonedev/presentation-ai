@@ -11,9 +11,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuSeparator,
-} from "@/components/plate/ui/dropdown-menu";
-import { Separator } from "@/components/plate/ui/separator";
-import { Tooltip, TooltipTrigger } from "@/components/plate/ui/tooltip";
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export function Toolbar({
@@ -22,7 +22,7 @@ export function Toolbar({
 }: React.ComponentProps<typeof ToolbarPrimitive.Root>) {
   return (
     <ToolbarPrimitive.Root
-      className={cn("relative flex select-none items-center", className)}
+      className={cn("relative flex items-center select-none", className)}
       {...props}
     />
   );
@@ -276,7 +276,7 @@ export function ToolbarGroup({
     >
       <div className="flex items-center">{children}</div>
 
-      <div className="group-last/toolbar-group:hidden! mx-1.5 py-0.5">
+      <div className="mx-1.5 py-0.5 group-last/toolbar-group:hidden!">
         <Separator orientation="vertical" />
       </div>
     </div>
@@ -339,7 +339,7 @@ function TooltipContent({
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content
         className={cn(
-          "origin-(--radix-tooltip-content-transform-origin) z-50 w-fit text-balance rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground",
+          "z-50 w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md bg-primary px-3 py-1.5 text-xs text-balance text-primary-foreground",
           className,
         )}
         data-slot="tooltip-content"
@@ -378,7 +378,7 @@ export function ToolbarMenuGroup({
         )}
       >
         {label && (
-          <DropdownMenuLabel className="select-none text-xs font-semibold text-muted-foreground">
+          <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground select-none">
             {label}
           </DropdownMenuLabel>
         )}

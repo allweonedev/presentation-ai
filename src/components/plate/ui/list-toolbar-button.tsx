@@ -58,7 +58,11 @@ export function BulletedListToolbarButton() {
           <ToolbarSplitButtonSecondary />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start" alignOffset={-32}>
+        <DropdownMenuContent
+          className="ignore-click-outside/toolbar"
+          align="start"
+          alignOffset={-32}
+        >
           <DropdownMenuGroup>
             <DropdownMenuItem
               onClick={() =>
@@ -138,7 +142,11 @@ export function NumberedListToolbarButton() {
           <ToolbarSplitButtonSecondary />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start" alignOffset={-32}>
+        <DropdownMenuContent
+          className="ignore-click-outside/toolbar"
+          align="start"
+          alignOffset={-32}
+        >
           <DropdownMenuGroup>
             <DropdownMenuItem
               onSelect={() =>

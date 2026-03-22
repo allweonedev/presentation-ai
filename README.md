@@ -243,7 +243,7 @@ presentation/
 │   ├── server/               # Server-side code
 │   ├── states/               # State management
 │   ├── styles/               # Styles required in the project
-│   ├── middleware.ts         # Next.js middleware
+│   ├── proxy.ts              # Next.js proxy
 │   └── env.js                # Environment configuration
 ├── .env                       # Environment variables (not in git)
 ├── .env.example              # Example environment variables

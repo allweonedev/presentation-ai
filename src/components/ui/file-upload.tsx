@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import {
   AudioWaveform,
   File,
@@ -60,6 +61,8 @@ export default function FileUpload({
   acceptedTypes = ["pdf", "docx", "txt"],
   info,
   showUploadButton = true,
+  dropzoneMinHeightClassName = "min-h-[350px]",
+  dropzoneClassName,
 }: {
   files: File[];
   setFiles: (files: File[] | ((prevFiles: File[]) => File[])) => void;
@@ -71,6 +74,8 @@ export default function FileUpload({
   acceptedTypes?: string[];
   info?: string;
   showUploadButton?: boolean;
+  dropzoneMinHeightClassName?: string;
+  dropzoneClassName?: string;
 }) {
   const { toast } = useToast();
   const getFileIconAndColor = (file: File) => {
@@ -174,17 +179,23 @@ export default function FileUpload({
     maxFiles,
     maxSize,
     multiple,
+    onDragEnter: () => {},
+    onDragLeave: () => {},
+    onDragOver: () => {},
   });
 
   return (
-    <div className="min-h-full w-full">
-      <div className="grid min-h-[350px]">
+    <div className="min-h-full w-full max-w-full overflow-x-auto">
+      <div className={cn("grid", dropzoneMinHeightClassName)}>
         <label
           {...getRootProps()}
-          className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-primary bg-background py-6 hover:bg-muted"
+          className={cn(
+            "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-primary bg-background py-6 hover:bg-muted",
+            dropzoneClassName,
+          )}
         >
-          <div className=" text-center">
-            <div className=" mx-auto max-w-min rounded-md border p-2">
+          <div className="text-center">
+            <div className="mx-auto max-w-min rounded-md border p-2">
               <UploadCloud className="text-primary" size={20} />
             </div>
 
@@ -198,7 +209,7 @@ export default function FileUpload({
               {maxSize / 1024 / 1024} MB)
             </p>
             {info && (
-              <p className="whitespace-pre-line text-xs text-gray-500">
+              <p className="text-xs whitespace-pre-line text-gray-500">
                 {info}
               </p>
             )}
@@ -216,10 +227,10 @@ export default function FileUpload({
 
       {showUploadButton && files.length > 0 && (
         <div>
-          <ScrollArea className="max-h-52">
-            <p className="my-2 mt-6 text-sm font-medium text-muted-foreground">
-              Files to upload
-            </p>
+          <p className="my-2 mt-6 text-sm font-medium text-muted-foreground">
+            Files to upload
+          </p>
+          <ScrollArea className="max-h-48">
             <div className="space-y-2 pr-3">
               {files.map((file) => {
                 return (
@@ -234,7 +245,7 @@ export default function FileUpload({
 
                       <div className="ml-2 w-full space-y-1">
                         <div className="flex justify-between text-sm">
-                          <p className="text-muted-foreground ">
+                          <p className="text-muted-foreground">
                             {file.name.slice(0, 25)}
                           </p>
                         </div>

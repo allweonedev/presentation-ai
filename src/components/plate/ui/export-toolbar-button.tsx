@@ -6,8 +6,11 @@ import { type DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
 
 import { MarkdownPlugin } from "@platejs/markdown";
 import { ArrowDownToLineIcon } from "lucide-react";
-import { createSlateEditor, serializeHtml } from "platejs";
 import { useEditorRef } from "platejs/react";
+import {
+  createStaticEditor as createSlateEditor,
+  serializeHtml,
+} from "platejs/static";
 
 import { BaseEditorKit } from "@/components/plate/editor-base-kit";
 import {
@@ -173,3 +176,5 @@ export function ExportToolbarButton(props: DropdownMenuProps) {
     </DropdownMenu>
   );
 }
+
+

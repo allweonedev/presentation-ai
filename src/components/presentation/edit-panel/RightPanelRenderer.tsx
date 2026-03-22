@@ -26,6 +26,8 @@ import { MediaEmbedPanel } from "./sections/MediaEmbedPanel";
 import { PresentationImageEditorPanel } from "./sections/PresentationImageEditorPanel";
 import { ThemePanel } from "./sections/ThemePanel";
 
+const RIGHT_PANEL_WIDTH_PX = 416;
+
 // Panel titles and icons for panels that need our generic header
 const PANEL_INFO = {
   elements: {
@@ -140,12 +142,12 @@ export function RightPanelRenderer() {
         <motion.div
           key="right-panel"
           initial={{ width: 0, opacity: 0.5 }}
-          animate={{ width: "auto", opacity: 1 }}
+          animate={{ width: RIGHT_PANEL_WIDTH_PX, opacity: 1 }}
           exit={{ width: 0, opacity: 0.5 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="h-full"
+          className="h-full shrink-0 overflow-hidden"
         >
-          <div className="flex h-full w-104 flex-col gap-3 border-l bg-background">
+          <div className="flex h-full w-[26rem] flex-col gap-3 border-l bg-background">
             {!isSelfContained && (
               <PanelHeader panel={activeRightPanel} onClose={handleClose} />
             )}

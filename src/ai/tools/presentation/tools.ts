@@ -249,4 +249,4 @@ export type PresentationTool =
   | "regenerate_slide"
   | "create_slide"
   | "delete_slide"
-  | "exa_search_results_json";
+  | "webSearch";

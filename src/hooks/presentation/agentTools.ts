@@ -12,6 +12,32 @@ interface ToolArgs {
   [key: string]: unknown;
 }
 
+async function executeSearchTool(args: Record<string, unknown>) {
+  const query = typeof args.query === "string" ? args.query.trim() : "";
+
+  if (!query) {
+    return "Missing search query";
+  }
+
+  const response = await fetch("/api/agent/presentation/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Search tool request failed");
+  }
+
+  const data = (await response.json()) as {
+    result?: string;
+  };
+
+  return data.result ?? "Search completed";
+}
+
 function editSlideProperties(
   slidesToUpdate: string[],
   rest: Record<string, unknown>,
@@ -239,6 +265,11 @@ export async function executeToolCall({
 }): Promise<string> {
   try {
     const parsedArgs = typeof args === "string" ? JSON.parse(args) : args;
+
+    if (name === "webSearch") {
+      return executeSearchTool((parsedArgs as Record<string, unknown>) ?? {});
+    }
+
     const result = executeToolAction({
       action: name,
       ...parsedArgs,

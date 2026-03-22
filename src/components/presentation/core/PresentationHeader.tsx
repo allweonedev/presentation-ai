@@ -13,7 +13,7 @@ import { ShareButton } from "@/components/presentation/buttons/ShareButton";
 import { PresentationMenu } from "@/components/presentation/controls/PresentationMenu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Palette } from "lucide-react";
+import { Bot, Palette } from "lucide-react";
 import * as motion from "motion/react-client";
 
 interface PresentationHeaderProps {
@@ -148,6 +148,20 @@ export default function PresentationHeader({ title }: PresentationHeaderProps) {
         {isPresentationPage && !isPresenting && !isReadOnly && <ShareButton />}
 
         {/* Agent button - Only in presentation page, not outline or present mode */}
+        {isPresentationPage && !isPresenting && !isReadOnly && (
+          <Button
+            variant={activeRightPanel === "agent" ? "default" : "outline"}
+            size="sm"
+            onClick={() => {
+              setActiveRightPanel(activeRightPanel === "agent" ? null : "agent");
+            }}
+            className="gap-2"
+          >
+            <Bot className="h-4 w-4" />
+            <span className="hidden sm:inline">Agent</span>
+          </Button>
+        )}
+
         {/* Present button - Only in presentation page, not outline */}
         {isPresentationPage && <PresentButton />}
 

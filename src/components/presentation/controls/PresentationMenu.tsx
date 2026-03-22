@@ -16,6 +16,7 @@ import { usePresentationHistoryState } from "@/states/presentation-history-state
 import { usePresentationState } from "@/states/presentation-state";
 import { useMutation } from "@tanstack/react-query";
 import {
+  Bot,
   Copy,
   FileEdit,
   FolderOpen,
@@ -159,6 +160,10 @@ export function PresentationMenu({
             <DropdownMenuItem onClick={() => setActiveRightPanel("theme")}>
               <Palette className="mr-2 h-4 w-4" />
               Theme panel
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveRightPanel("agent")}>
+              <Bot className="mr-2 h-4 w-4" />
+              Agent panel
             </DropdownMenuItem>
           </>
         ) : null}

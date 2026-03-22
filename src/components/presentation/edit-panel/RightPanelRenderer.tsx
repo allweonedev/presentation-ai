@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { PresentationAgentPanel } from "../agent/PresentationAgentPanel";
 import { GlobalSettings } from "../controls/global-settings/GlobalSettings";
 import { BackgroundPanel } from "./sections/BackgroundPanel";
 import { ChartEditorPanel } from "./sections/ChartEditorPanel";
@@ -50,6 +51,7 @@ const PANEL_INFO = {
 
 // Panels that have their own complete structure (header, styling, etc.)
 const SELF_CONTAINED_PANELS: RightPanelType[] = [
+  "agent",
   "globalSettings",
   "theme",
   "imageEditor",
@@ -110,6 +112,8 @@ function PanelContent({ panel }: { panel: RightPanelType }) {
       );
     case "theme":
       return <ThemePanel />;
+    case "agent":
+      return <PresentationAgentPanel />;
     case "globalSettings":
       return <GlobalSettings />;
     case "imageEditor":

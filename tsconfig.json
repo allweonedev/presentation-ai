@@ -22,7 +22,7 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -44,7 +44,8 @@
     "next-env.d.ts",
     "src/ai/open-canvas/nodes/rewrite-artifact/index.tsx",
     "src/components/notebook/mindmap/types.tss",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

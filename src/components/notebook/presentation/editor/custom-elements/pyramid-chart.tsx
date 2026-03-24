@@ -51,7 +51,7 @@ export default function PyramidChartElement(
     <PlateElement {...props}>
       <div
         className={cn(
-          "relative mb-4 w-full rounded-lg border bg-card p-2 shadow-xs",
+          "relative mb-4 w-full rounded-lg border bg-card p-2 shadow-2xs",
         )}
         style={{
           backgroundColor: "var(--presentation-background)",

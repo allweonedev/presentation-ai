@@ -188,7 +188,7 @@ export function SlideWrapper({
           (shouldUseTallLandscapeStage
             ? "overflow-auto overscroll-contain"
             : "overflow-x-auto overflow-y-hidden overscroll-x-contain"),
-        id === currentSlideId && isPresenting && "z-[999]",
+        id === currentSlideId && isPresenting && "z-999",
       )}
       {...attributes}
     >
@@ -270,7 +270,7 @@ export function SlideWrapper({
 
               {!isPresenting && !isReadOnly && (
                 <div
-                  className="absolute top-2 left-4 z-[999999] flex opacity-0 transition-opacity duration-200 group-hover/card-container:opacity-100"
+                  className="absolute top-2 left-4 z-999999 flex opacity-0 transition-opacity duration-200 group-hover/card-container:opacity-100"
                   style={{
                     transform: `scale(${0.6 + 0.4 / scalingConfig.scale})`,
                     transformOrigin: "center center",

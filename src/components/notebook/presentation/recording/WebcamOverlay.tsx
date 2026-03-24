@@ -89,8 +89,8 @@ export function WebcamOverlay() {
         );
       }}
       className={cn(
-        "fixed z-[999999] overflow-hidden rounded-xl border border-border shadow-sm",
-        "aspect-video w-80 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/40",
+        "fixed z-999999 overflow-hidden rounded-xl border border-border shadow-xs",
+        "aspect-video w-80 bg-background/50 backdrop-blur-sm supports-backdrop-filter:bg-background/40",
       )}
     >
       <video

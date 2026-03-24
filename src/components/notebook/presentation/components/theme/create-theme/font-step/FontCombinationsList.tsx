@@ -41,7 +41,7 @@ export function FontCombinationsList({
                 <div className="text-xs text-muted-foreground">{pair.body}</div>
               </div>
               {isSelected && (
-                <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+                <Check className="h-4 w-4 shrink-0 text-primary" />
               )}
             </button>
           );

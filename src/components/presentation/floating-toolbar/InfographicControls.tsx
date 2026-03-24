@@ -343,7 +343,7 @@ export function InfographicControls() {
               {currentPaletteColors.slice(0, 3).map((color, i) => (
                 <div
                   key={i}
-                  className="h-3.5 w-3.5 rounded-full border border-background shadow-sm ring-1 ring-border/20"
+                  className="h-3.5 w-3.5 rounded-full border border-background shadow-xs ring-1 ring-border/20"
                   style={{ backgroundColor: color }}
                 />
               ))}
@@ -416,7 +416,7 @@ export function InfographicControls() {
                     >
                       <button
                         type="button"
-                        className="h-6 w-6 rounded-full border border-border shadow-sm transition-transform hover:scale-110 focus:ring-2 focus:ring-primary/50 focus:outline-none"
+                        className="h-6 w-6 rounded-full border border-border shadow-xs transition-transform hover:scale-110 focus:ring-2 focus:ring-primary/50 focus:outline-hidden"
                         style={{ backgroundColor: color }}
                         aria-label={`Color ${index + 1}`}
                       />
@@ -425,7 +425,7 @@ export function InfographicControls() {
                       <button
                         type="button"
                         onClick={() => removeCustomColor(index)}
-                        className="absolute -top-1 -right-1 hidden h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-sm group-hover:flex"
+                        className="absolute -top-1 -right-1 hidden h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-xs group-hover:flex"
                       >
                         <Minus className="h-2 w-2" />
                       </button>

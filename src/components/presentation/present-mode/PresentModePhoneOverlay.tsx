@@ -187,11 +187,11 @@ export function PresentModePhoneOverlay({
   };
 
   return createPortal(
-    <div className="pointer-events-none fixed inset-0 z-[1000]">
+    <div className="pointer-events-none fixed inset-0 z-1000">
       {useRotatedControls ? (
         <>
           <div
-            className="pointer-events-auto absolute inset-x-0 top-0 z-[2147483646] h-[24%] select-none touch-pan-x"
+            className="pointer-events-auto absolute inset-x-0 top-0 z-2147483646 h-[24%] select-none touch-pan-x"
             data-navigation-zone="top"
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
@@ -200,7 +200,7 @@ export function PresentModePhoneOverlay({
             role="button"
           />
           <div
-            className="pointer-events-auto absolute inset-x-0 bottom-0 z-[2147483646] h-[24%] select-none touch-pan-x"
+            className="pointer-events-auto absolute inset-x-0 bottom-0 z-2147483646 h-[24%] select-none touch-pan-x"
             data-navigation-zone="bottom"
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
@@ -212,7 +212,7 @@ export function PresentModePhoneOverlay({
       ) : (
         <div
           className={cn(
-            "pointer-events-auto absolute inset-0 z-[2147483646] select-none",
+            "pointer-events-auto absolute inset-0 z-2147483646 select-none",
             "touch-pan-y",
           )}
           onPointerDown={handlePointerDown}

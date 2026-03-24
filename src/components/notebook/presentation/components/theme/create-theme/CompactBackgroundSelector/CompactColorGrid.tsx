@@ -25,7 +25,7 @@ export function CompactColorGrid({
             className={cn(
               "group relative aspect-square rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md",
               selected === c.value
-                ? "z-10 scale-105 shadow-sm ring-2 ring-primary ring-offset-2 ring-offset-card"
+                ? "z-10 scale-105 shadow-xs ring-2 ring-primary ring-offset-2 ring-offset-card"
                 : "hover:ring-2 hover:ring-primary/20 hover:ring-offset-1",
             )}
             style={{ background: c.value }}
@@ -50,7 +50,7 @@ export function CompactColorGrid({
             placeholder="#000000"
           />
           <div
-            className="absolute top-1/2 left-2 size-4 -translate-y-1/2 rounded-full border border-border shadow-sm"
+            className="absolute top-1/2 left-2 size-4 -translate-y-1/2 rounded-full border border-border shadow-xs"
             style={{ background: selected ?? "#ffffff" }}
           />
         </div>

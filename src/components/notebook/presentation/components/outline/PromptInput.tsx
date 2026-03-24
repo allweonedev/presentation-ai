@@ -20,7 +20,7 @@ export function PromptInput() {
   };
 
   return (
-    <div className="rounded-2xl border border-border/60 bg-background/80 p-3 shadow-sm sm:p-4">
+    <div className="rounded-2xl border border-border/60 bg-background/80 p-3 shadow-xs sm:p-4">
       <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
           <h3 className="text-sm font-semibold text-foreground">

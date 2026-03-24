@@ -117,7 +117,7 @@ export function PresentationDashboard() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6">
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
-        <Card className="border-border/60 bg-background/70 shadow-sm">
+        <Card className="border-border/60 bg-background/70 shadow-xs">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl">
               <Sparkles className="h-6 w-6 text-primary" />
@@ -207,7 +207,7 @@ export function PresentationDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="border-border/60 bg-background/70 shadow-sm">
+        <Card className="border-border/60 bg-background/70 shadow-xs">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
               <Presentation className="h-5 w-5 text-primary" />

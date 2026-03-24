@@ -175,7 +175,7 @@ export default function LayoutImageDrop({ slideId }: { slideId: string }) {
       <div
         ref={topRef}
         className={cn(
-          "absolute top-0 right-0 left-0 z-[99999] h-12",
+          "absolute top-0 right-0 left-0 z-99999 h-12",
           isTopOver ? "bg-primary/20" : "bg-transparent",
           "transition-colors duration-200",
         )}
@@ -185,7 +185,7 @@ export default function LayoutImageDrop({ slideId }: { slideId: string }) {
       <div
         ref={leftRef}
         className={cn(
-          "absolute top-16 bottom-0 left-0 z-[99999] w-8",
+          "absolute top-16 bottom-0 left-0 z-99999 w-8",
           isLeftOver ? "bg-primary/20" : "bg-transparent",
           "transition-colors duration-200",
         )}
@@ -195,7 +195,7 @@ export default function LayoutImageDrop({ slideId }: { slideId: string }) {
       <div
         ref={rightRef}
         className={cn(
-          "absolute top-16 right-0 bottom-0 z-[99999] w-8",
+          "absolute top-16 right-0 bottom-0 z-99999 w-8",
           isRightOver ? "bg-primary/20" : "bg-transparent",
           "transition-colors duration-200",
         )}

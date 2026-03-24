@@ -171,7 +171,7 @@ export function TurnIntoToolbarButton(props: DropdownMenuProps) {
           {turnIntoItems.map(({ icon, label, value: itemValue }) => (
             <DropdownMenuRadioItem
               key={itemValue}
-              className="min-w-[180px] pl-2 [span]:first:*:hidden"
+              className="min-w-[180px] pl-2 *:first:[span]:hidden"
               value={itemValue}
             >
               <span className="pointer-events-none absolute right-2 flex size-3.5 items-center justify-center">

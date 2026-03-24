@@ -41,7 +41,7 @@ export function CompactUploadZone({
         </div>
       ) : (
         <>
-          <div className="rounded-full bg-background p-2 shadow-sm ring-1 ring-border/50">
+          <div className="rounded-full bg-background p-2 shadow-xs ring-1 ring-border/50">
             <Upload className="size-4 text-muted-foreground" />
           </div>
           <div className="space-y-0.5">

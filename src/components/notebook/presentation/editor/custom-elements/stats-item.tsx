@@ -51,7 +51,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
               }}
               onChange={(e) => handleStatChange(e.target.value)}
               onBlur={(e) => handleStatChange(e.target.value)}
-              className="w-20 border-none bg-transparent text-center text-6xl font-bold outline-none"
+              className="w-20 border-none bg-transparent text-center text-6xl font-bold outline-hidden"
               style={{
                 color: parentElement?.color || "var(--presentation-primary)",
               }}
@@ -101,7 +101,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
                 }}
                 onChange={(e) => handleStatChange(e.target.value)}
                 onBlur={(e) => handleStatChange(e.target.value)}
-                className="w-full border-none bg-transparent text-center text-2xl font-bold outline-none"
+                className="w-full border-none bg-transparent text-center text-2xl font-bold outline-hidden"
                 style={{
                   color: parentElement?.color || "var(--presentation-primary)",
                 }}
@@ -165,7 +165,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
                 }}
                 onChange={(e) => handleStatChange(e.target.value)}
                 onBlur={(e) => handleStatChange(e.target.value)}
-                className="w-full border-none bg-transparent text-center text-2xl font-bold outline-none"
+                className="w-full border-none bg-transparent text-center text-2xl font-bold outline-hidden"
                 style={{
                   color:
                     parentElement?.color ||
@@ -185,7 +185,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
                 }}
                 onChange={(e) => handleStatChange(e.target.value)}
                 onBlur={(e) => handleStatChange(e.target.value)}
-                className="w-full border-none bg-transparent text-center text-2xl font-bold outline-none"
+                className="w-full border-none bg-transparent text-center text-2xl font-bold outline-hidden"
                 style={{
                   color:
                     parentElement?.color ||
@@ -230,7 +230,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
               }}
               onChange={(e) => handleStatChange(e.target.value)}
               onBlur={(e) => handleStatChange(e.target.value)}
-              className="w-full border-none bg-transparent text-center text-2xl font-bold outline-none"
+              className="w-full border-none bg-transparent text-center text-2xl font-bold outline-hidden"
               style={{
                 color:
                   parentElement?.color ||
@@ -243,7 +243,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
       case "bar":
         return (
           <div className="flex w-full items-center gap-1">
-            <div className="h-8 w-full flex-1 border-1 border-(--presentation-smart-layout) bg-(--presentation-background)">
+            <div className="h-8 w-full flex-1 border border-(--presentation-smart-layout) bg-(--presentation-background)">
               <div
                 className="h-8 transition-all duration-300"
                 style={{
@@ -264,7 +264,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
               }}
               onChange={(e) => handleStatChange(e.target.value)}
               onBlur={(e) => handleStatChange(e.target.value)}
-              className="w-20 border-none bg-transparent text-center text-2xl font-bold outline-none"
+              className="w-20 border-none bg-transparent text-center text-2xl font-bold outline-hidden"
               style={{
                 color:
                   parentElement?.color ||
@@ -304,7 +304,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
               }}
               onChange={(e) => handleStatChange(e.target.value)}
               onBlur={(e) => handleStatChange(e.target.value)}
-              className="w-full border-none bg-transparent text-2xl font-bold outline-none"
+              className="w-full border-none bg-transparent text-2xl font-bold outline-hidden"
               style={{
                 color:
                   parentElement?.color ||
@@ -344,7 +344,7 @@ export const StatsItem = (props: PlateElementProps<TStatsItemElement>) => {
               }}
               onChange={(e) => handleStatChange(e.target.value)}
               onBlur={(e) => handleStatChange(e.target.value)}
-              className="w-full border-none bg-transparent text-2xl font-bold outline-none"
+              className="w-full border-none bg-transparent text-2xl font-bold outline-hidden"
               style={{
                 color:
                   parentElement?.color ||

@@ -14,7 +14,7 @@ export default function TableElement(props: PlateElementProps) {
       >
         <div
           className={cn(
-            "min-w-[600px] rounded-lg border bg-card p-2 shadow-xs",
+            "min-w-[600px] rounded-lg border bg-card p-2 shadow-2xs",
           )}
           style={{
             backgroundColor: "var(--presentation-card-background)",

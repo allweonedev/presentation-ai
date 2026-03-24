@@ -22,7 +22,7 @@ export function PresentModeProgressBar({
   return (
     <div
       className={cn(
-        "fixed z-[1001] !m-0",
+        "fixed z-1001 m-0!",
         shouldForceLandscape
           ? forcedLandscapeProgressSide === "right"
             ? "top-1 right-1 bottom-1"
@@ -45,7 +45,7 @@ export function PresentModeProgressBar({
               "rounded-full transition-all",
               shouldForceLandscape ? "w-full flex-1" : "h-full flex-1",
               slideId === currentSlideId
-                ? "bg-primary shadow-xs"
+                ? "bg-primary shadow-2xs"
                 : "bg-white/20 hover:bg-white/40",
             )}
             onClick={() => setCurrentSlideId(slideId)}

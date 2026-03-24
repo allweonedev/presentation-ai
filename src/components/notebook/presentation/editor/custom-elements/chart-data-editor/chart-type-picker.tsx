@@ -102,7 +102,7 @@ export function ChartTypePicker({ value, onChange }: ChartTypePickerProps) {
 
       {isOpen && (
         <div
-          className="absolute top-full left-0 z-[100] mt-1 min-w-[100px] animate-in rounded-md border bg-popover p-1 text-popover-foreground shadow-md fade-in-0 zoom-in-95"
+          className="absolute top-full left-0 z-100 mt-1 min-w-[100px] animate-in rounded-md border bg-popover p-1 text-popover-foreground shadow-md fade-in-0 zoom-in-95"
           onMouseDown={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
         >

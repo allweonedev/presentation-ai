@@ -191,7 +191,7 @@ export function ImagePreview({
       {/* Image Preview Area */}
       <div
         className={cn(
-          "relative overflow-hidden rounded-md shadow-sm transition-all duration-300",
+          "relative overflow-hidden rounded-md shadow-xs transition-all duration-300",
           currentMode === "crop" && "ring-2 ring-primary ring-offset-2",
         )}
         style={{
@@ -243,7 +243,7 @@ export function ImagePreview({
 
       {/* Floating Controls Toolbar */}
       {!hideControls && (
-        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 translate-y-2 items-center gap-2 rounded-full border bg-background/80 p-1.5 px-3 opacity-0 shadow-lg backdrop-blur-sm transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 translate-y-2 items-center gap-2 rounded-full border bg-background/80 p-1.5 px-3 opacity-0 shadow-lg backdrop-blur-xs transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
           <Button
             variant="ghost"
             size="icon"

@@ -61,7 +61,7 @@ export function ThemeModalContent({
 
   return (
     <div className="flex h-full max-h-[85vh] w-full flex-col overflow-hidden border-border bg-background lg:w-[40%] lg:border-r">
-      <div className="flex flex-shrink-0 items-center justify-between border-b border-border px-2">
+      <div className="flex shrink-0 items-center justify-between border-b border-border px-2">
         <h2 className="p-4 text-lg font-semibold">Themes</h2>
         <div className="flex items-center gap-2">
           <Button size="icon" variant="ghost" onClick={onClose}>
@@ -76,7 +76,7 @@ export function ThemeModalContent({
         onValueChange={onTabChange}
         className="flex min-h-0 flex-1 flex-col overflow-hidden"
       >
-        <div className="flex-shrink-0 px-4 pt-2">
+        <div className="shrink-0 px-4 pt-2">
           <TabsList className="h-auto w-full justify-start gap-6 rounded-none border-b border-border bg-transparent p-0">
             <TabsTrigger
               value="allweone-themes"
@@ -198,7 +198,7 @@ export function ThemeModalContent({
       </Tabs>
 
       {/* Apply Button */}
-      <div className="flex-shrink-0 border-t border-border p-4">
+      <div className="shrink-0 border-t border-border p-4">
         <Button
           onClick={onApplyTheme}
           className="w-full"

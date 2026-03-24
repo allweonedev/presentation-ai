@@ -272,7 +272,7 @@ export function ThemeCard({
             onClick={handleToggleLike}
             disabled={isPendingLike}
             className={cn(
-              "absolute top-2 left-2 z-10 flex items-center gap-1 rounded-full bg-background/90 px-2 py-1 backdrop-blur-sm transition-colors hover:bg-background/95 disabled:opacity-50",
+              "absolute top-2 left-2 z-10 flex items-center gap-1 rounded-full bg-background/90 px-2 py-1 backdrop-blur-xs transition-colors hover:bg-background/95 disabled:opacity-50",
               localIsLiked && "bg-red-50 dark:bg-red-950/30",
             )}
           >
@@ -353,7 +353,7 @@ export function ThemeCard({
               </span>
             </div>
             {isSelected && (
-              <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-purple-600">
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-600">
                 <svg
                   className="h-3 w-3 text-white"
                   fill="none"

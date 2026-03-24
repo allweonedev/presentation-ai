@@ -26,7 +26,7 @@ export function PremiumFeaturesSection() {
         >
           <div className="flex items-center gap-2">
             <span className="text-sm">Enable animations</span>
-            <span className="flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
+            <span className="flex items-center gap-1 rounded-full bg-linear-to-r from-amber-500 to-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
               <span>👑</span> PRO
             </span>
           </div>
@@ -47,7 +47,7 @@ export function PremiumFeaturesSection() {
         >
           <div className="flex items-center gap-2">
             <span className="text-sm">Remove ALLWEONE® branding</span>
-            <span className="flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
+            <span className="flex items-center gap-1 rounded-full bg-linear-to-r from-amber-500 to-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
               <span>👑</span> PRO
             </span>
           </div>

@@ -511,7 +511,7 @@ export default function RootImage({
             >
               {/* Chart/Image/Embed drop overlay */}
               {isChartOver && canDropChart && (
-                <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-primary/20 backdrop-blur-sm">
+                <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-primary/20 backdrop-blur-xs">
                   {isImageDrop ? (
                     <>
                       <ImageIcon className="h-12 w-12 text-primary" />

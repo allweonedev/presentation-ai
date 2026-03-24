@@ -117,7 +117,7 @@ export const TableElement = withHOC(
         {...props}
         className={cn(
           "overflow-x-auto py-5",
-          hasControls && "-ml-2 data-[slot=block-selection]:*:left-2",
+          hasControls && "-ml-2 *:data-[slot=block-selection]:left-2",
         )}
         style={{ paddingLeft: marginLeft }}
       >

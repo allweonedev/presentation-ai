@@ -179,7 +179,7 @@ export function SharedGenerateControls({
         {/* Generate Button - Moved up */}
         <Button
           variant="default"
-          className="h-10 w-full bg-gradient-to-r from-primary to-primary/90 text-base shadow-lg shadow-primary/20 transition-all hover:from-primary/90 hover:to-primary"
+          className="h-10 w-full bg-linear-to-r from-primary to-primary/90 text-base shadow-lg shadow-primary/20 transition-all hover:from-primary/90 hover:to-primary"
           onClick={handleGenerateClick}
           disabled={isGenerating || !newPrompt.trim()}
         >

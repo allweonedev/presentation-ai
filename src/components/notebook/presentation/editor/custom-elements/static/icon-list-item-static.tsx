@@ -28,7 +28,7 @@ export function IconListItemStatic(
         >
           <PresentationIcon
             icon={displayIcon}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border bg-transparent shadow-xs"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border bg-transparent shadow-2xs"
           />
 
           <div className={cn("min-w-0 flex-1", getAlignmentClasses(alignment))}>

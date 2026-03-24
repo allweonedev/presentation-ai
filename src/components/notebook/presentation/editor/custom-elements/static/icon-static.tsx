@@ -19,7 +19,7 @@ export function IconStatic(props: SlateElementProps<TIconElement>) {
         <div className="mb-2 p-2">
           <PresentationIcon
             icon={icon}
-            className="flex h-10 w-10 items-center justify-center rounded-md border bg-transparent! shadow-xs"
+            className="flex h-10 w-10 items-center justify-center rounded-md border bg-transparent! shadow-2xs"
           />
         </div>
       ) : null}

@@ -11,7 +11,7 @@ export default function EditingSlide({ slides = [] }: { slides: string[] }) {
     <div
       className={cn(
         "scrollbar-thumb-rounded-full scrollbar-thin flex max-w-[20rem] flex-col gap-2 overflow-y-auto scrollbar-thumb-muted-foreground scrollbar-track-transparent",
-        slides.length > 1 ? "h-80" : "h-[13.75rem]",
+        slides.length > 1 ? "h-80" : "h-55",
       )}
     >
       <h3 className="text-lg font-bold">
@@ -87,7 +87,7 @@ export function MemoizedEditingSlide({
         >
           <StaticPresentationEditor
             initialContent={slide}
-            className="min-h-[13.75rem] w-full border"
+            className="min-h-55 w-full border"
             id={`preview-${index}`}
           />
         </div>

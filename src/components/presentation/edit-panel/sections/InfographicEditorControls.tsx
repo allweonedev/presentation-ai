@@ -97,7 +97,7 @@ const InfographicPreview = memo(function InfographicPreview({
       type="button"
       onClick={onClick}
       className={cn(
-        "group relative aspect-video w-full rounded-lg border bg-card text-card-foreground shadow-sm transition-all focus:ring-2 focus:ring-primary/50 focus:outline-none",
+        "group relative aspect-video w-full rounded-lg border bg-card text-card-foreground shadow-xs transition-all focus:ring-2 focus:ring-primary/50 focus:outline-hidden",
         isSelected
           ? "border-primary ring-2 ring-primary/20"
           : "border-border hover:border-primary/50 hover:shadow-md",
@@ -121,7 +121,7 @@ const InfographicPreview = memo(function InfographicPreview({
         )}
       />
       {isSelected && (
-        <div className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm">
+        <div className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-xs">
           <Check className="h-3 w-3" />
         </div>
       )}

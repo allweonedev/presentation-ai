@@ -63,7 +63,7 @@ export function FontPickerField({
       {currentUrl ? (
         // Show custom uploaded font display
         <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 p-3">
-          <FileText className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+          <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
           <div className="min-w-0 flex-1">
             <p
               className="truncate text-sm font-medium"

@@ -113,7 +113,7 @@ export function MediaEmbedPlaceholder({
       <div className="relative flex min-h-[200px] flex-col items-center justify-center space-y-4 p-6">
         {/* Icon and title */}
         <div className="flex flex-col items-center space-y-2">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl text-3xl shadow-sm">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl text-3xl shadow-xs">
             {safeConfig.icon}
           </div>
           <div className="text-center">

@@ -224,7 +224,7 @@ export function Comment(props: {
 
         {/* Hover actions */}
         {isMyComment && (hovering || dropdownOpen) && (
-          <div className="absolute -top-0.5 right-0 flex items-center gap-0.5 rounded-md border border-border/50 bg-popover/95 p-0.5 shadow-sm backdrop-blur-sm">
+          <div className="absolute -top-0.5 right-0 flex items-center gap-0.5 rounded-md border border-border/50 bg-popover/95 p-0.5 shadow-xs backdrop-blur-xs">
             {index === 0 && (
               <button
                 className="flex size-6 items-center justify-center rounded-[5px] text-muted-foreground transition-colors hover:bg-accent hover:text-emerald-500"
@@ -633,7 +633,7 @@ export function CommentCreateForm({
               variant="comment"
               className={cn(
                 variant === "popover" &&
-                  "rounded-lg border-border/60 bg-muted/20 shadow-sm transition-colors focus-within:bg-muted/30",
+                  "rounded-lg border-border/60 bg-muted/20 shadow-xs transition-colors focus-within:bg-muted/30",
               )}
             >
               <Editor
@@ -663,7 +663,7 @@ export function CommentCreateForm({
                 className={cn(
                   "absolute top-1/2 right-1 flex size-6 -translate-y-1/2 items-center justify-center rounded-full transition-all",
                   hasContent && currentUserId
-                    ? "bg-brand text-background shadow-sm hover:opacity-90"
+                    ? "bg-brand text-background shadow-xs hover:opacity-90"
                     : "text-muted-foreground/40",
                 )}
                 disabled={!currentUserId || !hasContent}

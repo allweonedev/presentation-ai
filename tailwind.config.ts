@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import typography from "@tailwindcss/typography";
+import defaultTheme from "tailwindcss/defaultTheme.js";
+import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindScrollbar from "tailwind-scrollbar";
+import tailwindScrollbarHide from "tailwind-scrollbar-hide";
+
+const { fontFamily } = defaultTheme;
 
 const config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -138,18 +144,13 @@ const config = {
         breathing: "breathing 4s ease-in-out infinite",
         shake: "shake 0.3s ease-out",
       },
-      screens: {
-        "main-hover": {
-          raw: "(hover: hover)",
-        },
-      },
     },
   },
   plugins: [
-    require("tailwindcss-animate"),
-    require("tailwind-scrollbar"),
-    require("@tailwindcss/typography"),
-    require("tailwind-scrollbar-hide"),
+    tailwindcssAnimate,
+    tailwindScrollbar,
+    typography,
+    tailwindScrollbarHide,
   ],
 } satisfies Config;
 

@@ -23,7 +23,7 @@ export function PresentationRegenerateSlideCall({
   return (
     <div
       className={
-        "rounded-lg border bg-card shadow-xs transition-opacity" +
+        "rounded-lg border bg-card shadow-2xs transition-opacity" +
         (loading ? " opacity-60" : "")
       }
     >

@@ -121,7 +121,7 @@ export default function PresentationHeader({ title }: PresentationHeaderProps) {
               }
             }
           }}
-          className="line-clamp-1 h-auto min-w-0 flex-1 cursor-text rounded-xs border-none bg-transparent p-0 font-medium text-ellipsis shadow-none outline-none sm:max-w-96"
+          className="line-clamp-1 h-auto min-w-0 flex-1 cursor-text rounded-xs border-none bg-transparent p-0 font-medium text-ellipsis shadow-none outline-hidden sm:max-w-96"
           style={{
             appearance: "none",
           }}

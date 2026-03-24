@@ -34,9 +34,9 @@ export function CycleElementStatic(props: SlateElementProps) {
             className={cn(
               "relative size-64 place-self-center @min-4xl:col-start-2",
               !hasOddItems
-                ? "@min-4xl:row-start-1 @min-4xl:row-end-[-1]"
+                ? "@min-4xl:row-start-1 @min-4xl:-row-end-1"
                 : "@min-4xl:row-start-2",
-              totalChildren >= 5 && "@min-4xl:row-end-[-1]",
+              totalChildren >= 5 && "@min-4xl:-row-end-1",
             )}
           >
             {(() => {

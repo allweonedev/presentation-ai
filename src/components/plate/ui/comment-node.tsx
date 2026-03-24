@@ -37,7 +37,7 @@ export function CommentLeaf(props: PlateLeafProps<TCommentText>) {
         "rounded-[3px] bg-amber-200/30 text-inherit no-underline transition-colors duration-200",
         !readOnly && "bg-amber-200/45",
         !readOnly && (isHover || isActive) && "bg-amber-200/65",
-        isOverlapping && "outline outline-1 outline-amber-300/50",
+        isOverlapping && "outline-solid outline-1 outline-amber-300/50",
         !readOnly && isOverlapping && "bg-amber-200/55 outline-amber-300/70",
         (isHover || isActive) &&
           !readOnly &&

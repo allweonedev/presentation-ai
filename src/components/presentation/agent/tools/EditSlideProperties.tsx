@@ -270,7 +270,7 @@ export function PresentationEditSlidePropertiesCall({
         <div className="flex min-w-0 items-center gap-2">
           {form.bgColor ? (
             <div
-              className="h-4 w-4 rounded border shadow-xs"
+              className="h-4 w-4 rounded border shadow-2xs"
               style={{ backgroundColor: form.bgColor }}
             />
           ) : null}

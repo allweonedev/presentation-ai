@@ -292,7 +292,7 @@ export function Draggable(props: PlateElementProps) {
 
         <div
           ref={previewRef}
-          className={cn("pointer-events-none absolute -left-0 hidden w-full")}
+          className={cn("pointer-events-none absolute left-0 hidden w-full")}
           style={{ top: `${-previewTop}px` }}
           contentEditable={false}
         />

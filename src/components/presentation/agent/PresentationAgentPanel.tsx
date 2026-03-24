@@ -228,7 +228,7 @@ export function PresentationAgentPanel() {
 
   return (
     <div className="flex h-full min-w-0 flex-col bg-background">
-      <div className="flex items-center justify-between border-b p-3 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+      <div className="flex items-center justify-between border-b p-3 backdrop-blur-xs supports-backdrop-filter:bg-background/60">
         <div className="flex items-center gap-2">
           <Bot className="h-4 w-4" />
           <h2 className="text-sm font-semibold tracking-wide">Agent</h2>

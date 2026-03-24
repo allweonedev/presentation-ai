@@ -111,7 +111,7 @@ export function ThemeSelector({
 function ThemeCardSkeleton() {
   return (
     <div className="relative rounded-xl border border-border bg-card/50 p-2">
-      <Skeleton className="aspect-[4/3] w-full rounded-lg" />
+      <Skeleton className="aspect-4/3 w-full rounded-lg" />
       <div className="mt-3 space-y-2 px-2 pb-2">
         <Skeleton className="h-4 w-3/5" />
         <Skeleton className="h-3 w-2/5" />

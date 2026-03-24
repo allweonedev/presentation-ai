@@ -52,7 +52,7 @@ const ToolResultComponentMap = {
 
 function SearchCall() {
   return (
-    <div className="w-full rounded-lg border bg-card p-3 shadow-xs">
+    <div className="w-full rounded-lg border bg-card p-3 shadow-2xs">
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Loader2 className="h-4 w-4 animate-spin" />
         Searching the web...
@@ -63,7 +63,7 @@ function SearchCall() {
 
 function SearchResult({ message }: { message?: string }) {
   return (
-    <div className="rounded-lg border bg-card px-3 py-2 shadow-xs">
+    <div className="rounded-lg border bg-card px-3 py-2 shadow-2xs">
       <div className="flex items-center gap-2 text-sm">
         <Search className="h-4 w-4 text-muted-foreground" />
         <span className="line-clamp-2 text-muted-foreground">
@@ -165,7 +165,7 @@ export default function AIMessageComponent({
           />
         )}
       {text ? (
-        <div className="whitespace-pre-wrap rounded-2xl bg-muted px-3 py-2 text-sm text-foreground shadow-xs">
+        <div className="whitespace-pre-wrap rounded-2xl bg-muted px-3 py-2 text-sm text-foreground shadow-2xs">
           {text}
         </div>
       ) : null}

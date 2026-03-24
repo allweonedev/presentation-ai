@@ -177,7 +177,7 @@ export function StatsItemStatic(props: SlateElementProps<TStatsItemElement>) {
       case "bar":
         return (
           <div className="flex w-full items-center gap-1">
-            <div className="h-8 w-full flex-1 border-1 border-(--presentation-primary) bg-(--presentation-background)">
+            <div className="h-8 w-full flex-1 border border-(--presentation-primary) bg-(--presentation-background)">
               <div
                 className="h-8 transition-all duration-300"
                 style={{

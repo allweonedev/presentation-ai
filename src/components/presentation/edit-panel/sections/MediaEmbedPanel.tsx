@@ -92,7 +92,7 @@ function MediaEmbedCard({ item }: { item: MediaEmbedItem }) {
       </div>
       <div
         className={cn(
-          "flex h-14 w-14 items-center justify-center rounded-lg text-3xl shadow-sm transition-all duration-300 group-hover:scale-110",
+          "flex h-14 w-14 items-center justify-center rounded-lg text-3xl shadow-xs transition-all duration-300 group-hover:scale-110",
           "bg-muted",
         )}
       >

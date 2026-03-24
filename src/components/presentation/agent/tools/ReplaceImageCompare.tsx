@@ -90,7 +90,7 @@ function ImagePreviewCard({
 
   return (
     <div className="group relative overflow-hidden rounded-md border border-muted bg-card">
-      <div className="absolute inset-x-0 top-0 z-10 flex items-center gap-2 bg-gradient-to-b from-background/95 via-background/80 to-transparent px-3 py-2 text-xs text-muted-foreground">
+      <div className="absolute inset-x-0 top-0 z-10 flex items-center gap-2 bg-linear-to-b from-background/95 via-background/80 to-transparent px-3 py-2 text-xs text-muted-foreground">
         <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-muted px-1.5 font-medium">
           {slideNumber ?? "-"}
         </span>
@@ -99,7 +99,7 @@ function ImagePreviewCard({
         </span>
       </div>
 
-      <div className="aspect-[16/9] bg-muted/30">
+      <div className="aspect-video bg-muted/30">
         {imageUrl ? (
           // biome-ignore lint/performance/noImgElement: Dynamic image preview in compare UI
           <img
@@ -269,7 +269,7 @@ export function PresentationReplaceImageCompare({
   }
 
   return (
-    <div className="w-full max-w-[26rem]">
+    <div className="w-full max-w-104">
       <div className="grid gap-3 md:grid-cols-2">
         <div
           role="button"
@@ -281,7 +281,7 @@ export function PresentationReplaceImageCompare({
               applySlides(originalTargetSlides);
             }
           }}
-          className="group cursor-pointer text-left outline-none"
+          className="group cursor-pointer text-left outline-hidden"
         >
           <div className="mb-2 flex items-center justify-between gap-2">
             <h3 className="text-lg font-bold">Original</h3>
@@ -290,7 +290,7 @@ export function PresentationReplaceImageCompare({
               {originalTargetSlides.length === 1 ? "" : "s"}
             </span>
           </div>
-          <div className="space-y-2 rounded-md group-hover:outline group-hover:outline-primary">
+          <div className="space-y-2 rounded-md group-hover:outline-solid group-hover:outline-primary">
             {originalTargetSlides.map((slide) => (
               <ImagePreviewCard
                 key={`original-${slide.id}`}
@@ -311,7 +311,7 @@ export function PresentationReplaceImageCompare({
               applySlides(modifiedSlides);
             }
           }}
-          className="group cursor-pointer text-left outline-none"
+          className="group cursor-pointer text-left outline-hidden"
         >
           <div className="mb-2 flex items-center justify-between gap-2">
             <h3 className="text-lg font-bold">Modified</h3>
@@ -320,7 +320,7 @@ export function PresentationReplaceImageCompare({
               {modifiedSlides.length === 1 ? "" : "s"}
             </span>
           </div>
-          <div className="space-y-2 rounded-md group-hover:outline group-hover:outline-primary">
+          <div className="space-y-2 rounded-md group-hover:outline-solid group-hover:outline-primary">
             {modifiedSlides.map((slide) => (
               <ImagePreviewCard
                 key={`modified-${slide.id}`}

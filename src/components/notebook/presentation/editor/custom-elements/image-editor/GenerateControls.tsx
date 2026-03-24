@@ -111,7 +111,7 @@ export function GenerateControls({
 
       <div className="flex flex-col gap-2">
         <div className="flex justify-center">
-          <div className="relative flex size-90 items-center justify-center overflow-hidden rounded-md border bg-muted shadow-sm">
+          <div className="relative flex size-90 items-center justify-center overflow-hidden rounded-md border bg-muted shadow-xs">
             {imageDimensions ? (
               <ImagePreview
                 element={element}

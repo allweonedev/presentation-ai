@@ -209,7 +209,7 @@ export function CropModal({
                   <img
                     src={imageUrl}
                     alt=""
-                    className="h-full w-full object-fill opacity-40 grayscale-[30%]"
+                    className="h-full w-full object-fill opacity-40 grayscale-30"
                   />
                   {/* Overlay to dim it further */}
                   <div className="absolute inset-0 bg-black/70" />

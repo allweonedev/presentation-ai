@@ -61,7 +61,7 @@ export function RecordingControls() {
         drag
         dragMomentum={false}
         className={cn(
-          "fixed z-[1000]",
+          "fixed z-1000",
           "rounded-2xl border bg-background/95 backdrop-blur-md",
           "px-3 py-2.5 shadow-xl",
           "cursor-move select-none",
@@ -97,7 +97,7 @@ export function RecordingControls() {
               </PopoverTrigger>
               <PopoverContent
                 align="center"
-                className="z-[9999] w-64 rounded-xl border p-0 shadow-lg"
+                className="z-9999 w-64 rounded-xl border p-0 shadow-lg"
                 side="top"
                 sideOffset={12}
               >
@@ -122,7 +122,7 @@ export function RecordingControls() {
                         className={cn(
                           "flex w-full items-center gap-2 px-3 py-2 text-left text-sm",
                           "transition-colors hover:bg-accent",
-                          "focus-visible:bg-accent focus-visible:outline-none",
+                          "focus-visible:bg-accent focus-visible:outline-hidden",
                         )}
                         onClick={() => {
                           setSelectedVideoDevice(device.deviceId);
@@ -136,7 +136,7 @@ export function RecordingControls() {
                           selectedVideoDeviceId,
                           videoDevices,
                         ) && (
-                          <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+                          <Check className="h-4 w-4 shrink-0 text-primary" />
                         )}
                       </button>
                     ))
@@ -171,7 +171,7 @@ export function RecordingControls() {
               </PopoverTrigger>
               <PopoverContent
                 align="center"
-                className="z-[9999] w-64 rounded-xl border p-0 shadow-lg"
+                className="z-9999 w-64 rounded-xl border p-0 shadow-lg"
                 side="top"
                 sideOffset={12}
               >
@@ -196,7 +196,7 @@ export function RecordingControls() {
                         className={cn(
                           "flex w-full items-center gap-2 px-3 py-2 text-left text-sm",
                           "transition-colors hover:bg-accent",
-                          "focus-visible:bg-accent focus-visible:outline-none",
+                          "focus-visible:bg-accent focus-visible:outline-hidden",
                         )}
                         onClick={() => {
                           setSelectedAudioDevice(device.deviceId);
@@ -210,7 +210,7 @@ export function RecordingControls() {
                           selectedAudioDeviceId,
                           audioDevices,
                         ) && (
-                          <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+                          <Check className="h-4 w-4 shrink-0 text-primary" />
                         )}
                       </button>
                     ))

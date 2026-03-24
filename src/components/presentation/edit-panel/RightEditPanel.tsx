@@ -19,7 +19,7 @@ export function RightEditPanel() {
         <HelpMenu hideKeyboardShortcutsOnMobile />
       </div>
 
-      <div className="sheet-container relative hidden w-full max-w-max items-center justify-center gap-1 rounded-2xl border border-border/70 bg-background/95 px-2 py-2 shadow-lg backdrop-blur lg:flex lg:flex-1 lg:items-center lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:py-0 lg:shadow-none">
+      <div className="sheet-container relative hidden w-full max-w-max items-center justify-center gap-1 rounded-2xl border border-border/70 bg-background/95 px-2 py-2 shadow-lg backdrop-blur-sm lg:flex lg:flex-1 lg:items-center lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:py-0 lg:shadow-none">
         <div className="flex items-center gap-1 lg:absolute lg:top-1/2 lg:left-1/2 lg:flex-col lg:gap-3 lg:-translate-x-1/2 lg:-translate-y-1/2">
           <Button
             size="icon"

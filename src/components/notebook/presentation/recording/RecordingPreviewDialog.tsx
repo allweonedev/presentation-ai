@@ -25,7 +25,7 @@ export function RecordingPreviewDialog() {
 
   return (
     <Credenza open={open} onOpenChange={(v) => !v && setBlobUrl(null)}>
-      <CredenzaContent className="z-[9999] max-w-2xl">
+      <CredenzaContent className="z-9999 max-w-2xl">
         <CredenzaHeader>
           <CredenzaTitle>Recording preview</CredenzaTitle>
         </CredenzaHeader>

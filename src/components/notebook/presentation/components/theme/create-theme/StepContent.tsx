@@ -78,7 +78,7 @@ export function StepContent({
                   id="theme-name"
                   {...field}
                   placeholder="Enter a name for your theme"
-                  className="w-full rounded-lg border-2 border-border bg-background px-4 py-3 text-foreground transition-all outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
+                  className="w-full rounded-lg border-2 border-border bg-background px-4 py-3 text-foreground transition-all outline-hidden focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
                 />
               )}
             />

@@ -34,7 +34,7 @@ function TemplateCard({ template, onClick }: TemplateCardProps) {
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
-      <div className="aspect-[4/3] w-full overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-all group-hover:border-primary/50 group-hover:shadow-md">
+      <div className="aspect-4/3 w-full overflow-hidden rounded-lg border border-border bg-card shadow-xs transition-all group-hover:border-primary/50 group-hover:shadow-md">
         {template.preview}
       </div>
       <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground">

@@ -19,7 +19,7 @@ export function ThemeModalTabs({
           className={cn(
             "flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
             activeTab === "standard"
-              ? "bg-background text-foreground shadow-sm"
+              ? "bg-background text-foreground shadow-xs"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -30,7 +30,7 @@ export function ThemeModalTabs({
           className={cn(
             "flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
             activeTab === "public"
-              ? "bg-background text-foreground shadow-sm"
+              ? "bg-background text-foreground shadow-xs"
               : "text-muted-foreground hover:text-foreground",
           )}
         >

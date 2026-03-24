@@ -136,7 +136,7 @@ export function UserFontPairs({
 
                 <div className="flex items-center gap-2">
                   {isSelected && (
-                    <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+                    <Check className="h-4 w-4 shrink-0 text-primary" />
                   )}
                   <button
                     onClick={(e) => handleDelete(e, pair.id)}
@@ -145,7 +145,7 @@ export function UserFontPairs({
                       "rounded-md p-1.5 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-destructive/10 hover:text-destructive",
                       isDeleting &&
                         "animate-pulse text-destructive opacity-100",
-                      "focus:opacity-100 focus:outline-none",
+                      "focus:opacity-100 focus:outline-hidden",
                     )}
                     title="Delete font pair"
                   >

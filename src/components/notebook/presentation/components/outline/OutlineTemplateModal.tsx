@@ -46,7 +46,7 @@ function SelectableTemplateCard({
     >
       <div
         className={cn(
-          "aspect-[4/3] w-full overflow-hidden rounded-lg border bg-card shadow-sm transition-all",
+          "aspect-4/3 w-full overflow-hidden rounded-lg border bg-card shadow-xs transition-all",
           isSelected
             ? "border-primary ring-2 ring-primary/20"
             : "border-border group-hover:border-primary/50 group-hover:shadow-md",

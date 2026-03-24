@@ -174,7 +174,7 @@ function PaletteCard({
         if (el) drag(el);
       }}
       className={cn(
-        "group cursor-grab rounded-md border p-2 px-4 transition hover:shadow-sm active:cursor-grabbing",
+        "group cursor-grab rounded-md border p-2 px-4 transition hover:shadow-xs active:cursor-grabbing",
         isDragging && "opacity-50",
       )}
     >

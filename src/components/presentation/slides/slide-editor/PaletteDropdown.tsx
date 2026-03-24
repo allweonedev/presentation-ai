@@ -42,7 +42,7 @@ export function PaletteDropdown() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8! gap-1 rounded-full border border-white/20 bg-background/50 shadow-sm backdrop-blur-md transition-all hover:bg-background/80"
+          className="size-8! gap-1 rounded-full border border-white/20 bg-background/50 shadow-xs backdrop-blur-md transition-all hover:bg-background/80"
         >
           <Palette className="h-4 w-4 text-muted-foreground" />
         </Button>

@@ -34,7 +34,7 @@ export function MagicMenuDropdown() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8! gap-1 rounded-full border border-white/20 bg-background/50 shadow-sm backdrop-blur-md transition-all hover:bg-background/80"
+          className="size-8! gap-1 rounded-full border border-white/20 bg-background/50 shadow-xs backdrop-blur-md transition-all hover:bg-background/80"
         >
           <Sparkles className="h-4 w-4 text-muted-foreground" />
         </Button>
@@ -52,7 +52,7 @@ export function MagicMenuDropdown() {
               onChange={(e) => setAiInput(e.target.value)}
               onKeyDown={handleAiKeyDown}
               placeholder="How would you like to edit this card?"
-              className="flex-1 bg-transparent text-sm text-foreground placeholder-muted-foreground outline-none"
+              className="flex-1 bg-transparent text-sm text-foreground placeholder-muted-foreground outline-hidden"
             />
             <button
               onClick={() => handleAiSubmit()}

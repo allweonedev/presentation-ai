@@ -44,7 +44,7 @@ export function BackgroundSection() {
           }}
         />
         <Input
-          className="w-28 rounded border border-border bg-background px-2 py-1 text-xs focus:border-primary focus:outline-none"
+          className="w-28 rounded border border-border bg-background px-2 py-1 text-xs focus:border-primary focus:outline-hidden"
           value={hexInput}
           onChange={handleHexChange}
           placeholder="#RRGGBB"

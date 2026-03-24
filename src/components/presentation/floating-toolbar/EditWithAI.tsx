@@ -86,12 +86,12 @@ export function EditWithAI({
           {/* focus halo (no gradients) - keep your focus behavior class */}
           <div
             className={cn(
-              "absolute -inset-px rounded-xl bg-primary/20 opacity-0 blur-sm transition-opacity duration-300",
+              "absolute -inset-px rounded-xl bg-primary/20 opacity-0 blur-xs transition-opacity duration-300",
               "group-focus-within:opacity-100",
             )}
           />
 
-          <div className="relative overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm">
+          <div className="relative overflow-hidden rounded-xl border border-border/60 bg-card shadow-xs">
             <textarea
               ref={inputRef}
               value={prompt}
@@ -101,7 +101,7 @@ export function EditWithAI({
               disabled={isLoading}
               className={cn(
                 "max-h-[140px] min-h-[72px] w-full resize-none bg-transparent px-3 py-2.5 text-sm",
-                "placeholder:text-muted-foreground/60 focus:outline-none",
+                "placeholder:text-muted-foreground/60 focus:outline-hidden",
                 "disabled:cursor-not-allowed disabled:opacity-50",
               )}
               rows={3}
@@ -124,7 +124,7 @@ export function EditWithAI({
                 className={cn(
                   "h-7 w-7 rounded-lg transition-all duration-200",
                   prompt.trim() && !isLoading
-                    ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+                    ? "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
                     : "text-muted-foreground hover:text-foreground",
                 )}
                 disabled={!prompt.trim() || isLoading}
@@ -189,7 +189,7 @@ export function EditWithAI({
                     "flex items-center gap-2 rounded-lg px-3 py-2 text-left transition-all duration-200",
                     "border border-transparent bg-muted/30 hover:border-border/50 hover:bg-muted",
                     "text-xs font-medium text-muted-foreground hover:text-foreground",
-                    "hover:shadow-sm",
+                    "hover:shadow-xs",
                     "active:scale-[0.99]",
                   )}
                 >

@@ -100,7 +100,7 @@ export const SlidesContainer = ({
             slidesCount === 0 &&
             !isReadOnly && (
             <div className="mx-auto w-full max-w-5xl">
-              <div className="relative flex aspect-video w-full flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-background/85 p-8 text-center shadow-sm">
+              <div className="relative flex aspect-video w-full flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-background/85 p-8 text-center shadow-xs">
                 <div className="absolute inset-5 rounded-xl border border-dashed border-border/50" />
                 <div className="relative z-10 flex flex-col items-center gap-4">
                   <span className="rounded-full border border-border/70 bg-muted/70 p-3">

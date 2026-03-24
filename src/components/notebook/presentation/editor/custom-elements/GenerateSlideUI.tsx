@@ -101,7 +101,7 @@ export function GenerateSlideUI({ slideId, onClose }: GenerateSlideUIProps) {
             </motion.p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-5">
+              <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-xs backdrop-blur-sm dark:border-white/10 dark:bg-white/5 sm:p-5">
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-medium text-slate-500 dark:text-white/60">
@@ -180,7 +180,7 @@ export function GenerateSlideUI({ slideId, onClose }: GenerateSlideUIProps) {
                   onKeyDown={handleKeyDown}
                   placeholder="Describe what you want on this slide..."
                   rows={3}
-                  className="mt-4 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:border-slate-300 focus:outline-none focus:ring-0 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40 dark:focus:border-white/30"
+                  className="mt-4 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-slate-300 focus:outline-hidden focus:ring-0 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40 dark:focus:border-white/30"
                 />
               </div>
 
@@ -188,7 +188,7 @@ export function GenerateSlideUI({ slideId, onClose }: GenerateSlideUIProps) {
                 <motion.button
                   type="submit"
                   disabled={!prompt.trim()}
-                  className="flex items-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                  className="flex items-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-4 py-2.5 text-sm font-medium text-white shadow-xs transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}

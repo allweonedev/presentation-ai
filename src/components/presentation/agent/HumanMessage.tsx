@@ -104,7 +104,7 @@ export default function HumanMessageComponent({
         </div>
       ) : null}
 
-      <div className="w-full max-w-[80%] overflow-x-auto rounded-2xl bg-primary px-3 py-2 text-sm text-primary-foreground shadow-xs">
+      <div className="w-full max-w-[80%] overflow-x-auto rounded-2xl bg-primary px-3 py-2 text-sm text-primary-foreground shadow-2xs">
         {sanitizeHumanMessage(textContent)}
       </div>
 

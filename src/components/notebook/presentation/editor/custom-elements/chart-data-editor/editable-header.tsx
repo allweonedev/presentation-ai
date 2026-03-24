@@ -54,7 +54,7 @@ export function EditableHeader({
   return (
     <div className="group flex items-center gap-1">
       <div
-        className="h-4 w-2 flex-shrink-0 rounded-sm"
+        className="h-4 w-2 shrink-0 rounded-sm"
         style={{ backgroundColor: `hsl(var(--chart-${(colorIndex % 5) + 1}))` }}
       />
       {showChartTypePicker && onChartTypeChange && (
@@ -66,7 +66,7 @@ export function EditableHeader({
         onBlur={handleBlur}
         onFocus={() => setIsEditing(true)}
         onKeyDown={handleKeyDown}
-        className={`h-6 min-w-0 flex-1 border-0 bg-transparent px-1 text-xs font-semibold outline-none ${isEditing ? "bg-background ring-1 ring-primary" : ""} truncate focus:bg-background focus:ring-1 focus:ring-primary`}
+        className={`h-6 min-w-0 flex-1 border-0 bg-transparent px-1 text-xs font-semibold outline-hidden ${isEditing ? "bg-background ring-1 ring-primary" : ""} truncate focus:bg-background focus:ring-1 focus:ring-primary`}
         placeholder="Series"
       />
       {canRemove && (

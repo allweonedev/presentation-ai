@@ -92,7 +92,7 @@ export function ChartRenderer({
   const primaryColor = (chartOptions.color as string) ?? getChartColor(0);
 
   const containerClass = cn(
-    "h-full w-full rounded-lg border bg-card p-2 shadow-xs",
+    "h-full w-full rounded-lg border bg-card p-2 shadow-2xs",
     className,
   );
   const containerStyle: React.CSSProperties = {

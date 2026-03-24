@@ -21,7 +21,7 @@ export function ThemeModalPreview({
   return (
     <div className="hidden h-[calc(85vh)] w-[60%] flex-col overflow-y-auto bg-muted/30 lg:flex">
       {/* Preview Header */}
-      <div className="flex flex-shrink-0 items-center justify-between gap-3 border-b border-border p-4">
+      <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border p-4">
         <h2 className="text-lg font-semibold">Preview</h2>
       </div>
 

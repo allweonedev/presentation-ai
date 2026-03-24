@@ -21,7 +21,7 @@ const boxItemVariants = cva(
         icon: "bg-opacity-60 gap-3 bg-(--presentation-card-background)",
         solid: "bg-opacity-100 border-0 bg-(--presentation-card-background)",
         sideline:
-          "border-t-1 border-r-1 border-b-1 border-l-5 border-y-primary border-r-primary border-l-(--presentation-card-background)",
+          "border-t border-r border-b border-l-5 border-y-primary border-r-primary border-l-(--presentation-card-background)",
         joined: "rounded-none!",
         leaf: "rounded-none rounded-tl-lg! rounded-br-lg!",
       },

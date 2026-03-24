@@ -31,7 +31,7 @@ export function GridCell({
       onChange={(e) => onUpdate(e.target.value)}
       onKeyDown={onKeyDown}
       onFocus={onFocus}
-      className={`h-8 w-full border-0 bg-transparent px-2 py-1 text-sm outline-none ${type === "number" ? "text-right font-mono tabular-nums" : "text-left"} ${isFocused ? "bg-primary/5 ring-2 ring-primary ring-inset" : ""} [appearance:textfield] placeholder:text-muted-foreground/50 focus:bg-primary/5 focus:ring-2 focus:ring-primary focus:ring-inset [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+      className={`h-8 w-full border-0 bg-transparent px-2 py-1 text-sm outline-hidden ${type === "number" ? "text-right font-mono tabular-nums" : "text-left"} ${isFocused ? "bg-primary/5 ring-2 ring-primary ring-inset" : ""} [appearance:textfield] placeholder:text-muted-foreground/50 focus:bg-primary/5 focus:ring-2 focus:ring-primary focus:ring-inset [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
       placeholder={placeholder}
     />
   );

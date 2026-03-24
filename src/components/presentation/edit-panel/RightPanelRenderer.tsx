@@ -151,7 +151,7 @@ export function RightPanelRenderer() {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="h-full shrink-0 overflow-hidden"
         >
-          <div className="flex h-full w-[26rem] flex-col gap-3 border-l bg-background">
+          <div className="flex h-full w-104 flex-col gap-3 border-l bg-background">
             {!isSelfContained && (
               <PanelHeader panel={activeRightPanel} onClose={handleClose} />
             )}

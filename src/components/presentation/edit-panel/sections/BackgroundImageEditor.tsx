@@ -117,7 +117,7 @@ export function BackgroundImageEditor({
       )}
 
       {previewUrl && imageMode !== "upload-url" && (
-        <div className="sticky right-0 bottom-0 left-0 z-10 mt-auto border-t bg-background/80 p-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="sticky right-0 bottom-0 left-0 z-10 mt-auto border-t bg-background/80 p-2 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
           <div className="flex gap-2">
             <Button className="flex-1" onClick={applyUrl}>
               Apply Selected

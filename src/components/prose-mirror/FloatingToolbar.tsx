@@ -144,7 +144,7 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
 
   return (
     <div
-      className="floating-toolbar absolute z-50 flex w-fit items-center gap-1 rounded-md border bg-background/95 p-1 shadow-md backdrop-blur-sm supports-backdrop-filter:bg-background/80"
+      className="floating-toolbar absolute z-50 flex w-fit items-center gap-1 rounded-md border bg-background/95 p-1 shadow-md backdrop-blur-xs supports-backdrop-filter:bg-background/80"
       style={{
         top: 0,
         left: 0,

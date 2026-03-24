@@ -48,7 +48,7 @@ export default function CompareGroup(props: PlateElementProps) {
             >
               <div
                 className={cn(
-                  "grid h-12 w-12 place-items-center rounded-full text-sm font-bold shadow-xs",
+                  "grid h-12 w-12 place-items-center rounded-full text-sm font-bold shadow-2xs",
                 )}
                 style={{
                   backgroundColor:

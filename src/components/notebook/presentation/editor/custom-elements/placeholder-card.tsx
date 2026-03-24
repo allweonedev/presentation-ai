@@ -184,7 +184,7 @@ function TemplateButton({
   return (
     <motion.button
       onClick={onClick}
-      className="group relative flex h-24 w-28 flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card/50 backdrop-blur-sm transition-all hover:border-sidebar-accent-foreground/20 hover:bg-sidebar-accent"
+      className="group relative flex h-24 w-28 flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card/50 backdrop-blur-xs transition-all hover:border-sidebar-accent-foreground/20 hover:bg-sidebar-accent"
       whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}

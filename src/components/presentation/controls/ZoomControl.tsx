@@ -40,7 +40,7 @@ export function ZoomControl() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-8 rounded-full border-1 border-primary/10 px-2 text-xs"
+          className="h-8 rounded-full border border-primary/10 px-2 text-xs"
         >
           {displayPercentage}%
         </Button>

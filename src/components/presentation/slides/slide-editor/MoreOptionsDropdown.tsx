@@ -26,7 +26,7 @@ export function MoreOptionsDropdown() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8! cursor-grab rounded-full border border-white/20 bg-background/50 shadow-sm backdrop-blur-md transition-all hover:bg-background/80"
+          className="size-8! cursor-grab rounded-full border border-white/20 bg-background/50 shadow-xs backdrop-blur-md transition-all hover:bg-background/80"
           {...dragListeners}
           onClick={() => setIsMenuOpen(true)}
         >

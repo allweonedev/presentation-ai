@@ -235,7 +235,7 @@ export function SharedImageSearchControls({
                               }
                             }}
                             className={cn(
-                              "aspect-square w-full overflow-hidden rounded-md border transition-all hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:outline-none",
+                              "aspect-square w-full overflow-hidden rounded-md border transition-all hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:outline-hidden",
                               selectedUrl === r.url
                                 ? "border-primary ring-2 ring-primary ring-offset-1"
                                 : "border-transparent hover:border-primary/50",
@@ -306,7 +306,7 @@ export function SharedImageSearchControls({
                               onImageSelect(r.url);
                             }}
                             className={cn(
-                              "aspect-square w-full overflow-hidden rounded-md border transition-all hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:outline-none",
+                              "aspect-square w-full overflow-hidden rounded-md border transition-all hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:outline-hidden",
                               selectedUrl === r.url
                                 ? "border-primary ring-2 ring-primary ring-offset-1"
                                 : "border-transparent hover:border-primary/50",

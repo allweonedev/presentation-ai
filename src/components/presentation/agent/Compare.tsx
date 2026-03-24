@@ -42,11 +42,11 @@ export default function Compare({
 
   return (
     <div
-      className="scrollbar-thumb-rounded-full relative h-full max-h-[13.75rem] w-full max-w-[26rem] overflow-x-clip overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-transparent"
+      className="scrollbar-thumb-rounded-full relative h-full max-h-55 w-full max-w-104 overflow-x-clip overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-transparent"
       onScroll={handleScroll}
     >
       <div
-        className={`pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-transparent to-background transition-opacity duration-150 ${isScrolling ? "opacity-0" : "opacity-100"}`}
+        className={`pointer-events-none absolute inset-0 z-10 bg-linear-to-b from-transparent to-background transition-opacity duration-150 ${isScrolling ? "opacity-0" : "opacity-100"}`}
       />
 
       <div className="flex h-max gap-2">
@@ -69,7 +69,7 @@ export default function Compare({
           }}
         >
           <h3 className="text-lg font-bold">Original</h3>
-          <div className="pointer-events-none space-y-2 rounded-md group-hover:outline group-hover:outline-primary">
+          <div className="pointer-events-none space-y-2 rounded-md group-hover:outline-solid group-hover:outline-primary">
             {left.map((slide, index) => (
               <SlideThumbnail
                 key={slide.id}
@@ -108,7 +108,7 @@ export default function Compare({
           }}
         >
           <h3 className="text-lg font-bold">Modified</h3>
-          <div className="space-y-2 rounded-md group-hover:outline group-hover:outline-primary">
+          <div className="space-y-2 rounded-md group-hover:outline-solid group-hover:outline-primary">
             {right.map((slide, index) => (
               <SlideThumbnail
                 key={slide.id}

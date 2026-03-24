@@ -174,28 +174,28 @@ export function LargeBulletsPreview() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-1 p-3">
       <div className="flex w-full items-center gap-2">
-        <div className="mt-0.5 size-3.5 flex-shrink-0 rounded bg-muted-foreground/40" />
+        <div className="mt-0.5 size-3.5 shrink-0 rounded bg-muted-foreground/40" />
         <div className="w-full space-y-0.5">
           <div className="h-1.5 rounded bg-muted-foreground/20" />
           <div className="h-1 w-5/6 rounded bg-muted-foreground/20" />
         </div>
       </div>
       <div className="flex w-full items-center gap-2">
-        <div className="mt-0.5 size-3.5 flex-shrink-0 rounded bg-muted-foreground/40" />
+        <div className="mt-0.5 size-3.5 shrink-0 rounded bg-muted-foreground/40" />
         <div className="w-full space-y-0.5">
           <div className="h-1.5 rounded bg-muted-foreground/20" />
           <div className="h-1 w-5/6 rounded bg-muted-foreground/20" />
         </div>
       </div>
       <div className="flex w-full items-center gap-2">
-        <div className="mt-0.5 size-3.5 flex-shrink-0 rounded bg-muted-foreground/40" />
+        <div className="mt-0.5 size-3.5 shrink-0 rounded bg-muted-foreground/40" />
         <div className="w-full space-y-0.5">
           <div className="h-1.5 rounded bg-muted-foreground/20" />
           <div className="h-1 w-5/6 rounded bg-muted-foreground/20" />
         </div>
       </div>
       <div className="flex w-full items-center gap-2">
-        <div className="mt-0.5 size-3.5 flex-shrink-0 rounded bg-muted-foreground/40" />
+        <div className="mt-0.5 size-3.5 shrink-0 rounded bg-muted-foreground/40" />
         <div className="w-full space-y-0.5">
           <div className="h-1.5 rounded bg-muted-foreground/20" />
           <div className="h-1 w-5/6 rounded bg-muted-foreground/20" />
@@ -210,7 +210,7 @@ export function SmallBulletsPreview() {
     <div className="flex h-full w-full flex-col items-center justify-center space-y-1 p-3">
       {[1, 2, 3, 4].map((i) => (
         <div key={i} className="flex w-full items-center gap-1.5">
-          <div className="mt-0.5 size-1.5 flex-shrink-0 rounded-full bg-muted-foreground/40" />
+          <div className="mt-0.5 size-1.5 shrink-0 rounded-full bg-muted-foreground/40" />
           <div className="w-full space-y-0.5">
             <div className="h-1 flex-1 rounded bg-muted-foreground/20" />
             <div className="h-0.5 w-5/6 flex-1 rounded bg-muted-foreground/20" />
@@ -560,7 +560,7 @@ export function ArrowBulletsPreview() {
     <div className="flex h-full w-full flex-col items-center justify-center gap-1 p-3">
       <div className="flex w-full items-center gap-2">
         <svg
-          className="size-3.5 flex-shrink-0"
+          className="size-3.5 shrink-0"
           viewBox="0 0 155.139 155.139"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -576,7 +576,7 @@ export function ArrowBulletsPreview() {
       </div>
       <div className="flex w-full items-center gap-2">
         <svg
-          className="size-3.5 flex-shrink-0"
+          className="size-3.5 shrink-0"
           viewBox="0 0 155.139 155.139"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -592,7 +592,7 @@ export function ArrowBulletsPreview() {
       </div>
       <div className="flex w-full items-center gap-2">
         <svg
-          className="size-3.5 flex-shrink-0"
+          className="size-3.5 shrink-0"
           viewBox="0 0 155.139 155.139"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -608,7 +608,7 @@ export function ArrowBulletsPreview() {
       </div>
       <div className="flex w-full items-center gap-2">
         <svg
-          className="size-3.5 flex-shrink-0"
+          className="size-3.5 shrink-0"
           viewBox="0 0 155.139 155.139"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -632,7 +632,7 @@ export function ProcessStepsPreview() {
       <div className="w-full space-y-1.5">
         {[1, 2, 3].map((i) => (
           <div key={i} className="flex items-start gap-1.5">
-            <div className="flex h-3 w-3 flex-shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
+            <div className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
               <div className="h-1 w-1 rounded-full bg-muted-foreground" />
             </div>
             <div className="mt-1 h-1 flex-1 rounded bg-muted-foreground/20" />
@@ -649,7 +649,7 @@ export function SolidBoxSmallBulletsPreview() {
       <div className="w-full space-y-1">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="flex items-start gap-1.5">
-            <div className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 bg-muted-foreground/40" />
+            <div className="mt-0.5 h-1.5 w-1.5 shrink-0 bg-muted-foreground/40" />
             <div className="h-1 flex-1 rounded bg-muted-foreground/20" />
           </div>
         ))}
@@ -877,7 +877,7 @@ export function TimelineSequencePreview() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="h-3 w-3 rounded-full border-2 border-background bg-muted-foreground shadow"
+              className="h-3 w-3 rounded-full border-2 border-background bg-muted-foreground shadow-sm"
             />
           ))}
         </div>
@@ -926,10 +926,10 @@ export function ArrowsSequencePreview() {
     <div className="flex h-full w-full items-center justify-center p-4">
       <div className="flex w-full items-center justify-center gap-1">
         <div className="relative flex h-8 flex-1 items-center justify-end bg-muted-foreground/20 pr-2">
-          <div className="absolute -right-2 h-0 w-0 border-t-[16px] border-b-[16px] border-l-[8px] border-t-transparent border-b-transparent border-l-muted-foreground/20" />
+          <div className="absolute -right-2 h-0 w-0 border-t-16 border-b-16 border-l-8 border-t-transparent border-b-transparent border-l-muted-foreground/20" />
         </div>
         <div className="relative flex h-8 flex-1 items-center justify-end bg-muted-foreground/20 pr-2">
-          <div className="absolute -right-2 h-0 w-0 border-t-[16px] border-b-[16px] border-l-[8px] border-t-transparent border-b-transparent border-l-muted-foreground/20" />
+          <div className="absolute -right-2 h-0 w-0 border-t-16 border-b-16 border-l-8 border-t-transparent border-b-transparent border-l-muted-foreground/20" />
         </div>
         <div className="h-8 flex-1 bg-muted-foreground/20" />
       </div>
@@ -1928,19 +1928,19 @@ export function StepsWithIconsPreview() {
   return (
     <div className="h-full w-full space-y-1.5 p-3">
       <div className="flex items-center gap-2">
-        <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
+        <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
           <div className="h-1.5 w-1.5 rounded-sm bg-muted-foreground" />
         </div>
         <div className="h-1 flex-1 rounded bg-muted" />
       </div>
       <div className="flex items-center gap-2">
-        <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
+        <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
           <div className="h-1.5 w-1.5 rounded-sm bg-muted-foreground" />
         </div>
         <div className="h-1 flex-1 rounded bg-muted" />
       </div>
       <div className="flex items-center gap-2">
-        <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
+        <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-muted-foreground/20">
           <div className="h-1.5 w-1.5 rounded-sm bg-muted-foreground" />
         </div>
         <div className="h-1 flex-1 rounded bg-muted" />
@@ -2289,7 +2289,7 @@ export function BulletsCollectionPreview() {
     <div className="grid h-full w-full place-items-center space-y-1 p-3">
       {[1, 2, 3].map((i) => (
         <div key={i} className="flex items-start gap-1.5">
-          <div className="mt-0.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground/40" />
+          <div className="mt-0.5 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/40" />
           <div className="h-1 flex-1 rounded bg-muted-foreground/20" />
         </div>
       ))}

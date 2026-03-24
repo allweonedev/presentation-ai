@@ -119,7 +119,7 @@ export function CompactBackgroundSelector({
       <div className="min-h-[200px]">
         {activeType === "solid" && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+            <div className="rounded-xl border border-border bg-card p-4 shadow-xs">
               <CompactColorGrid
                 selected={value?.override}
                 onPick={handleSolidColorChange}
@@ -130,7 +130,7 @@ export function CompactBackgroundSelector({
 
         {activeType === "gradient" && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+            <div className="rounded-xl border border-border bg-card p-4 shadow-xs">
               <CompactGradientGrid onPick={handleGradientChange} />
             </div>
           </div>

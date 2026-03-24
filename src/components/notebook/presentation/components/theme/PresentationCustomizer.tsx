@@ -59,7 +59,7 @@ export function PresentationCustomizer() {
   return (
     <div className="space-y-4 rounded-xl border bg-muted/40">
       {/* Text Content Section */}
-      <div className="border-0 p-6 shadow-sm">
+      <div className="border-0 p-6 shadow-xs">
         <div className="mb-4 flex items-center gap-2">
           <List className="h-5 w-5 text-primary" />
           <h2 className="text-xl font-semibold text-foreground">

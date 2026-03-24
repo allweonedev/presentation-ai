@@ -240,8 +240,8 @@ export const CycleElement = ({
               isMultiColumn && "col-start-2",
               // Apply row positioning only for multi-column layout
               isMultiColumn &&
-                (!hasOddItems ? "row-start-1 row-end-[-1]" : "row-start-2"),
-              isMultiColumn && totalChildren >= 5 && "row-end-[-1]",
+                (!hasOddItems ? "row-start-1 -row-end-1" : "row-start-2"),
+              isMultiColumn && totalChildren >= 5 && "-row-end-1",
             )}
           >
             {(() => {

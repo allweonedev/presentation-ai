@@ -53,7 +53,7 @@ export function SubscriptionModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="z-[100] max-w-6xl gap-0 p-0">
+      <DialogContent className="z-100 max-w-6xl gap-0 p-0">
         <div className="border-b px-8 pt-8 pb-6">
           <h2 className="text-3xl font-semibold tracking-tight">
             Upgrade to ALLWEONE® Presentation AI
@@ -97,7 +97,7 @@ export function SubscriptionModal({
                 <div className="space-y-3 pt-2">
                   {plan.features.map((feature, index) => (
                     <div key={index} className="flex items-start gap-2">
-                      <CheckIcon className="mt-0.5 size-5 flex-shrink-0 text-primary" />
+                      <CheckIcon className="mt-0.5 size-5 shrink-0 text-primary" />
                       <span className="text-sm leading-relaxed">{feature}</span>
                     </div>
                   ))}

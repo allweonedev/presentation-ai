@@ -89,7 +89,7 @@ function InputGroupNumber({
         onKeyDown={handleKeyDown}
         disabled={disabled}
         className={cn(
-          "h-full w-10 flex-1 bg-transparent px-3 py-1.5 text-sm outline-none",
+          "h-full w-10 flex-1 bg-transparent px-3 py-1.5 text-sm outline-hidden",
           "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
           disabled && "cursor-not-allowed",
         )}

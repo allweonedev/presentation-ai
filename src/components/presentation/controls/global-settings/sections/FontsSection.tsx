@@ -240,7 +240,7 @@ export function FontsSection() {
                   </div>
                 </div>
                 {isSelected && (
-                  <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+                  <Check className="h-4 w-4 shrink-0 text-primary" />
                 )}
               </button>
             );

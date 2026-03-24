@@ -21,7 +21,7 @@ export function GlobalSettings() {
   return (
     <div className="flex h-full w-full flex-col bg-background">
       {/* Header */}
-      <div className="flex items-center justify-between border-b p-3 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+      <div className="flex items-center justify-between border-b p-3 backdrop-blur-xs supports-backdrop-filter:bg-background/60">
         <div className="flex items-center gap-2">
           <Settings className="h-4 w-4 text-primary" />
           <h2 className="text-sm font-semibold tracking-wide">Page Setup</h2>

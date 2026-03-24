@@ -40,7 +40,7 @@ export function PresentationChangeThemeCall({
 
   if (!theme || !themes?.[theme]?.name) {
     return (
-      <div className="w-full rounded-lg border bg-card p-3 shadow-xs">
+      <div className="w-full rounded-lg border bg-card p-3 shadow-2xs">
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
           <span className="text-sm text-muted-foreground">
@@ -53,7 +53,7 @@ export function PresentationChangeThemeCall({
 
   if (isEditing) {
     return (
-      <div className="rounded-lg border bg-card p-3 shadow-xs">
+      <div className="rounded-lg border bg-card p-3 shadow-2xs">
         <div className="mb-3 flex items-center gap-2">
           <Palette className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm font-medium">Change Theme</span>
@@ -88,7 +88,7 @@ export function PresentationChangeThemeCall({
   return (
     <button
       onClick={() => setIsEditing(true)}
-      className="group w-full rounded-lg border bg-card p-3 text-left shadow-xs transition-colors hover:bg-accent/50"
+      className="group w-full rounded-lg border bg-card p-3 text-left shadow-2xs transition-colors hover:bg-accent/50"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">

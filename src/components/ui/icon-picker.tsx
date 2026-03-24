@@ -397,7 +397,7 @@ const IconPicker = ({
           size="icon"
           className={cn(
             sizeClasses[size ?? "md"],
-            "flex items-center justify-center rounded-md border shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden",
+            "flex items-center justify-center rounded-md border shadow-2xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden",
             className,
           )}
           aria-label="Select icon"

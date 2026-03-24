@@ -129,7 +129,7 @@ export function GenerateImageSlidesButton({
                     {m.name}
                   </span>
                   {m.premium && (
-                    <span className="rounded-full border border-amber-300 bg-gradient-to-br from-amber-100 to-amber-200 px-1.5 py-[1px] text-[9px] font-bold tracking-wide text-amber-700 uppercase">
+                    <span className="rounded-full border border-amber-300 bg-linear-to-br from-amber-100 to-amber-200 px-1.5 py-px text-[9px] font-bold tracking-wide text-amber-700 uppercase">
                       Premium
                     </span>
                   )}

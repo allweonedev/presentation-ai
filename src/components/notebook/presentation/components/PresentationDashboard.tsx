@@ -1,6 +1,6 @@
 "use client";
 
-import { createBlankPresentation, createEmptyPresentation } from "@/app/_actions/notebook/presentation/presentationActions";
+import { createBlankPresentation } from "@/app/_actions/notebook/presentation/presentationActions";
 import { fetchPresentations } from "@/app/_actions/notebook/presentation/fetchPresentations";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,6 +51,7 @@ export function PresentationDashboard() {
     webSearchEnabled,
     setWebSearchEnabled,
     setCurrentPresentation,
+    setPendingCreateRequest,
     setTheme,
     resetPresentationState,
   } = usePresentationState();
@@ -68,20 +69,31 @@ export function PresentationDashboard() {
 
   const createPresentation = async (blank = false) => {
     setIsCreating(true);
+    const prompt = presentationInput.trim();
+    const selectedLanguage = language;
+    const selectedNumSlides = numSlides;
+    const selectedWebSearchEnabled = webSearchEnabled;
     resetPresentationState();
 
     try {
-      const title =
-        presentationInput.trim() ||
-        (blank ? "Blank presentation" : "Untitled Presentation");
+      if (!blank) {
+        setPendingCreateRequest({
+          prompt,
+          language: selectedLanguage,
+          numSlides: selectedNumSlides,
+          webSearchEnabled: selectedWebSearchEnabled,
+        });
+        router.push("/presentation/create");
+        return;
+      }
+
+      const title = prompt || "Blank presentation";
       const theme = resolvedTheme === "dark" ? "ebony" : "mystique";
-      const result = blank
-        ? await createBlankPresentation(title, theme, language)
-        : await createEmptyPresentation({
-            title,
-            theme,
-            language,
-          });
+      const result = await createBlankPresentation(
+        title,
+        theme,
+        selectedLanguage,
+      );
 
       if (!result.success || !result.presentation) {
         toast.error(result.message ?? "Failed to create presentation");
@@ -90,16 +102,15 @@ export function PresentationDashboard() {
 
       setTheme(theme);
       setCurrentPresentation(result.presentation.id, result.presentation.title);
-      if (!blank) {
-        setPresentationInput(title);
-      }
       router.push(`/presentation/generate/${result.presentation.id}`);
     } catch (error) {
       console.error(error);
       toast.error("Failed to create presentation");
     } finally {
       setIsCreating(false);
-      void refetch();
+      if (blank) {
+        void refetch();
+      }
     }
   };
 

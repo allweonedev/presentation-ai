@@ -53,7 +53,6 @@ export function usePresentationData(id: string, forcedReadOnly = false) {
   );
   const setPageStyle = usePresentationState((s) => s.setPageStyle);
   const setLanguage = usePresentationState((s) => s.setLanguage);
-  const setAttachedFiles = usePresentationState((s) => s.setAttachedFiles);
   const setTextContent = usePresentationState((s) => s.setTextContent);
   const setTone = usePresentationState((s) => s.setTone);
   const setAudience = usePresentationState((s) => s.setAudience);
@@ -273,79 +272,6 @@ export function usePresentationData(id: string, forcedReadOnly = false) {
         setLanguage(presentationData.presentation.language);
       }
 
-      // Set attached files from ragFiles relation (preferred) or deprecated files field (fallback)
-      const ragFiles = (
-        presentationData.presentation as {
-          ragFiles?: Array<{
-            rag: {
-              id: string;
-              fileUrl: string;
-              fileName: string | null;
-              processingStatus: string;
-            };
-          }>;
-        }
-      )?.ragFiles;
-
-      if (ragFiles && ragFiles.length > 0) {
-        // Use ragFiles junction table (new approach)
-        const files = ragFiles.map((rf) => ({
-          url: rf.rag.fileUrl,
-          name: rf.rag.fileName || rf.rag.fileUrl.split("/").pop() || "file",
-        }));
-        setAttachedFiles(files);
-
-        // Set extractorRagId if any file is processed
-        const { setCurrentExtractorRagId, setExtractorRagIds } =
-          usePresentationState.getState();
-
-        // Populate the list of extractor RAG IDs from the loaded files
-        setExtractorRagIds(ragFiles.map((rf) => rf.rag.id));
-
-        const processedRag = ragFiles.find(
-          (rf) => rf.rag.processingStatus === "COMPLETE",
-        );
-        if (processedRag) {
-          setCurrentExtractorRagId(processedRag.rag.id);
-        }
-      } else if (presentationData.presentation?.files) {
-        // Fallback to deprecated files JSON field
-        try {
-          const files = presentationData.presentation.files as Array<unknown>;
-          // Validate that files have the correct structure
-          const validatedFiles = files.filter(
-            (f: unknown): f is { url: string; name: string } =>
-              typeof f === "object" &&
-              f !== null &&
-              typeof (f as { url?: unknown }).url === "string" &&
-              typeof (f as { name?: unknown }).name === "string",
-          );
-
-          setAttachedFiles(validatedFiles);
-        } catch (error) {
-          console.error("Failed to parse files:", error);
-          setAttachedFiles([]);
-        }
-      } else {
-        setAttachedFiles([]);
-      }
-
-      // Set selected chunks if available
-      if (presentationData.presentation?.selectedChunks) {
-        try {
-          const chunks = presentationData.presentation.selectedChunks as Array<{
-            chunkId: string;
-            ragId: string;
-            slideNumber?: number | null;
-            content?: string;
-          }>;
-          usePresentationState.setState({ selectedChunks: chunks });
-        } catch (error) {
-          console.error("Failed to parse selectedChunks:", error);
-          usePresentationState.setState({ selectedChunks: [] });
-        }
-      }
-
       clearHistory();
     }
   }, [
@@ -365,7 +291,6 @@ export function usePresentationData(id: string, forcedReadOnly = false) {
     id,
     setImageSource,
     setThumbnailUrl,
-    setAttachedFiles,
     setTextContent,
     setTone,
     setAudience,

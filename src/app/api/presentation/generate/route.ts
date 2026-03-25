@@ -20,11 +20,6 @@ interface SlidesRequest {
   templateContext?: string;
   outlineTemplateHints?: Record<number, string>;
   selectedTemplateCount?: number; // Number of templates selected by user
-  selectedChunks?: Array<{
-    chunkId: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>;
 }
 
 const DEFAULT_LAYOUTS = `
@@ -250,8 +245,6 @@ Vary layouts throughout for visual interest.
 - extensive: 4-5+ sentences per point
 
 **Content Expansion:** For each outline point, add supporting data, real-world examples, and industry context. Do NOT copy outline verbatim.
-**Selected Chunks:** Provide detailed and accurate information based on the user's selected chunks.
-
 ---
 
 # CRITICAL RULES
@@ -447,73 +440,6 @@ function buildCriticalRules(
 6. For per-slide assignments: use the EXACT template specified with NO structural changes`;
 }
 
-function formatSelectedChunks(
-  selectedChunks?: Array<{
-    chunkId: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>,
-): string {
-  if (!selectedChunks || selectedChunks.length === 0) {
-    return "";
-  }
-
-  const generalChunks = selectedChunks.filter((c) => !c.slideNumber);
-  const assignedChunks = selectedChunks.filter((c) => c.slideNumber);
-
-  let output = `## SELECTED DOCUMENT CONTENT
-
-The user has highlighted specific content from their documents. You MUST incorporate this information into the presentation. These chunks are markdown formatted, so when giving your xml out please make sure you convert the markdown format to xml.Here is what i mean.  
-Wrong: <H2>## Heading 2</H2>
-Right: <H2>Heading 2</H2>
-
-`;
-
-  if (generalChunks.length > 0) {
-    output += `### GENERAL CONTENT (Incorporate where relevant)
-${generalChunks
-  .map((c, i) => {
-    // If content looks like an image, treat it as one
-    // Note: The 'type' field is a UI hint, so we also check content pattern just in case
-    const isImage = c.content?.trim().match(/^!\[.*\]\(.*\)$/);
-
-    if (isImage) {
-      // Extract URL from markdown image syntax: ![alt](url)
-      const urlMatch = c.content?.match(/\((.*?)\)/);
-      const url = urlMatch ? urlMatch[1] : "";
-      return `Chunk ${i + 1} (Image): Use <IMG url="${url}" />`;
-    }
-
-    return `Chunk ${i + 1}: ${c.content}`;
-  })
-  .join("\n\n")}
-
-`;
-  }
-
-  if (assignedChunks.length > 0) {
-    output += `### MANDATORY SLIDE ASSIGNMENTS
-You MUST include the following content in the specified slides:
-
-${assignedChunks
-  .map((c) => {
-    const isImage = c.content?.trim().match(/^!\[.*\]\(.*\)$/);
-
-    if (isImage) {
-      const urlMatch = c.content?.match(/\((.*?)\)/);
-      const url = urlMatch ? urlMatch[1] : "";
-      return `- Slide ${c.slideNumber}: Insert image <IMG url="${url}" />`;
-    }
-
-    return `- Slide ${c.slideNumber}: ${c.content}`;
-  })
-  .join("\n")}
-`;
-  }
-
-  return output + "---\n";
-}
-
 export async function POST(req: Request) {
   try {
     const session = await auth();
@@ -535,7 +461,6 @@ export async function POST(req: Request) {
       templateContext,
       outlineTemplateHints,
       selectedTemplateCount,
-      selectedChunks,
     } = (await req.json()) as SlidesRequest;
 
     if (!title || !outline || !Array.isArray(outline) || !language) {
@@ -567,7 +492,7 @@ export async function POST(req: Request) {
       OUTLINE_FORMATTED: outline.join("\n\n"),
       TOTAL_SLIDES: totalSlides,
       SEARCH_RESULTS: formatSearchResults(searchResults),
-      SELECTED_CHUNKS_CONTEXT: formatSelectedChunks(selectedChunks),
+      SELECTED_CHUNKS_CONTEXT: "",
       TEXT_CONTENT: textContent || "concise",
       AUDIENCE: audience || "auto",
       SCENARIO: scenario || "auto",

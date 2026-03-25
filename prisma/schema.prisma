@@ -64,7 +64,6 @@ enum DocumentType {
   DESIGN
   STICKY_NOTES
   MIND_MAP
-  RAG
   RESEARCH_PAPER
   FLIPBOOK
   PRESENTATION
@@ -96,11 +95,8 @@ model Presentation {
   language          String?               @default("en-US")
   outline           String[]
   searchResults     Json?
-  files             Json?
-  selectedChunks    Json?
   templateId        String?
   base              BaseDocument          @relation(fields: [id], references: [id], onDelete: Cascade)
-  ragFiles          PresentationRagFile[]
 }
 
 model PresentationTheme {
@@ -182,40 +178,4 @@ model GeneratedImage {
   userId    String
   prompt    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum ProcessingStatus {
-  PENDING
-  PROCESSING
-  COMPLETE
-  ERROR
-}
-
-enum RagSource {
-  PRESENTATION
-}
-
-model RAG {
-  id                String               @id @default(cuid())
-  fileUrl           String
-  fileName          String?
-  processingStatus  ProcessingStatus     @default(PENDING)
-  source            RagSource            @default(PRESENTATION)
-  processedMarkdown String?              @db.Text
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
-  presentationLinks PresentationRagFile[]
-}
-
-model PresentationRagFile {
-  id             String       @id @default(cuid())
-  presentationId String
-  ragId          String
-  addedAt        DateTime     @default(now())
-  presentation   Presentation @relation(fields: [presentationId], references: [id], onDelete: Cascade)
-  rag            RAG          @relation(fields: [ragId], references: [id], onDelete: Cascade)
-
-  @@unique([presentationId, ragId])
-  @@index([presentationId])
-  @@index([ragId])
 }

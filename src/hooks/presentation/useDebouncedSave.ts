@@ -36,7 +36,6 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
           language,
           pageBackground,
           thumbnailUrl,
-          attachedFiles,
           customThemeData,
           pageStyle,
           textContent,
@@ -61,7 +60,6 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
             presentationStyle,
             language,
             thumbnailUrl,
-            files: attachedFiles,
             customization: buildPresentationCustomization({
               customThemeData,
               pageStyle,
@@ -112,7 +110,6 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
       language,
       pageBackground,
       thumbnailUrl,
-      attachedFiles,
       customThemeData,
       pageStyle,
       textContent,
@@ -138,7 +135,6 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
         imageSource,
         presentationStyle,
         thumbnailUrl,
-        files: attachedFiles,
         customization: buildPresentationCustomization({
           customThemeData,
           pageStyle,

@@ -29,13 +29,6 @@ export type RightPanelType =
   | "presentationImageEditor"
   | null;
 
-export type Chunk = {
-  chunkId: string;
-  ragId: string;
-  slideNumber?: number | null;
-  content?: string;
-};
-
 type PendingPresentationCreateRequest = {
   language: string;
   numSlides: number;
@@ -285,12 +278,6 @@ interface PresentationState {
   isReorderingSlides: boolean;
   setIsReorderingSlides: (isReordering: boolean) => void;
 
-  // Attached files (uploaded via UploadThing) for outline with docs
-  attachedFiles: Array<{ url: string; name: string }>;
-  setAttachedFiles: (files: Array<{ url: string; name: string }>) => void;
-  isUploadingAttachment: boolean;
-  setIsUploadingAttachment: (uploading: boolean) => void;
-
   // Generated image cache by prompt
   generatedImageCache: Record<string, GeneratedImage[]>;
   setGeneratedImageCache: (prompt: string, images: GeneratedImage[]) => void;
@@ -318,27 +305,6 @@ interface PresentationState {
     templateId: string | null,
   ) => void;
   clearOutlineTemplateOverrides: () => void;
-
-  // Manual extraction state for presentation generation
-  isManualExtractionEnabled: boolean;
-  setIsManualExtractionEnabled: (enabled: boolean) => void;
-  selectedChunks: Chunk[];
-  addSelectedChunk: (chunk: Chunk) => void;
-  removeSelectedChunk: (chunkId: string, ragId: string) => void;
-  updateChunkSlideAssignment: (
-    chunkId: string,
-    ragId: string,
-    slideNumber: number | null,
-  ) => void;
-  clearSelectedChunks: () => void;
-  // Multi-file extraction support
-  extractorRagIds: string[];
-  addExtractorRagId: (id: string) => void;
-  removeExtractorRagId: (id: string) => void;
-  clearExtractorRagIds: () => void;
-  setExtractorRagIds: (ids: string[]) => void;
-  currentExtractorRagId: string | null;
-  setCurrentExtractorRagId: (id: string | null) => void;
 
   // Zoom state for slide scaling in edit mode
   zoomLevel: number; // Zoom multiplier (1 = 100%, 1.4 = 140%, etc.)
@@ -422,13 +388,6 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
   setIsReorderingSlides: (isReordering) =>
     set({ isReorderingSlides: isReordering }),
 
-  // Attached files state
-  attachedFiles: [],
-  setAttachedFiles: (files) => set({ attachedFiles: files }),
-  isUploadingAttachment: false,
-  setIsUploadingAttachment: (uploading) =>
-    set({ isUploadingAttachment: uploading }),
-
   // Generated image cache
   generatedImageCache: {},
   setGeneratedImageCache: (prompt, images) =>
@@ -463,62 +422,6 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
       },
     })),
   clearOutlineTemplateOverrides: () => set({ outlineTemplateOverrides: {} }),
-
-  // Manual extraction state
-  isManualExtractionEnabled: false,
-  setIsManualExtractionEnabled: (enabled) =>
-    set({ isManualExtractionEnabled: enabled }),
-  selectedChunks: [],
-  addSelectedChunk: (chunk) =>
-    set((state) => ({
-      selectedChunks: state.selectedChunks.some(
-        (c) => c.chunkId === chunk.chunkId && c.ragId === chunk.ragId,
-      )
-        ? state.selectedChunks
-        : [...state.selectedChunks, chunk],
-    })),
-  removeSelectedChunk: (chunkId, ragId) =>
-    set((state) => ({
-      selectedChunks: state.selectedChunks.filter(
-        (c) => !(c.chunkId === chunkId && c.ragId === ragId),
-      ),
-    })),
-  updateChunkSlideAssignment: (chunkId, ragId, slideNumber) =>
-    set((state) => ({
-      selectedChunks: state.selectedChunks.map((c) =>
-        c.chunkId === chunkId && c.ragId === ragId ? { ...c, slideNumber } : c,
-      ),
-    })),
-  clearSelectedChunks: () => set({ selectedChunks: [] }),
-  // Multi-file extraction support
-  extractorRagIds: [],
-  addExtractorRagId: (id) =>
-    set((state) => ({
-      extractorRagIds: state.extractorRagIds.includes(id)
-        ? state.extractorRagIds
-        : [...state.extractorRagIds, id],
-      // Auto-set current if first file
-      currentExtractorRagId: state.currentExtractorRagId ?? id,
-    })),
-  removeExtractorRagId: (id) =>
-    set((state) => {
-      const newIds = state.extractorRagIds.filter((rid) => rid !== id);
-      return {
-        extractorRagIds: newIds,
-        // Reset current if removed
-        currentExtractorRagId:
-          state.currentExtractorRagId === id
-            ? (newIds[0] ?? null)
-            : state.currentExtractorRagId,
-        // Also remove chunks from this file
-        selectedChunks: state.selectedChunks.filter((c) => c.ragId !== id),
-      };
-    }),
-  clearExtractorRagIds: () =>
-    set({ extractorRagIds: [], currentExtractorRagId: null }),
-  setExtractorRagIds: (ids) => set({ extractorRagIds: ids }),
-  currentExtractorRagId: null,
-  setCurrentExtractorRagId: (id) => set({ currentExtractorRagId: id }),
 
   // Zoom state for slide scaling in edit mode
   zoomLevel: 1, // Default to 100%
@@ -856,13 +759,8 @@ export const usePresentationState = create<PresentationState>((set, get) => ({
       slides: [],
       searchResults: [],
       rootImageGeneration: {},
-      attachedFiles: [],
       pageBackground: {},
       thumbnailUrl: undefined,
-      isManualExtractionEnabled: false,
-      selectedChunks: [],
-      extractorRagIds: [],
-      currentExtractorRagId: null,
 
       // Reset generation flags
       shouldStartOutlineGeneration: false,

@@ -40,7 +40,6 @@ export function Header() {
     setWebSearchEnabled,
     isGeneratingOutline,
     startOutlineGeneration,
-    attachedFiles,
   } = usePresentationState();
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -99,12 +98,6 @@ export function Header() {
             <Badge variant="secondary" className="font-normal">
               {webSearchEnabled ? "Search on" : "Search off"}
             </Badge>
-            {attachedFiles.length > 0 && (
-              <Badge variant="outline" className="font-normal text-primary">
-                {attachedFiles.length}{" "}
-                {attachedFiles.length === 1 ? "file" : "files"}
-              </Badge>
-            )}
           </div>
 
           {/* Regenerate */}
@@ -137,12 +130,6 @@ export function Header() {
                 <Badge variant="secondary" className="font-normal">
                   {webSearchEnabled ? "Search on" : "Search off"}
                 </Badge>
-                {attachedFiles.length > 0 && (
-                  <Badge variant="outline" className="font-normal text-primary">
-                    {attachedFiles.length}{" "}
-                    {attachedFiles.length === 1 ? "file" : "files"}
-                  </Badge>
-                )}
               </div>
 
               {/* Prompt */}
@@ -233,26 +220,6 @@ export function Header() {
                   </div>
                 </div>
               </div>
-
-              {/* Attached files */}
-              {attachedFiles.length > 0 && (
-                <div className="space-y-2">
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Attached files
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {attachedFiles.map((file, i) => (
-                      <div
-                        key={`file-${i}`}
-                        className="max-w-full rounded-lg border bg-muted/40 px-2.5 py-1.5 text-xs"
-                        title={file.name}
-                      >
-                        <span className="block max-w-48 truncate">{file.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </CollapsibleContent>

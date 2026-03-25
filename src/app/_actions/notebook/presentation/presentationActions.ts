@@ -19,8 +19,6 @@ export async function createPresentation({
   presentationStyle,
   customization,
   language,
-  files,
-  selectedChunks,
 }: {
   content: {
     slides: PlateSlide[];
@@ -32,13 +30,6 @@ export async function createPresentation({
   presentationStyle?: string;
   customization?: PresentationCustomization;
   language?: string;
-  files?: Array<{ url: string; name: string }>;
-  selectedChunks?: Array<{
-    chunkId: string;
-    ragId?: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>;
 }) {
   const session = await auth();
   if (!session?.user) {
@@ -62,8 +53,6 @@ export async function createPresentation({
             customization: customization as InputJsonValue | undefined,
             language,
             outline,
-            files: files as InputJsonValue | undefined,
-            selectedChunks: selectedChunks as InputJsonValue | undefined,
           },
         },
       },
@@ -90,27 +79,16 @@ export async function createEmptyPresentation({
   title,
   theme = "mystique",
   language = "en-US",
-  files,
-  selectedChunks,
 }: {
   title: string;
   theme?: string;
   language?: string;
-  files?: Array<{ url: string; name: string }>;
-  selectedChunks?: Array<{
-    chunkId: string;
-    ragId?: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>;
 }) {
   return createPresentation({
     content: { slides: [] },
     title,
     theme,
     language,
-    files,
-    selectedChunks,
   });
 }
 
@@ -151,8 +129,6 @@ export async function updatePresentation({
   customization,
   language,
   thumbnailUrl,
-  files,
-  selectedChunks,
 }: {
   id: string;
   content?: {
@@ -169,13 +145,6 @@ export async function updatePresentation({
   customization?: PresentationCustomization;
   language?: string;
   thumbnailUrl?: string | null;
-  files?: Array<{ url: string; name: string }>;
-  selectedChunks?: Array<{
-    chunkId: string;
-    ragId?: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>;
 }) {
   const session = await auth();
   if (!session?.user) {
@@ -213,28 +182,11 @@ export async function updatePresentation({
             language,
             outline,
             searchResults: searchResults as unknown as InputJsonValue,
-            files: files as InputJsonValue | undefined,
-            selectedChunks: selectedChunks as InputJsonValue | undefined,
           },
         },
       },
       include: {
-        presentation: {
-          include: {
-            ragFiles: {
-              include: {
-                rag: {
-                  select: {
-                    id: true,
-                    fileUrl: true,
-                    fileName: true,
-                    processingStatus: true,
-                  },
-                },
-              },
-            },
-          },
-        },
+        presentation: true,
       },
     });
 
@@ -341,22 +293,7 @@ export async function getPresentation(id: string) {
     const presentation = await db.baseDocument.findUnique({
       where: { id },
       include: {
-        presentation: {
-          include: {
-            ragFiles: {
-              include: {
-                rag: {
-                  select: {
-                    id: true,
-                    fileUrl: true,
-                    fileName: true,
-                    processingStatus: true,
-                  },
-                },
-              },
-            },
-          },
-        },
+        presentation: true,
         favorites: session?.user.id
           ? {
               where: { userId: session.user.id },
@@ -487,11 +424,6 @@ export async function duplicatePresentation(id: string, newTitle?: string) {
             theme: original.presentation.theme,
             customization:
               (original.presentation.customization as InputJsonValue) ??
-              undefined,
-            files:
-              (original.presentation.files as InputJsonValue) ?? undefined,
-            selectedChunks:
-              (original.presentation.selectedChunks as InputJsonValue) ??
               undefined,
           },
         },

@@ -12,8 +12,6 @@ export function ToolCallDisplay() {
     searchResults,
     isGeneratingOutline,
     webSearchEnabled,
-    attachedFiles,
-    isUploadingAttachment,
     outline,
   } = usePresentationState();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -21,21 +19,15 @@ export function ToolCallDisplay() {
 
   // Show tool call display when any tool is active:
   // - Web search has results or is searching
-  // - Files are being uploaded
-  // - Files are attached and outline generation is in progress (file processing)
   // - Outline generation is in progress (which might use tools)
   const hasActiveTools =
     searchResults.length > 0 ||
-    (webSearchEnabled && isGeneratingOutline) ||
-    isUploadingAttachment ||
-    (attachedFiles.length > 0 && isGeneratingOutline);
+    (webSearchEnabled && isGeneratingOutline);
 
   const shouldAutoExpand =
     !hasOutline &&
     (searchResults.length > 0 ||
-      (webSearchEnabled && isGeneratingOutline) ||
-      isUploadingAttachment ||
-      (attachedFiles.length > 0 && isGeneratingOutline));
+      (webSearchEnabled && isGeneratingOutline));
 
   useEffect(() => {
     if (shouldAutoExpand) {
@@ -62,11 +54,9 @@ export function ToolCallDisplay() {
               <span className="text-sm font-medium">
                 {searchResults.length > 0
                   ? `Search Results (${searchResults.length})`
-                  : attachedFiles.length > 0 && isGeneratingOutline
-                    ? `Processing Files`
-                    : webSearchEnabled
-                      ? `Web Search`
-                      : `Tools`}
+                  : webSearchEnabled
+                    ? `Web Search`
+                    : `Tools`}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -83,27 +73,6 @@ export function ToolCallDisplay() {
         </CollapsibleTrigger>
 
         <CollapsibleContent className="space-y-2 px-4 pt-2">
-          {/* Show file processing when uploading or processing attached files */}
-          {(isUploadingAttachment ||
-            (attachedFiles.length > 0 && isGeneratingOutline)) && (
-            <div className="rounded-lg border bg-muted/30 p-3">
-              <div className="flex items-center gap-2">
-                <span className="flex size-4 shrink-0 items-center justify-center">
-                  <Loader2 className="size-4 animate-spin text-blue-500" />
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {isUploadingAttachment
-                    ? `Preparing ${attachedFiles.length || 1} file${
-                        attachedFiles.length === 1 ? "" : "s"
-                      }...`
-                    : `Processing ${attachedFiles.length} file${
-                        attachedFiles.length === 1 ? "" : "s"
-                      }...`}
-                </span>
-              </div>
-            </div>
-          )}
-
           {searchResults.map((searchItem, index) => (
             <div key={index} className="rounded-lg border bg-background/70 p-3">
               <div className="mb-2 text-sm font-medium">{searchItem.query}</div>
@@ -153,20 +122,18 @@ export function ToolCallDisplay() {
             </div>
           ))}
 
-          {isGeneratingOutline &&
-            searchResults.length === 0 &&
-            attachedFiles.length === 0 && (
-              <div className="rounded-lg border bg-muted/30 p-3">
-                <div className="flex items-center gap-2">
-                  <span className="flex size-4 shrink-0 items-center justify-center">
-                    <Loader2 className="size-4 animate-spin text-blue-500" />
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    AI is researching...
-                  </span>
-                </div>
+          {isGeneratingOutline && searchResults.length === 0 && (
+            <div className="rounded-lg border bg-muted/30 p-3">
+              <div className="flex items-center gap-2">
+                <span className="flex size-4 shrink-0 items-center justify-center">
+                  <Loader2 className="size-4 animate-spin text-blue-500" />
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  AI is researching...
+                </span>
               </div>
-            )}
+            </div>
+          )}
         </CollapsibleContent>
       </Collapsible>
     </div>

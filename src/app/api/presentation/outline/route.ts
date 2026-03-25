@@ -9,7 +9,6 @@ import { auth } from "@/server/auth";
 import { toBaseMessages, toUIMessageStream } from "@ai-sdk/langchain";
 import {
   createUIMessageStreamResponse,
-  type FileUIPart,
   type UIMessage,
 } from "ai";
 import { createAgent } from "langchain";
@@ -28,11 +27,6 @@ interface OutlineMessageMetadata {
   audience?: string;
   scenario?: string;
   presentationId?: string;
-  selectedChunks?: Array<{
-    chunkId: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>;
 }
 
 const outlineSystemPrompt = `You are an expert presentation outline generator. Your task is to create a comprehensive and engaging presentation outline based on the user's topic.
@@ -131,46 +125,6 @@ function buildOutlineSystemPrompt({
     );
 }
 
-function formatSelectedChunksForOutline(
-  selectedChunks?: Array<{
-    chunkId: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>,
-) {
-  if (!selectedChunks || selectedChunks.length === 0) {
-    return "";
-  }
-
-  const generalChunks = selectedChunks.filter((chunk) => !chunk.slideNumber);
-  const assignedChunks = selectedChunks.filter((chunk) => chunk.slideNumber);
-
-  let output = `\n\n## SELECTED DOCUMENT CONTENT\n`;
-
-  if (generalChunks.length > 0) {
-    output += `Use these points where relevant:\n${generalChunks
-      .map((chunk, index) => `- General chunk ${index + 1}: ${chunk.content ?? ""}`)
-      .join("\n")}\n`;
-  }
-
-  if (assignedChunks.length > 0) {
-    output += `Assign these points to the specified slides:\n${assignedChunks
-      .map(
-        (chunk) =>
-          `- Slide ${chunk.slideNumber}: ${chunk.content ?? ""}`,
-      )
-      .join("\n")}\n`;
-  }
-
-  return output;
-}
-
-function getMessageFiles(message: UIMessage): FileUIPart[] {
-  return message.parts.filter(
-    (part): part is FileUIPart => part.type === "file",
-  );
-}
-
 export async function POST(req: Request) {
   const actionName = "presentation.outline.post";
   const span = logger.startSpan(`allweone.api.${actionName}`, {
@@ -198,9 +152,6 @@ export async function POST(req: Request) {
     const prompt = latestUserMessage ? getMessageText(latestUserMessage).trim() : "";
     const metadata =
       (latestUserMessage?.metadata as OutlineMessageMetadata | undefined) ?? {};
-    const attachedFiles = latestUserMessage
-      ? getMessageFiles(latestUserMessage)
-      : [];
     const numberOfCards = metadata.numberOfCards ?? 0;
     const language = metadata.language ?? "";
     const webSearch = Boolean(metadata.webSearch);
@@ -210,7 +161,6 @@ export async function POST(req: Request) {
       "allweone.presentation.prompt.length": prompt.length,
       "allweone.presentation.language": language,
       "allweone.presentation.web_search": webSearch,
-      "allweone.presentation.files.count": attachedFiles.length,
     });
 
     if (!prompt || !numberOfCards || !language || messages.length === 0) {
@@ -246,14 +196,6 @@ export async function POST(req: Request) {
       day: "numeric",
     });
 
-    const selectedChunksContext = formatSelectedChunksForOutline(
-      metadata.selectedChunks,
-    );
-    const fileNotice =
-      attachedFiles.length > 0
-        ? "\n\nNote: uploaded files are attached in this workspace, but document extraction is not enabled in this trimmed presentation repo."
-        : "";
-
     const agent = createAgent({
       model: modelPicker("gpt-4o-mini"),
       tools: webSearch ? [search_tool] : [],
@@ -267,9 +209,7 @@ export async function POST(req: Request) {
           audience: metadata.audience ?? "auto",
           scenario: metadata.scenario ?? "auto",
           webSearch,
-        }) +
-        selectedChunksContext +
-        fileNotice,
+        }),
     });
 
     const stream = await agent.stream(

@@ -22,7 +22,7 @@ import {
   type ThemeProperties,
   type Themes,
 } from "@/lib/presentation/themes";
-import { usePresentationState, type Chunk } from "@/states/presentation-state";
+import { usePresentationState } from "@/states/presentation-state";
 import { useQuery } from "@tanstack/react-query";
 import { Wand2 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -216,76 +216,6 @@ export default function PresentationGenerateWithIdPage() {
         setPageBackground(next);
       }
 
-      // Set attached files from ragFiles relation (preferred) or deprecated files field (fallback)
-      const { setAttachedFiles, setCurrentExtractorRagId } =
-        usePresentationState.getState();
-      const ragFiles = (
-        presentationData.presentation as {
-          ragFiles?: Array<{
-            rag: {
-              id: string;
-              fileUrl: string;
-              fileName: string | null;
-              processingStatus: string;
-            };
-          }>;
-        }
-      )?.ragFiles;
-
-      if (ragFiles && ragFiles.length > 0) {
-        // Use ragFiles junction table (new approach)
-        const files = ragFiles.map((rf) => ({
-          url: rf.rag.fileUrl,
-          name: rf.rag.fileName || rf.rag.fileUrl.split("/").pop() || "file",
-        }));
-        setAttachedFiles(files);
-
-        // Set extractorRagId if any file is processed
-        const processedRag = ragFiles.find(
-          (rf) => rf.rag.processingStatus === "COMPLETE",
-        );
-        if (processedRag) {
-          setCurrentExtractorRagId(processedRag.rag.id);
-        }
-      } else if (presentationData.presentation?.files) {
-        // Fallback to deprecated files JSON field
-        try {
-          const files = presentationData.presentation.files as Array<unknown>;
-
-          const validatedFiles = files.filter(
-            (f: unknown): f is { url: string; name: string } =>
-              typeof f === "object" &&
-              f !== null &&
-              typeof (f as { url?: unknown }).url === "string" &&
-              typeof (f as { name?: unknown }).name === "string",
-          );
-
-          setAttachedFiles(validatedFiles);
-        } catch (error) {
-          console.error("Failed to parse files:", error);
-          setAttachedFiles([]);
-        }
-      } else {
-        setAttachedFiles([]);
-      }
-
-      // Set selected chunks if available
-      if (presentationData.presentation?.selectedChunks) {
-        try {
-          const chunks = (
-            presentationData.presentation.selectedChunks as Chunk[]
-          ).map((c) => ({
-            chunkId: c.chunkId,
-            ragId: c.ragId || "",
-            slideNumber: c.slideNumber,
-            content: c.content,
-          }));
-          usePresentationState.setState({ selectedChunks: chunks });
-        } catch (error) {
-          console.error("Failed to parse selectedChunks:", error);
-          usePresentationState.setState({ selectedChunks: [] });
-        }
-      }
     }
   }, [
     presentationData,

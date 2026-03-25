@@ -17,11 +17,7 @@ import { isWebSearchToolName } from "@/lib/ai/tool-names";
 import { useDebouncedSave } from "@/hooks/presentation/useDebouncedSave";
 import { usePresentationState } from "@/states/presentation-state";
 import { useChat, useCompletion } from "@ai-sdk/react";
-import {
-  DefaultChatTransport,
-  type FileUIPart,
-  type UIMessage,
-} from "ai";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
@@ -58,12 +54,6 @@ interface PresentationOutlineMessageMetadata {
     | "teaching-training"
     | "promotional-materials"
     | "public-speeches";
-  selectedChunks: Array<{
-    chunkId: string;
-    ragId: string;
-    slideNumber?: number | null;
-    content?: string;
-  }>;
 }
 
 function stripXmlCodeBlock(input: string): string {
@@ -128,7 +118,6 @@ export function PresentationGenerationManager() {
     isGeneratingPresentation,
     isGeneratingOutline,
     slides,
-    attachedFiles,
     textContent,
     tone,
     audience,
@@ -233,8 +222,7 @@ export function PresentationGenerationManager() {
         };
 
         if (
-          (isWebSearchToolName(invocation.toolName) ||
-            invocation.toolName === "searchDocuments") &&
+          isWebSearchToolName(invocation.toolName) &&
           invocation.state === "result" &&
           invocation.result
         ) {
@@ -366,7 +354,6 @@ export function PresentationGenerationManager() {
           prompt: presentationInput,
           title: currentPresentationTitle ?? "",
           imageSource,
-          files: attachedFiles,
         });
       }
 
@@ -418,49 +405,20 @@ export function PresentationGenerationManager() {
               requestAnimationFrame(updateOutlineWithRAF);
           }
 
-          await appendOutlineMessage(
-            attachedFiles.length > 0
-              ? {
-                  role: "user",
-                  metadata: {
-                    numberOfCards: numSlides,
-                    language,
-                    webSearch: webSearchEnabled,
-                    presentationId: currentPresentationId,
-                    textContent,
-                    tone,
-                    audience,
-                    scenario,
-                    selectedChunks: usePresentationState.getState().selectedChunks,
-                  } satisfies PresentationOutlineMessageMetadata,
-                  parts: [
-                    { type: "text", text: presentationInput },
-                    ...attachedFiles.map(
-                      (file): FileUIPart => ({
-                        type: "file",
-                        url: file.url,
-                        filename: file.name,
-                        mediaType: "application/octet-stream",
-                      }),
-                    ),
-                  ],
-                }
-              : {
-                  role: "user",
-                  metadata: {
-                    numberOfCards: numSlides,
-                    language,
-                    webSearch: webSearchEnabled,
-                    presentationId: currentPresentationId,
-                    textContent,
-                    tone,
-                    audience,
-                    scenario,
-                    selectedChunks: usePresentationState.getState().selectedChunks,
-                  } satisfies PresentationOutlineMessageMetadata,
-                  parts: [{ type: "text", text: presentationInput }],
-                },
-          );
+          await appendOutlineMessage({
+            role: "user",
+            metadata: {
+              numberOfCards: numSlides,
+              language,
+              webSearch: webSearchEnabled,
+              presentationId: currentPresentationId,
+              textContent,
+              tone,
+              audience,
+              scenario,
+            } satisfies PresentationOutlineMessageMetadata,
+            parts: [{ type: "text", text: presentationInput }],
+          });
         } catch (error) {
           console.error(error);
         }
@@ -649,7 +607,6 @@ export function PresentationGenerationManager() {
           templateContext,
           outlineTemplateHints,
           selectedTemplateCount: selectedSlideTemplates.length,
-          selectedChunks: usePresentationState.getState().selectedChunks,
         },
       });
     }

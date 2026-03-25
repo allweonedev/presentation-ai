@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, type buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
@@ -9,6 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { type VariantProps } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState, type ReactNode } from "react";
 import { type IconType } from "react-icons";
@@ -22,12 +23,14 @@ interface IconItem {
 type IconModule = Record<string, IconType>;
 
 // Define the prop types
-interface IconPickerProps {
+interface IconPickerProps
+  extends
+    React.ComponentProps<"button">,
+    Omit<VariantProps<typeof buttonVariants>, "size"> {
   onIconSelect?: (iconName: string, iconComponent: ReactNode) => void;
   defaultIcon?: string;
   searchTerm?: string; // Added prop to automatically search and select the first matching icon
   size?: "sm" | "md" | "lg";
-  className?: string;
 }
 
 // Main Icon Picker Component
@@ -35,8 +38,9 @@ const IconPicker = ({
   onIconSelect,
   defaultIcon = "FaHome",
   searchTerm = "",
-  size = "md",
   className,
+  size,
+  ...props
 }: IconPickerProps) => {
   const [icon, setIcon] = useState<string>(defaultIcon);
   const [iconComponent, setIconComponent] = useState<ReactNode>(null);
@@ -392,11 +396,12 @@ const IconPicker = ({
           variant="outline"
           size="icon"
           className={cn(
-            sizeClasses[size],
-            "flex items-center justify-center rounded-md border shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            sizeClasses[size ?? "md"],
+            "flex items-center justify-center rounded-md border shadow-2xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden",
             className,
           )}
           aria-label="Select icon"
+          {...props}
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />

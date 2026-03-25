@@ -49,7 +49,7 @@ export function FontList({
     return (
       <div className="w-full space-y-2">
         <div className="relative">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute top-2.5 left-2 h-4 w-4 text-muted-foreground" />
           <Input placeholder="Loading fonts..." disabled className="pl-8" />
         </div>
         <div className="flex h-96 w-full items-center justify-center rounded-md border">
@@ -65,7 +65,7 @@ export function FontList({
   return (
     <div className="w-full space-y-2">
       <div className="relative">
-        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute top-2.5 left-2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search fonts..."
           value={searchValue}

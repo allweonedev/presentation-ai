@@ -56,7 +56,7 @@ export function EquationElement(props: PlateElementProps<TEquationElement>) {
         <PopoverTrigger asChild>
           <div
             className={cn(
-              "group flex cursor-pointer select-none items-center justify-center rounded-sm hover:bg-primary/10 data-[selected=true]:bg-primary/10",
+              "group flex cursor-pointer items-center justify-center rounded-sm select-none hover:bg-primary/10 data-[selected=true]:bg-primary/10",
               props.element.texExpression.length === 0
                 ? "bg-muted p-3 pr-9"
                 : "px-2 py-1",
@@ -68,7 +68,7 @@ export function EquationElement(props: PlateElementProps<TEquationElement>) {
             {props.element.texExpression.length > 0 ? (
               <span ref={katexRef} />
             ) : (
-              <div className="flex h-7 w-full items-center gap-2 whitespace-nowrap text-sm text-muted-foreground">
+              <div className="flex h-7 w-full items-center gap-2 text-sm whitespace-nowrap text-muted-foreground">
                 <RadicalIcon className="size-6 text-muted-foreground/80" />
                 <div>Add a Tex equation</div>
               </div>
@@ -127,14 +127,14 @@ export function InlineEquationElement(
     <PlateElement
       {...props}
       className={cn(
-        "[&_.katex-display]:my-0! mx-1 inline-block select-none rounded-sm",
+        "mx-1 inline-block rounded-sm select-none [&_.katex-display]:my-0!",
       )}
     >
       <Popover open={open} onOpenChange={setOpen} modal={false}>
         <PopoverTrigger asChild>
           <div
             className={cn(
-              'after:z-1 after:absolute after:inset-0 after:-left-1 after:-top-0.5 after:h-[calc(100%)+4px] after:w-[calc(100%+8px)] after:rounded-sm after:content-[""]',
+              'after:absolute after:inset-0 after:-top-0.5 after:-left-1 after:z-1 after:h-[calc(100%)+4px] after:w-[calc(100%+8px)] after:rounded-sm after:content-[""]',
               "h-6",
               ((element.texExpression.length > 0 && open) || selected) &&
                 "after:bg-brand/15",

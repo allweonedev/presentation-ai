@@ -63,7 +63,6 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
   }
 
   const execCommand = (cmd: Command): void => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     cmd(view.state, view.dispatch, view);
     view.focus();
   };
@@ -145,7 +144,7 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
 
   return (
     <div
-      className="floating-toolbar absolute z-50 flex w-fit items-center gap-1 rounded-md border bg-background/95 p-1 shadow-md backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      className="floating-toolbar absolute z-50 flex w-fit items-center gap-1 rounded-md border bg-background/95 p-1 shadow-md backdrop-blur-xs supports-backdrop-filter:bg-background/80"
       style={{
         top: 0,
         left: 0,
@@ -204,7 +203,7 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
         >
           <Code className={iconClass} />
         </Button>
-        <div className="h-4 w-[1px] bg-border" />
+        <div className="h-4 w-px bg-border" />
 
         {/* List Types Dropdown */}
         <DropdownMenu modal={false}>

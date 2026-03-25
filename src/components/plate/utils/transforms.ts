@@ -151,7 +151,7 @@ export const setBlockType = (
     };
 
     if (at) {
-      const entry = editor.api.node<TElement>(at);
+      const entry = editor.api.node(at) as NodeEntry<TElement> | undefined;
 
       if (entry) {
         setEntry(entry);

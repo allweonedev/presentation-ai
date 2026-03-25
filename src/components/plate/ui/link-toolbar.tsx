@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { type TLinkElement } from "platejs";
+import { type NodeEntry, type TLinkElement } from "platejs";
 
 import {
   type UseVirtualFloatingOptions,
@@ -36,8 +36,24 @@ const popoverVariants = cva(
 );
 
 const inputVariants = cva(
-  "flex h-[28px] w-full rounded-md border-none bg-transparent px-1.5 py-1 text-base placeholder:text-muted-foreground focus-visible:ring-transparent focus-visible:outline-none md:text-sm",
+  "flex h-[28px] w-full rounded-md border-none bg-transparent px-1.5 py-1 text-base placeholder:text-muted-foreground focus-visible:ring-transparent focus-visible:outline-hidden md:text-sm",
 );
+
+type FloatingStyle = React.CSSProperties & {
+  WebkitUserSelect?: string;
+};
+
+const sanitizeFloatingStyle = (style?: FloatingStyle) => {
+  if (!style) return undefined;
+
+  const sanitizedStyle = { ...style };
+  const userSelect = sanitizedStyle.WebkitUserSelect as unknown;
+  if (typeof userSelect === "string" && userSelect === "-moz-none") {
+    delete sanitizedStyle.WebkitUserSelect;
+  }
+
+  return sanitizedStyle;
+};
 
 export function LinkFloatingToolbar({
   state,
@@ -96,12 +112,22 @@ export function LinkFloatingToolbar({
     preventDefaultOnEnterKeydown: true,
   });
 
+  const { style: insertStyle, ...insertRestProps } = insertProps;
+  const { style: editStyle, ...editRestProps } = editProps;
+
+  const sanitizedInsertStyle = sanitizeFloatingStyle(
+    insertStyle as FloatingStyle | undefined,
+  );
+  const sanitizedEditStyle = sanitizeFloatingStyle(
+    editStyle as FloatingStyle | undefined,
+  );
+
   if (hidden) return null;
 
   const input = (
     <div className="flex w-[330px] flex-col" {...inputProps}>
       <div className="flex items-center">
-        <div className="flex items-center pl-2 pr-1 text-muted-foreground">
+        <div className="flex items-center pr-1 pl-2 text-muted-foreground">
           <Link className="size-4" />
         </div>
 
@@ -113,7 +139,7 @@ export function LinkFloatingToolbar({
       </div>
       <Separator className="my-1" />
       <div className="flex items-center">
-        <div className="flex items-center pl-2 pr-1 text-muted-foreground">
+        <div className="flex items-center pr-1 pl-2 text-muted-foreground">
           <Text className="size-4" />
         </div>
         <input
@@ -159,11 +185,21 @@ export function LinkFloatingToolbar({
 
   return (
     <>
-      <div ref={insertRef} className={popoverVariants()} {...insertProps}>
+      <div
+        ref={insertRef as unknown as React.RefObject<HTMLDivElement | null>}
+        className={popoverVariants()}
+        {...insertRestProps}
+        style={sanitizedInsertStyle}
+      >
         {input}
       </div>
 
-      <div ref={editRef} className={popoverVariants()} {...editProps}>
+      <div
+        ref={editRef as unknown as React.RefObject<HTMLDivElement | null>}
+        className={popoverVariants()}
+        {...editRestProps}
+        style={sanitizedEditStyle}
+      >
         {editContent}
       </div>
     </>
@@ -175,9 +211,9 @@ function LinkOpenButton() {
   const selection = useEditorSelection();
 
   const attributes = React.useMemo(() => {
-    const entry = editor.api.node<TLinkElement>({
+    const entry = editor.api.node({
       match: { type: editor.getType(KEYS.link) },
-    });
+    }) as NodeEntry<TLinkElement> | undefined;
     if (!entry) {
       return {};
     }

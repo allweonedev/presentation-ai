@@ -1,75 +1,178 @@
-import { modelPicker } from "@/lib/model-picker";
+import { search_tool } from "@/ai/tools/search";
+import {
+  getLatestUserMessage,
+  getMessageText,
+} from "@/lib/ai/uiMessageParts";
+import { modelPicker } from "@/lib/modelPicker";
+import { logger } from "@/lib/observability/server/logger";
 import { auth } from "@/server/auth";
-import { streamText } from "ai";
+import { toBaseMessages, toUIMessageStream } from "@ai-sdk/langchain";
+import {
+  createUIMessageStreamResponse,
+  type UIMessage,
+} from "ai";
+import { createAgent } from "langchain";
 import { NextResponse } from "next/server";
 
 interface OutlineRequest {
-  prompt: string;
-  numberOfCards: number;
-  language: string;
-  modelProvider?: string;
-  modelId?: string;
+  messages?: UIMessage[];
 }
 
-const outlineTemplate = `Given the following presentation topic and requirements, generate a structured outline with {numberOfCards} main topics in markdown format.
-The outline should be in {language} language and it very important.
+interface OutlineMessageMetadata {
+  numberOfCards?: number;
+  language?: string;
+  webSearch?: boolean;
+  textContent?: "minimal" | "concise" | "detailed" | "extensive";
+  tone?: string;
+  audience?: string;
+  scenario?: string;
+  presentationId?: string;
+}
+
+const outlineSystemPrompt = `You are an expert presentation outline generator. Your task is to create a comprehensive and engaging presentation outline based on the user's topic.
 
 Current Date: {currentDate}
-Topic: {prompt}
 
-First, generate an appropriate title for the presentation, then create exactly {numberOfCards} main topics that would make for an engaging and well-structured presentation.
+## Presentation Customization:
+- Text Content Level: {textContent}
+- Tone: {tone}
+- Target Audience: {audience}
+- Scenario: {scenario}
 
-Format the response starting with the title in XML tags, followed by markdown content with each topic as a heading and 2-3 bullet points.
+## Your Process:
+1. Analyze the topic
+2. {researchStep}
+3. Generate the outline
 
-Example format:
+## Web Search Guidelines:
+{webSearchGuidelines}
+
+## Outline Requirements:
+- First generate an appropriate title for the presentation
+- Generate exactly {numberOfCards} main topics
+- Each topic should be a clear, engaging heading
+- Include 2-3 bullet points per topic
+- Use {language} language
+- Adapt content depth based on the text content level
+- Tailor language for the requested tone, audience, and scenario
+- ALWAYS use bullet points formatted as "- point text"
+- Do not use bold, italic, or underline
+
+## Output Format:
+Start with the title in XML tags, then generate markdown with each topic as a heading followed by bullet points.
+
+Example:
 <TITLE>Your Generated Presentation Title Here</TITLE>
 
 # First Main Topic
-- Key point about this topic
-- Another important aspect
-- Brief conclusion or impact
+- Key point
+- Another point
 
 # Second Main Topic
-- Main insight for this section
-- Supporting detail or example
-- Practical application or takeaway
+- Key point
+- Another point
 
-# Third Main Topic 
-- Primary concept to understand
-- Evidence or data point
-- Conclusion or future direction
+Remember: {finalInstruction}`;
 
-Make sure the topics:
-1. Flow logically from one to another
-2. Cover the key aspects of the main topic
-3. Are clear and concise
-4. Are engaging for the audience
-5. ALWAYS use bullet points (not paragraphs) and format each point as "- point text"
-6. Do not use bold, italic or underline
-7. Keep each bullet point brief - just one sentence per point
-8. Include exactly 2-3 bullet points per topic (not more, not less)`;
+function buildOutlineSystemPrompt({
+  actualLanguage,
+  numberOfCards,
+  currentDate,
+  textContent,
+  tone,
+  audience,
+  scenario,
+  webSearch,
+}: {
+  actualLanguage: string;
+  numberOfCards: number;
+  currentDate: string;
+  textContent: NonNullable<OutlineMessageMetadata["textContent"]>;
+  tone: string;
+  audience: string;
+  scenario: string;
+  webSearch: boolean;
+}) {
+  return outlineSystemPrompt
+    .replace("{currentDate}", currentDate)
+    .replace("{numberOfCards}", numberOfCards.toString())
+    .replace("{language}", actualLanguage)
+    .replaceAll("{textContent}", textContent)
+    .replaceAll("{tone}", tone)
+    .replaceAll("{audience}", audience)
+    .replaceAll("{scenario}", scenario)
+    .replace(
+      "{researchStep}",
+      webSearch
+        ? "Research first using web search before writing the outline"
+        : "Use existing knowledge only and skip tool usage",
+    )
+    .replace(
+      "{webSearchGuidelines}",
+      webSearch
+        ? [
+            "- Use web search for current facts, recent developments, and useful statistics",
+            "- Limit yourself to a few focused searches",
+            "- Only search when it materially improves the outline",
+          ].join("\n")
+        : "- Web search is disabled for this request.",
+    )
+    .replace(
+      "{finalInstruction}",
+      webSearch
+        ? "Perform at least one web search before generating the outline."
+        : "Generate the outline directly without web search.",
+    );
+}
 
 export async function POST(req: Request) {
+  const actionName = "presentation.outline.post";
+  const span = logger.startSpan(`allweone.api.${actionName}`, {
+    attributes: {
+      "allweone.scope": "api",
+      "allweone.action.type": "api_route",
+      "allweone.action.name": actionName,
+      "http.method": "POST",
+      "http.route": "/api/presentation/outline",
+    },
+  });
+
   try {
     const session = await auth();
     if (!session) {
+      span.event("allweone.api.request_rejected", {
+        "allweone.validation.error": "unauthorized",
+      });
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const {
-      prompt,
-      numberOfCards,
-      language,
-      modelProvider = "openai",
-      modelId,
-    } = (await req.json()) as OutlineRequest;
+    const request = (await req.json()) as OutlineRequest;
+    const { messages = [] } = request;
+    const latestUserMessage = getLatestUserMessage(messages);
+    const prompt = latestUserMessage ? getMessageText(latestUserMessage).trim() : "";
+    const metadata =
+      (latestUserMessage?.metadata as OutlineMessageMetadata | undefined) ?? {};
+    const numberOfCards = metadata.numberOfCards ?? 0;
+    const language = metadata.language ?? "";
+    const webSearch = Boolean(metadata.webSearch);
 
-    if (!prompt || !numberOfCards || !language) {
+    span.annotate({
+      "allweone.presentation.cards.count": numberOfCards,
+      "allweone.presentation.prompt.length": prompt.length,
+      "allweone.presentation.language": language,
+      "allweone.presentation.web_search": webSearch,
+    });
+
+    if (!prompt || !numberOfCards || !language || messages.length === 0) {
+      span.event("allweone.api.request_rejected", {
+        "allweone.validation.error": "missing_required_fields",
+      });
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
       );
     }
+
     const languageMap: Record<string, string> = {
       "en-US": "English (US)",
       pt: "Portuguese",
@@ -85,7 +188,7 @@ export async function POST(req: Request) {
       ar: "Arabic",
     };
 
-    const actualLanguage = languageMap[language] ?? language; // Fallback to the original if not found
+    const actualLanguage = languageMap[language] ?? language;
     const currentDate = new Date().toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
@@ -93,26 +196,43 @@ export async function POST(req: Request) {
       day: "numeric",
     });
 
-    const model = modelPicker(modelProvider, modelId);
-
-    // Format the prompt with template variables
-    const formattedPrompt = outlineTemplate
-      .replace(/{numberOfCards}/g, numberOfCards.toString())
-      .replace(/{language}/g, actualLanguage)
-      .replace(/{currentDate}/g, currentDate)
-      .replace(/{prompt}/g, prompt);
-
-    const result = streamText({
-      model,
-      prompt: formattedPrompt,
+    const agent = createAgent({
+      model: modelPicker("gpt-4o-mini"),
+      tools: webSearch ? [search_tool] : [],
+      systemPrompt:
+        buildOutlineSystemPrompt({
+          actualLanguage,
+          numberOfCards,
+          currentDate,
+          textContent: metadata.textContent ?? "concise",
+          tone: metadata.tone ?? "auto",
+          audience: metadata.audience ?? "auto",
+          scenario: metadata.scenario ?? "auto",
+          webSearch,
+        }),
     });
 
-    return result.toDataStreamResponse();
+    const stream = await agent.stream(
+      {
+        messages: await toBaseMessages(messages),
+      },
+      {
+        streamMode: ["values", "messages"],
+      },
+    );
+
+    span.event("allweone.api.response_stream_created");
+    return createUIMessageStreamResponse({
+      stream: toUIMessageStream(stream),
+    });
   } catch (error) {
+    span.error(error);
     console.error("Error in outline generation:", error);
     return NextResponse.json(
       { error: "Failed to generate outline" },
       { status: 500 },
     );
+  } finally {
+    span.end();
   }
 }

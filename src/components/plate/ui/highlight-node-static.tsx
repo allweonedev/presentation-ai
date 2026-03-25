@@ -1,6 +1,4 @@
-import { type SlateLeafProps } from "platejs";
-
-import { SlateLeaf } from "platejs";
+import { type SlateLeafProps, SlateLeaf } from "platejs/static";
 
 export function HighlightLeafStatic(props: SlateLeafProps) {
   return (
@@ -9,3 +7,5 @@ export function HighlightLeafStatic(props: SlateLeafProps) {
     </SlateLeaf>
   );
 }
+
+

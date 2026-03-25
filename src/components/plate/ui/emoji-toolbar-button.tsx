@@ -120,7 +120,7 @@ export function EmojiPicker({
     <div
       className={cn(
         "flex flex-col rounded-xl bg-popover text-popover-foreground",
-        "h-[23rem] w-80 border shadow-md",
+        "h-92 w-80 border shadow-md",
       )}
     >
       <EmojiPickerNavigation
@@ -276,7 +276,7 @@ function EmojiPickerContent({
             style={{ width: getRowWidth }}
             data-id={categoryId}
           >
-            <div className="z-1 backdrop-blur-xs sticky -top-px bg-popover/90 p-1 py-2 text-sm font-semibold">
+            <div className="sticky -top-px z-1 bg-popover/90 p-1 py-2 text-sm font-semibold backdrop-blur-xs">
               {i18n.categories[categoryId]}
             </div>
             <div
@@ -312,7 +312,7 @@ function EmojiPickerContent({
   const SearchList = React.useCallback(() => {
     return (
       <div style={{ width: getRowWidth }} data-id="search">
-        <div className="z-1 backdrop-blur-xs sticky -top-px bg-popover/90 p-1 py-2 text-sm font-semibold text-card-foreground">
+        <div className="sticky -top-px z-1 bg-popover/90 p-1 py-2 text-sm font-semibold text-card-foreground backdrop-blur-xs">
           {i18n.searchResult}
         </div>
         <div className="relative flex flex-wrap">
@@ -341,7 +341,7 @@ function EmojiPickerContent({
     <div
       ref={refs.current.contentRoot}
       className={cn(
-        "h-full min-h-[50%] overflow-y-auto overflow-x-hidden px-2",
+        "h-full min-h-[50%] overflow-x-hidden overflow-y-auto px-2",
         "[&::-webkit-scrollbar]:w-4",
         "[&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-button]:size-0",
         "[&::-webkit-scrollbar-thumb]:min-h-11 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-muted [&::-webkit-scrollbar-thumb]:hover:bg-muted-foreground/25",
@@ -368,14 +368,13 @@ function EmojiPickerSearchBar({
     <div className="flex items-center px-2">
       <div className="relative flex grow items-center">
         <input
-          className="block w-full appearance-none rounded-full border-0 bg-muted px-10 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:outline-none"
+          className="block w-full appearance-none rounded-full border-0 bg-muted px-10 py-2 text-sm outline-hidden placeholder:text-muted-foreground focus-visible:outline-hidden"
           value={searchValue}
           onChange={(event) => setSearch(event.target.value)}
           placeholder={i18n.search}
           aria-label="Search"
           autoComplete="off"
           type="text"
-          autoFocus
         />
         {children}
       </div>
@@ -392,7 +391,7 @@ function EmojiPickerSearchAndClear({
     <div className="flex items-center text-foreground">
       <div
         className={cn(
-          "absolute left-2.5 top-1/2 z-10 flex size-5 -translate-y-1/2 items-center justify-center text-foreground",
+          "absolute top-1/2 left-2.5 z-10 flex size-5 -translate-y-1/2 items-center justify-center text-foreground",
         )}
       >
         {emojiSearchIcons.loupe}
@@ -402,7 +401,7 @@ function EmojiPickerSearchAndClear({
           size="icon"
           variant="ghost"
           className={cn(
-            "absolute right-0.5 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-transparent text-popover-foreground hover:bg-transparent",
+            "absolute top-1/2 right-0.5 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-transparent text-popover-foreground hover:bg-transparent",
           )}
           onClick={clearSearch}
           title={i18n.clear}

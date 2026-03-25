@@ -1,16 +1,19 @@
 /* eslint-disable react/display-name */
 import type * as React from "react";
 
-import {
-  type RenderStaticNodeWrapper,
-  type SlateRenderElementProps,
-  type TListElement,
-} from "platejs";
+import { type TListElement } from "platejs";
+import { type SlateRenderElementProps } from "platejs/static";
 
 import { isOrderedList } from "@platejs/list";
 import { CheckIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+
+type RenderStaticNodeWrapper = (
+  props: SlateRenderElementProps,
+) =>
+  | ((props: SlateRenderElementProps) => React.ReactElement | null | undefined)
+  | undefined;
 
 const config: Record<
   string,
@@ -55,7 +58,7 @@ function TodoMarkerStatic(props: SlateRenderElementProps) {
     <div contentEditable={false}>
       <button
         className={cn(
-          "peer pointer-events-none absolute -left-6 top-1 size-4 shrink-0 rounded-sm border border-primary bg-background ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+          "peer pointer-events-none absolute top-1 -left-6 size-4 shrink-0 rounded-sm border border-primary bg-background ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-hidden data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
           props.className,
         )}
         data-state={checked ? "checked" : "unchecked"}
@@ -82,3 +85,5 @@ function TodoLiStatic(props: SlateRenderElementProps) {
     </li>
   );
 }
+
+

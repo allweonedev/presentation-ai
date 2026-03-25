@@ -17,24 +17,29 @@ import {
   type RenderNodeWrapper,
   MemoizedChildren,
   useEditorRef,
+  useEditorSelector,
   useElement,
+  useFocused,
   usePath,
   usePluginOption,
   useSelected,
 } from "platejs/react";
 import * as React from "react";
 
+import { useDraggable } from "@/components/notebook/presentation/editor/dnd/hooks/useDraggable";
+import { useDropLine } from "@/components/notebook/presentation/editor/dnd/hooks/useDropLine";
+import {
+  BLOCKS,
+  getGridClassForElement,
+} from "@/components/notebook/presentation/editor/lib";
+import { useIsTouchDevice } from "@/components/plate/hooks/use-is-touch-device";
 import { Button } from "@/components/plate/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/plate/ui/tooltip";
-import { useDraggable } from "@/components/presentation/editor/dnd/hooks/useDraggable";
-import { useDropLine } from "@/components/presentation/editor/dnd/hooks/useDropLine";
-import { getGridClassForElement } from "@/components/presentation/editor/lib";
 import { cn } from "@/lib/utils";
-import { MultiDndPlugin } from "../plugins/dnd-kit";
 
 // Configuration constants
 const UNDRAGGABLE_KEYS = [KEYS.tr, KEYS.td];
@@ -58,8 +63,12 @@ export const BlockDraggable: RenderNodeWrapper = (props) => {
 
   // biome-ignore lint/correctness/useHookAtTopLevel: We don't need to calculate anything when props are not available
   const enabled = React.useMemo(() => {
-    if (editor.dom.readOnly) return false;
     if (!path) return false;
+
+    if (!editor.api.isBlock(element)) return false;
+
+    // Inline elements like links should never receive block drag wrappers.
+    if (editor.api.isInline(element)) return false;
 
     // Check if element is undraggable
     if (isType(editor, element, UNDRAGGABLE_KEYS)) return false;
@@ -95,22 +104,38 @@ export const BlockDraggable: RenderNodeWrapper = (props) => {
 
 export function Draggable(props: PlateElementProps) {
   const { children, editor, element, path } = props;
-  const blockSelectionApi = editor.getApi(BlockSelectionPlugin).blockSelection;
 
-  let orientation: "vertical" | "horizontal" | undefined;
+  // Determine if this element can create columns when dropped on sides
+  // Root level elements (path.length === 1) can create columns
+  const canCreateColumns = path.length === 1;
   const { isAboutToDrag, isDragging, nodeRef, previewRef, handleRef } =
     useDraggable({
       element,
-      onDropHandler: (_, { dragItem }) => {
-        const id = (dragItem as { id: string[] | string }).id;
-        if (blockSelectionApi && id) {
-          blockSelectionApi.add(id);
-        }
+      canCreateColumns,
+      onDropHandler: () => {
         resetPreview();
         return undefined;
       },
       canDropNode: ({ dragEntry, dropEntry }) => {
         const dragElementType = dragEntry[0].type;
+        const dragPath = dragEntry[1];
+        const dropPath = dropEntry[1];
+
+        // ROOT ELEMENT RESTRICTION:
+        // If dragging a root-level element (path.length === 1),
+        // it can only drop at root level OR inside a Column element
+        if (dragPath.length === 1 && dropPath.length > 1) {
+          // Check if the drop target is inside a Column
+          const isInsideColumn = editor.api.some({
+            at: dropPath,
+            match: { type: editor.getType(KEYS.column) },
+          });
+
+          // Only allow drop inside Column, not inside other containers like bullet/cycle
+          if (!isInsideColumn) {
+            return false;
+          }
+        }
 
         // Check if this element requires sibling-only drops
         if (requiresSiblingOnlyDrop(dragElementType)) {
@@ -158,10 +183,15 @@ export function Draggable(props: PlateElementProps) {
 
   const isInColumn = path.length === 3;
   const isInTable = path.length === 4;
+  const showHoverBorder = React.useMemo(
+    () => BLOCKS.some((block) => block.type === element.type),
+    [element.type],
+  );
 
-  if (path.length === 2) {
-    orientation = "horizontal";
-  }
+  // Orientation is for UI styling (horizontal/vertical grip handle display)
+  // path.length === 2 means elements inside a layout block like bullet/cycle - show horizontal grip
+  const orientation: "horizontal" | "vertical" =
+    path.length === 2 ? "horizontal" : "vertical";
 
   const [previewTop, setPreviewTop] = React.useState(0);
 
@@ -187,8 +217,9 @@ export function Draggable(props: PlateElementProps) {
 
   return (
     <div
+      data-dnd-wrapper="true"
       className={cn(
-        path?.length === 1 && "px-16",
+        path?.length === 1 && "px-4 md:px-16",
         // path?.length === 2 && "pl-8",
         getGridClassForElement(
           editor as unknown as PlateEditor,
@@ -201,13 +232,14 @@ export function Draggable(props: PlateElementProps) {
         className={cn(
           "relative h-full",
           isDragging && "opacity-50",
-          "after:absolute after:-inset-1 after:pointer-events-none hover:after:border hover:after:border-blue-400",
+          showHoverBorder &&
+            "after:pointer-events-none after:absolute after:-inset-1 hover:after:border hover:after:border-blue-400",
           getContainerTypes(editor).includes(element.type)
             ? "group/container"
             : "group",
         )}
       >
-        {!isInTable && (
+        {!isInTable && !editor.dom.readOnly && (
           <Gutter orientation={orientation}>
             <div
               className={cn(
@@ -240,7 +272,7 @@ export function Draggable(props: PlateElementProps) {
                   ref={handleRef}
                   variant="ghost"
                   className={cn(
-                    "p-0 bg-background/50",
+                    "bg-background/50 p-0",
                     orientation === "horizontal" ? "h-5 w-6" : "h-6 w-5",
                   )}
                   data-plate-prevent-deselect
@@ -260,7 +292,7 @@ export function Draggable(props: PlateElementProps) {
 
         <div
           ref={previewRef}
-          className={cn("pointer-events-none absolute -left-0 hidden w-full")}
+          className={cn("pointer-events-none absolute left-0 hidden w-full")}
           style={{ top: `${-previewTop}px` }}
           contentEditable={false}
         />
@@ -294,8 +326,33 @@ function Gutter({
     BlockSelectionPlugin,
     "isSelectionAreaVisible",
   );
+  const isTouchDevice = useIsTouchDevice();
+  const isEditorFocused = useFocused();
 
   const selected = useSelected();
+
+  // Check if the editor's selection/cursor is within this element
+  const isFocusedWithin = useEditorSelector(() => {
+    if (!isEditorFocused || !path) return false;
+
+    const selection = editor.selection;
+    if (!selection) return false;
+
+    // Get the block at the selection focus point
+    const focusBlock = editor.api.block({ at: selection.focus });
+    if (!focusBlock) return false;
+
+    const [, focusPath] = focusBlock;
+
+    // Check if the focus path starts with or is equal to this element's path
+    // This means the cursor is within this element
+    // A path is an ancestor if it's a prefix of the focus path
+    return (
+      PathApi.equals(path, focusPath) ||
+      (focusPath.length > path.length &&
+        focusPath.slice(0, path.length).every((p, i) => p === path[i]))
+    );
+  }, [isEditorFocused, path]);
 
   const isNodeType = (keys: string[] | string) => isType(editor, element, keys);
   const isInColumn = path.length === 3;
@@ -305,25 +362,35 @@ function Gutter({
       {...props}
       className={cn(
         "slate-gutterLeft",
-        "absolute z-50 flex cursor-text hover:opacity-100 sm:opacity-0",
+        "absolute z-50 flex cursor-text",
+        // On touch devices, show when editor is focused and selection is within this element
+        // On desktop, show on hover
+        isTouchDevice
+          ? isFocusedWithin && !isSelectionAreaVisible
+            ? "opacity-100"
+            : "opacity-0"
+          : "hover:opacity-100 sm:opacity-0",
         orientation === "horizontal"
-          ? "left-1/2 top-0 -translate-x-1/2 -translate-y-1/2"
-          : "left-0 top-0 h-full -translate-x-full",
-        getContainerTypes(editor).includes(element.type)
-          ? "group-hover/container:opacity-100"
-          : "group-hover:opacity-100",
+          ? "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          : "top-0 left-0 h-full -translate-x-full",
+        // Desktop hover behavior
+        !isTouchDevice &&
+          (getContainerTypes(editor).includes(element.type)
+            ? "group-hover/container:opacity-100"
+            : "group-hover:opacity-100"),
         isSelectionAreaVisible && "hidden",
-        !selected && "opacity-0",
+        // On desktop, hide when not selected (unless hovering)
+        !isTouchDevice && !selected && "opacity-0",
         // Vertical orientation specific styles
         orientation === "vertical" && [
           isNodeType(KEYS.h1) && "pb-1 text-[1.875em]",
           isNodeType(KEYS.h2) && "pb-1 text-[1.5em]",
-          isNodeType(KEYS.h3) && "pb-1 pt-[2px] text-[1.25em]",
-          isNodeType([KEYS.h4, KEYS.h5]) && "pb-0 pt-1 text-[1.1em]",
+          isNodeType(KEYS.h3) && "pt-[2px] pb-1 text-[1.25em]",
+          isNodeType([KEYS.h4, KEYS.h5]) && "pt-1 pb-0 text-[1.1em]",
           isNodeType(KEYS.h6) && "pb-0",
-          isNodeType(KEYS.p) && "pb-0 pt-1",
+          isNodeType(KEYS.p) && "pt-1 pb-0",
           isNodeType(KEYS.blockquote) && "pb-0",
-          isNodeType(KEYS.codeBlock) && "pb-0 pt-6",
+          isNodeType(KEYS.codeBlock) && "pt-6 pb-0",
           isNodeType([
             KEYS.img,
             KEYS.mediaEmbed,
@@ -331,7 +398,7 @@ function Gutter({
             KEYS.toggle,
             KEYS.column,
           ]) && "py-0",
-          isNodeType([KEYS.placeholder, KEYS.table]) && "pb-0 pt-3",
+          isNodeType([KEYS.placeholder, KEYS.table]) && "pt-3 pb-0",
           isInColumn && "mt-2 h-4 pt-0",
         ],
         className,
@@ -359,13 +426,29 @@ const DragHandle = React.memo(function DragHandle({
   const editor = useEditorRef();
   const element = useElement();
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  // Track if a drag actually happened (vs just a click)
+  const dragStartedRef = React.useRef(false);
+  const pendingBlocksRef = React.useRef<TElement[]>([]);
+
+  React.useEffect(() => {
+    if (isDragging) {
+      dragStartedRef.current = true;
+    }
+  }, [isDragging]);
+
+  const startDrag = (e: React.MouseEvent | React.TouchEvent) => {
     resetPreview();
+    dragStartedRef.current = false;
 
-    if (e.button !== 0 || e.shiftKey) return;
+    // For mouse events, check button
+    if ("button" in e && (e.button !== 0 || e.shiftKey)) return;
 
-    // Set mouse down state to prevent toolbar from showing
-    editor.setOption(MultiDndPlugin, "isMouseDown", true);
+    // For touch events, prevent default to avoid text selection
+    // But for mouse events, we must NOT prevent default or stop propagation
+    // because react-dnd needs these events to bubble up to the handleRef
+    if ("touches" in e) {
+      e.preventDefault();
+    }
 
     const blockSelection = editor
       .getApi(BlockSelectionPlugin)
@@ -386,32 +469,62 @@ const DragHandle = React.memo(function DragHandle({
       ([node]) => node,
     );
 
+    // Store blocks for potential selection on mouse up
+    pendingBlocksRef.current = blocks;
+
     if (blockSelection.length === 0) {
       editor.tf.blur();
       editor.tf.collapse();
     }
 
+    // Only prepare the preview elements, don't set selection yet
     const elements = createDragPreviewElements(editor, blocks);
     previewRef.current?.append(...elements);
     previewRef.current?.classList.remove("hidden");
     previewRef.current?.classList.add("opacity-0");
     editor.setOption(DndPlugin, "multiplePreviewRef", previewRef);
 
-    editor
-      .getApi(BlockSelectionPlugin)
-      .blockSelection.set(blocks.map((block) => block.id as string));
+    // Note: We intentionally do NOT set block selection here
+    // Selection will happen on mouse up if it wasn't a drag
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    startDrag(e);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startDrag(e);
+  };
+
+  const endDrag = () => {
+    resetPreview();
+
+    // Only select blocks on pointer up when this interaction stayed a click.
+    if (!dragStartedRef.current && pendingBlocksRef.current.length > 0) {
+      // Set block selection now (on mouse up) instead of mouse down
+      editor
+        .getApi(BlockSelectionPlugin)
+        .blockSelection.set(
+          pendingBlocksRef.current.map((block) => block.id as string),
+        );
+
+      // Focus the block selection to show toolbar
+      editor.getApi(BlockSelectionPlugin).blockSelection.focus();
+    }
+
+    // Clear pending blocks
+    dragStartedRef.current = false;
+    pendingBlocksRef.current = [];
   };
 
   const handleMouseUp = () => {
-    resetPreview();
+    endDrag();
+  };
 
-    // Reset mouse down state to allow toolbar to show
-    editor.setOption(MultiDndPlugin, "isMouseDown", false);
-
-    // Show toolbar on mouse up (if not dragging)
-    if (!isDragging) {
-      editor.getApi(BlockSelectionPlugin).blockSelection.focus();
-    }
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    endDrag();
   };
 
   const handleMouseEnter = () => {
@@ -451,17 +564,25 @@ const DragHandle = React.memo(function DragHandle({
     <Tooltip delayDuration={1000}>
       <TooltipTrigger asChild>
         <div
-          className="flex size-full items-center justify-center"
+          className="flex size-full touch-none items-center justify-center"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseEnter={handleMouseEnter}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           role="button"
           data-plate-prevent-deselect
         >
           {orientation === "horizontal" ? (
-            <GripHorizontal className="text-muted-foreground" />
+            <GripHorizontal
+              className="text-muted-foreground"
+              data-ppt-ignore="true"
+            />
           ) : (
-            <GripVertical className="text-muted-foreground" />
+            <GripVertical
+              className="text-muted-foreground"
+              data-ppt-ignore="true"
+            />
           )}
         </div>
       </TooltipTrigger>

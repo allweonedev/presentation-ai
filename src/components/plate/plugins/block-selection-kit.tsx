@@ -1,15 +1,44 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: This use requires any */
 "use client";
 
-import { BlockSelectionPlugin } from "@platejs/selection/react";
-import { getPluginTypes, KEYS, type TElement } from "platejs";
+import * as React from "react";
+
+import {
+  BlockSelectionAfterEditable,
+  BlockSelectionPlugin,
+} from "@platejs/selection/react";
+import { getPluginTypes, KEYS } from "platejs";
+import { useEditorRef, usePluginOption } from "platejs/react";
 
 import { BlockSelection } from "@/components/plate/ui/block-selection";
+
+function BlockSelectionFocusBridge() {
+  const editor = useEditorRef();
+  const selectedIds = usePluginOption(BlockSelectionPlugin, "selectedIds");
+  const isSelectionAreaVisible = usePluginOption(
+    BlockSelectionPlugin,
+    "isSelectionAreaVisible",
+  );
+
+  React.useEffect(() => {
+    if (!selectedIds || selectedIds.size === 0 || isSelectionAreaVisible) {
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      editor.getApi(BlockSelectionPlugin).blockSelection.focus();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [editor, isSelectionAreaVisible, selectedIds]);
+
+  return null;
+}
 
 export const BlockSelectionKit = [
   BlockSelectionPlugin.configure(({ editor }) => ({
     options: {
-      enableContextMenu: true,
+      enableContextMenu: false,
       isSelectable: (element) => {
         return !getPluginTypes(editor, [
           KEYS.column,
@@ -20,47 +49,18 @@ export const BlockSelectionKit = [
       },
     },
     render: {
+      afterEditable: () => (
+        <>
+          <BlockSelectionAfterEditable />
+          <BlockSelectionFocusBridge />
+        </>
+      ),
       belowRootNodes: (props) => {
         if (!props.attributes.className?.includes("slate-selectable"))
           return null;
 
         return <BlockSelection {...(props as any)} />;
       },
-    },
-  })).extendEditorTransforms(({ editor, api }) => ({
-    selectAll: () => {
-      const selectedIds = editor.getOption(BlockSelectionPlugin, "selectedIds");
-
-      if (selectedIds?.size === 0) {
-        // First press: select current block
-        const currentBlock = editor.api.block({ at: editor.selection?.focus });
-        if (currentBlock) {
-          const [block] = currentBlock;
-          if (block.id) {
-            api.blockSelection.set([block.id as string]);
-            return true; // Indicate we handled it
-          }
-        }
-      }
-
-      // Second press or fallback: select all blocks
-      const ids = editor.api
-        .blocks({
-          at: [],
-          mode: "highest",
-          match: (n, p) =>
-            !!n.id && api.blockSelection.isSelectable(n[0] as TElement, p),
-        })
-        .map((n) => n[0].id);
-
-      editor.setOption(
-        BlockSelectionPlugin,
-        "selectedIds",
-        new Set(ids as string[]),
-      );
-      api.blockSelection.focus();
-
-      return true;
     },
   })),
 ];

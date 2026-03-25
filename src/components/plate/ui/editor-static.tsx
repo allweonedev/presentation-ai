@@ -1,15 +1,15 @@
 import { type VariantProps } from "class-variance-authority";
 
 import { cva } from "class-variance-authority";
-import { type PlateStaticProps, PlateStatic } from "platejs";
+import { type PlateStaticProps, PlateStatic } from "platejs/static";
 
 import { cn } from "@/lib/utils";
 
 export const editorVariants = cva(
   cn(
     "group/editor",
-    "relative w-full cursor-text overflow-x-hidden break-words whitespace-pre-wrap select-text",
-    "rounded-md ring-offset-background focus-visible:outline-none",
+    "relative w-full cursor-text overflow-x-hidden wrap-break-word whitespace-pre-wrap select-text",
+    "rounded-md ring-offset-background focus-visible:outline-hidden",
     "placeholder:text-muted-foreground/80 **:data-slate-placeholder:top-[auto_!important] **:data-slate-placeholder:text-muted-foreground/80 **:data-slate-placeholder:opacity-100!",
     "[&_strong]:font-bold",
   ),
@@ -51,3 +51,5 @@ export function EditorStatic({
     />
   );
 }
+
+

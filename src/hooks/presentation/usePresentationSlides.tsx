@@ -1,6 +1,6 @@
 "use client";
 
-import { type PlateSlide } from "@/components/presentation/utils/parser";
+import { type PlateSlide } from "@/components/notebook/presentation/utils/parser";
 import { usePresentationState } from "@/states/presentation-state";
 import {
   KeyboardSensor,
@@ -10,7 +10,6 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 
 interface SlideWithId extends PlateSlide {
@@ -18,12 +17,19 @@ interface SlideWithId extends PlateSlide {
 }
 
 export function usePresentationSlides() {
+  // Subscribe to slide IDs only for rendering - prevents re-render when content changes
+  // shallow ensures array comparison is shallow (same values = no re-render)
+  const slideIds = usePresentationState((s) =>
+    s.slides.map((slide) => slide.id),
+  );
+  // Keep full slides reference for drag operations only
   const slides = usePresentationState((s) => s.slides);
   const setSlides = usePresentationState((s) => s.setSlides);
-  const setCurrentSlideIndex = usePresentationState(
-    (s) => s.setCurrentSlideIndex,
-  );
+  const setCurrentSlideId = usePresentationState((s) => s.setCurrentSlideId);
   const isPresenting = usePresentationState((s) => s.isPresenting);
+  const setIsReorderingSlides = usePresentationState(
+    (s) => s.setIsReorderingSlides,
+  );
 
   // Configure DnD sensors
   const sensors = useSensors(
@@ -37,14 +43,10 @@ export function usePresentationSlides() {
     }),
   );
 
-  // Ensure all slides have IDs
-  const items = useMemo(
-    () =>
-      slides.map((slide) => (slide?.id ? slide : { ...slide, id: nanoid() })),
-    [slides],
-  );
+  // Memoize slide IDs for stable reference
+  const items = useMemo(() => slideIds, [slideIds]);
 
-  // Handle drag end
+  // Handle drag end - needs full slides for reordering
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       if (isPresenting) return; // Prevent drag when presenting
@@ -52,25 +54,33 @@ export function usePresentationSlides() {
       const { active, over } = event;
 
       if (over && active.id !== over.id) {
-        const oldIndex = items.findIndex(
+        const oldIndex = slides.findIndex(
           (item: SlideWithId) => item.id === active.id,
         );
-        const newIndex = items.findIndex(
+        const newIndex = slides.findIndex(
           (item: SlideWithId) => item.id === over.id,
         );
-        const newArray = arrayMove(items, oldIndex, newIndex);
+        const newArray = arrayMove(slides, oldIndex, newIndex);
         setSlides([...newArray]);
-        // Update current slide index to the new position
-        setCurrentSlideIndex(newIndex);
+        // Update current slide to the dragged slide's ID (not new position index)
+        setCurrentSlideId(active.id as string);
       }
+      // Clear reordering flag at end
+      setIsReorderingSlides(false);
     },
-    [items, isPresenting, setSlides, setCurrentSlideIndex],
+    [slides, isPresenting, setSlides, setCurrentSlideId, setIsReorderingSlides],
   );
 
+  // Expose a start handler to set reordering flag (to be wired in DndContext)
+  const handleDragStart = useCallback(() => {
+    if (isPresenting) return;
+    setIsReorderingSlides(true);
+  }, [isPresenting, setIsReorderingSlides]);
+
   // Scroll to a slide by index
-  const scrollToSlide = useCallback((index: number) => {
+  const scrollToSlide = useCallback((id: string) => {
     // Target the slide wrapper instead of slide container
-    const slideElement = document.querySelector(`.slide-wrapper-${index}`);
+    const slideElement = document.querySelector(`.slide-wrapper-${id}`);
 
     if (slideElement) {
       // Find the scrollable container
@@ -82,25 +92,17 @@ export function usePresentationSlides() {
           top: (slideElement as HTMLElement).offsetTop - 30, // Add a small offset for better visibility
           behavior: "smooth",
         });
-
-        setTimeout(() => {
-          // Focus the editor after scrolling
-          // Try to find and focus the editor within the slide container
-          const editorElement = slideElement.querySelector(
-            "[contenteditable=true]",
-          );
-          if (editorElement instanceof HTMLElement) {
-            editorElement.focus();
-          }
-        }, 500);
       }
     }
   }, []);
 
   return {
     items,
+    slideIds,
+    slides, // Still exposed for components that need full slide data
     sensors,
     isPresenting,
+    handleDragStart,
     handleDragEnd,
     scrollToSlide,
   };

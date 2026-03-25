@@ -1,0 +1,3974 @@
+[
+  {
+    "name": "Omolon",
+    "colors": ["#091E3A", "#2F80ED", "#2D9EE0"],
+    "colorsname": ["dark blue", "bright blue", "light blue"],
+    "keywords": [
+      ["dark", "blue", "serious", "deep"],
+      ["bright", "blue", "trust", "calm"],
+      ["bright", "light blue", "fresh", "cool"]
+    ]
+  },
+  {
+    "name": "Farhan",
+    "colors": ["#9400D3", "#4B0082"],
+    "colorsname": ["dark violet", "indigo"],
+    "keywords": [
+      ["dark", "violet", "mystery", "royalty"],
+      ["dark", "indigo", "depth", "wisdom"]
+    ]
+  },
+  {
+    "name": "Purple",
+    "colors": ["#c84e89", "#F15F79"],
+    "colorsname": ["light pinkish purple", "light pink"],
+    "keywords": [
+      ["light", "pinkish", "purple", "romantic"],
+      ["bright", "pink", "playful", "cheerful"]
+    ]
+  },
+  {
+    "name": "Ibtesam",
+    "colors": ["#00F5A0", "#00D9F5"],
+    "colorsname": ["light green", "light cyan"],
+    "keywords": [
+      ["bright", "green", "fresh", "nature"],
+      ["bright", "cyan", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Radioactive Heat",
+    "colors": ["#F7941E", "#72C6EF", "#00A651"],
+    "colorsname": ["orange", "light blue", "green"],
+    "keywords": [
+      ["bright", "orange", "energy", "vibrant"],
+      ["bright", "light blue", "calm", "refreshing"],
+      ["bright", "green", "nature", "fresh"]
+    ]
+  },
+  {
+    "name": "The Sky And The Sea",
+    "colors": ["#F7941E", "#004E8F"],
+    "colorsname": ["orange", "dark blue"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "From Ice To Fire",
+    "colors": ["#72C6EF", "#004E8F"],
+    "colorsname": ["light blue", "dark blue"],
+    "keywords": [
+      ["bright", "light blue", "cool", "refreshing"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Blue & Orange",
+    "colors": ["#FD8112", "#0085CA"],
+    "colorsname": ["bright orange", "blue"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["bright", "blue", "trust", "calm"]
+    ]
+  },
+  {
+    "name": "Purple Dream",
+    "colors": ["#bf5ae0", "#a811da"],
+    "colorsname": ["pinkish purple", "purple"],
+    "keywords": [
+      ["bright", "pinkish", "purple", "romantic"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Blu",
+    "colors": ["#00416A", "#E4E5E6"],
+    "colorsname": ["dark blue", "light gray"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Summer Breeze",
+    "colors": ["#fbed96", "#abecd6"],
+    "colorsname": ["light yellow", "light green"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Ver",
+    "colors": ["#FFE000", "#799F0C"],
+    "colorsname": ["bright yellow", "green"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["bright", "green", "nature", "fresh"]
+    ]
+  },
+  {
+    "name": "Ver Black",
+    "colors": ["#F7F8F8", "#ACBB78"],
+    "colorsname": ["light gray", "olive"],
+    "keywords": [
+      ["light", "gray", "neutral", "calm"],
+      ["dark", "olive", "earthy", "natural"]
+    ]
+  },
+  {
+    "name": "Combi",
+    "colors": ["#00416A", "#799F0C", "#FFE000"],
+    "colorsname": ["dark blue", "green", "bright yellow"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["bright", "green", "nature", "fresh"],
+      ["bright", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Anwar",
+    "colors": ["#334d50", "#cbcaa5"],
+    "colorsname": ["dark grayish teal", "light beige"],
+    "keywords": [
+      ["dark", "grayish", "teal", "calm"],
+      ["light", "beige", "neutral", "warm"]
+    ]
+  },
+  {
+    "name": "Bluelagoo",
+    "colors": ["#0052D4", "#4364F7", "#6FB1FC"],
+    "colorsname": ["blue", "light blue", "light blue"],
+    "keywords": [
+      ["bright", "blue", "trust", "calm"],
+      ["bright", "light blue", "cool", "refreshing"],
+      ["bright", "light blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Lunada",
+    "colors": ["#5433FF", "#20BDFF", "#A5FECB"],
+    "colorsname": ["dark blue", "light blue", "light green"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["bright", "light blue", "cool", "refreshing"],
+      ["bright", "light green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Reaqua",
+    "colors": ["#799F0C", "#ACBB78"],
+    "colorsname": ["green", "olive"],
+    "keywords": [
+      ["bright", "green", "nature", "fresh"],
+      ["dark", "olive", "earthy", "natural"]
+    ]
+  },
+  {
+    "name": "Mango",
+    "colors": ["#ffe259", "#ffa751"],
+    "colorsname": ["light yellow", "peach"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["bright", "peach", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Bupe",
+    "colors": ["#00416A", "#E4E5E6"],
+    "colorsname": ["dark blue", "light gray"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Rea",
+    "colors": ["#FFE000", "#799F0C"],
+    "colorsname": ["bright yellow", "green"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["bright", "green", "nature", "fresh"]
+    ]
+  },
+  {
+    "name": "Windy",
+    "colors": ["#acb6e5", "#86fde8"],
+    "colorsname": ["light blue", "light cyan"],
+    "keywords": [
+      ["light", "blue", "fresh", "calm"],
+      ["bright", "cyan", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Royal Blue",
+    "colors": ["#536976", "#292E49"],
+    "colorsname": ["dark bluish gray", "dark blue"],
+    "keywords": [
+      ["dark", "bluish", "gray", "serious"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Royal Blue + Petrol",
+    "colors": ["#BBD2C5", "#536976", "#292E49"],
+    "colorsname": ["light gray", "dark bluish gray", "dark blue"],
+    "keywords": [
+      ["light", "gray", "neutral", "calm"],
+      ["dark", "bluish", "gray", "serious"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Copper",
+    "colors": ["#B79891", "#94716B"],
+    "colorsname": ["light brown", "dark brown"],
+    "keywords": [
+      ["light", "brown", "warm", "earthy"],
+      ["dark", "brown", "earthy", "natural"]
+    ]
+  },
+  {
+    "name": "Anamnisar",
+    "colors": ["#9796f0", "#fbc7d4"],
+    "colorsname": ["light purple", "light pink"],
+    "keywords": [
+      ["light", "purple", "romantic", "soft"],
+      ["light", "pink", "cheerful", "soft"]
+    ]
+  },
+  {
+    "name": "Petrol",
+    "colors": ["#BBD2C5", "#536976"],
+    "colorsname": ["light gray", "dark bluish gray"],
+    "keywords": [
+      ["light", "gray", "neutral", "calm"],
+      ["dark", "bluish", "gray", "serious"]
+    ]
+  },
+  {
+    "name": "Sky",
+    "colors": ["#076585", "#fff"],
+    "colorsname": ["dark cyan", "white"],
+    "keywords": [
+      ["dark", "cyan", "cool", "refreshing"],
+      ["light", "white", "pure", "clean"]
+    ]
+  },
+  {
+    "name": "Sel",
+    "colors": ["#00467F", "#A5CC82"],
+    "colorsname": ["dark blue", "light green"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Afternoon",
+    "colors": ["#000C40", "#607D8B"],
+    "colorsname": ["dark blue", "dark gray"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Skyline",
+    "colors": ["#1488CC", "#2B32B2"],
+    "colorsname": ["bright blue", "dark blue"],
+    "keywords": [
+      ["bright", "blue", "trust", "calm"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "DIMIGO",
+    "colors": ["#ec008c", "#fc6767"],
+    "colorsname": ["bright pink", "light red"],
+    "keywords": [
+      ["bright", "pink", "romantic", "cheerful"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Purple Love",
+    "colors": ["#cc2b5e", "#753a88"],
+    "colorsname": ["dark pink", "dark purple"],
+    "keywords": [
+      ["dark", "pink", "romantic", "soft"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Sexy Blue",
+    "colors": ["#2193b0", "#6dd5ed"],
+    "colorsname": ["bright blue", "light blue"],
+    "keywords": [
+      ["bright", "blue", "trust", "calm"],
+      ["bright", "light blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Blooker20",
+    "colors": ["#e65c00", "#F9D423"],
+    "colorsname": ["bright orange", "light yellow"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Sea Blue",
+    "colors": ["#2b5876", "#4e4376"],
+    "colorsname": ["dark teal", "dark grayish blue"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["dark", "grayish blue", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Nimvelo",
+    "colors": ["#314755", "#26a0da"],
+    "colorsname": ["dark teal", "bright blue"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["bright", "blue", "trust", "calm"]
+    ]
+  },
+  {
+    "name": "Hazel",
+    "colors": ["#77A1D3", "#79CBCA", "#E684AE"],
+    "colorsname": ["light blue", "light cyan", "light pink"],
+    "keywords": [
+      ["light", "blue", "cool", "refreshing"],
+      ["light", "cyan", "fresh", "clean"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Noon to Dusk",
+    "colors": ["#ff6e7f", "#bfe9ff"],
+    "colorsname": ["light pink", "light blue"],
+    "keywords": [
+      ["bright", "pink", "romantic", "soft"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "YouTube",
+    "colors": ["#e52d27", "#b31217"],
+    "colorsname": ["bright red", "dark red"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["dark", "red", "serious", "passionate"]
+    ]
+  },
+  {
+    "name": "Cool Brown",
+    "colors": ["#603813", "#b29f94"],
+    "colorsname": ["dark brown", "light brown"],
+    "keywords": [
+      ["dark", "brown", "earthy", "natural"],
+      ["light", "brown", "warm", "earthy"]
+    ]
+  },
+  {
+    "name": "Harmonic Energy",
+    "colors": ["#16A085", "#F4D03F"],
+    "colorsname": ["dark teal", "bright yellow"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["bright", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Playing with Reds",
+    "colors": ["#D31027", "#EA384D"],
+    "colorsname": ["bright red", "bright pink"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["bright", "pink", "romantic", "cheerful"]
+    ]
+  },
+  {
+    "name": "Sunny Days",
+    "colors": ["#EDE574", "#E1F5C4"],
+    "colorsname": ["light yellow", "light green"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Green Beach",
+    "colors": ["#02AAB0", "#00CDAC"],
+    "colorsname": ["bright teal", "bright cyan"],
+    "keywords": [
+      ["bright", "teal", "fresh", "cool"],
+      ["bright", "cyan", "refreshing", "calm"]
+    ]
+  },
+  {
+    "name": "Intuitive Purple",
+    "colors": ["#DA22FF", "#9733EE"],
+    "colorsname": ["bright purple", "dark purple"],
+    "keywords": [
+      ["bright", "purple", "romantic", "mystery"],
+      ["dark", "purple", "serious", "royalty"]
+    ]
+  },
+  {
+    "name": "Emerald Water",
+    "colors": ["#348F50", "#56B4D3"],
+    "colorsname": ["dark green", "light blue"],
+    "keywords": [
+      ["dark", "green", "nature", "fresh"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Lemon Twist",
+    "colors": ["#3CA55C", "#B5AC49"],
+    "colorsname": ["bright green", "light brown"],
+    "keywords": [
+      ["bright", "green", "fresh", "nature"],
+      ["light", "brown", "warm", "earthy"]
+    ]
+  },
+  {
+    "name": "Monte Carlo",
+    "colors": ["#CC95C0", "#DBD4B4", "#7AA1D2"],
+    "colorsname": ["light pink", "light brown", "light blue"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "brown", "warm", "earthy"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Horizon",
+    "colors": ["#003973", "#E5E5BE"],
+    "colorsname": ["dark blue", "light gray"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Rose Water",
+    "colors": ["#E55D87", "#5FC3E4"],
+    "colorsname": ["light pink", "light blue"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Frozen",
+    "colors": ["#403B4A", "#E7E9BB"],
+    "colorsname": ["dark gray", "light gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Mango Pulp",
+    "colors": ["#F09819", "#EDDE5D"],
+    "colorsname": ["bright orange", "light yellow"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Bloody Mary",
+    "colors": ["#FF512F", "#DD2476"],
+    "colorsname": ["bright red", "bright pink"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["bright", "pink", "romantic", "cheerful"]
+    ]
+  },
+  {
+    "name": "Aubergine",
+    "colors": ["#AA076B", "#61045F"],
+    "colorsname": ["dark purple", "dark magenta"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "magenta", "bold", "confident"]
+    ]
+  },
+  {
+    "name": "Aqua Marine",
+    "colors": ["#1A2980", "#26D0CE"],
+    "colorsname": ["dark blue", "light cyan"],
+    "keywords": [
+      ["dark", "blue", "depth", "cool"],
+      ["light", "cyan", "refreshing", "calm"]
+    ]
+  },
+  {
+    "name": "Sunrise",
+    "colors": ["#FF512F", "#F09819"],
+    "colorsname": ["bright red", "bright orange"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["bright", "orange", "warm", "cheerful"]
+    ]
+  },
+  {
+    "name": "Purple Paradise",
+    "colors": ["#1D2B64", "#F8CDDA"],
+    "colorsname": ["dark blue", "light pink"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Stripe",
+    "colors": ["#1FA2FF", "#12D8FA", "#A6FFCB"],
+    "colorsname": ["bright blue", "light blue", "light green"],
+    "keywords": [
+      ["bright", "blue", "trust", "calm"],
+      ["bright", "light blue", "cool", "refreshing"],
+      ["bright", "light green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Sea Weed",
+    "colors": ["#4CB8C4", "#3CD3AD"],
+    "colorsname": ["dark cyan", "light teal"],
+    "keywords": [
+      ["dark", "cyan", "cool", "refreshing"],
+      ["light", "teal", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Pinky",
+    "colors": ["#DD5E89", "#F7BB97"],
+    "colorsname": ["light pink", "light peach"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "peach", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Cherry",
+    "colors": ["#EB3349", "#F45C43"],
+    "colorsname": ["bright red", "light red"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "red", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Mojito",
+    "colors": ["#1D976C", "#93F9B9"],
+    "colorsname": ["dark green", "light cyan"],
+    "keywords": [
+      ["dark", "green", "nature", "fresh"],
+      ["bright", "cyan", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Juicy Orange",
+    "colors": ["#FF8008", "#FFC837"],
+    "colorsname": ["bright orange", "light yellow"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Mirage",
+    "colors": ["#16222A", "#3A6073"],
+    "colorsname": ["dark gray", "dark blue"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["dark", "blue", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Steel Gray",
+    "colors": ["#1F1C2C", "#928DAB"],
+    "colorsname": ["dark gray", "light gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Kashmir",
+    "colors": ["#614385", "#516395"],
+    "colorsname": ["dark purple", "dark blue"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Electric Violet",
+    "colors": ["#4776E6", "#8E54E9"],
+    "colorsname": ["bright blue", "bright purple"],
+    "keywords": [
+      ["bright", "blue", "trust", "cool"],
+      ["bright", "purple", "romantic", "mystery"]
+    ]
+  },
+  {
+    "name": "Venice Blue",
+    "colors": ["#085078", "#85D8CE"],
+    "colorsname": ["dark cyan", "light cyan"],
+    "keywords": [
+      ["dark", "cyan", "cool", "refreshing"],
+      ["light", "cyan", "fresh", "calm"]
+    ]
+  },
+  {
+    "name": "Bora Bora",
+    "colors": ["#2BC0E4", "#EAECC6"],
+    "colorsname": ["bright cyan", "light gray"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Moss",
+    "colors": ["#134E5E", "#71B280"],
+    "colorsname": ["dark teal", "light green"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Shroom Haze",
+    "colors": ["#5C258D", "#4389A2"],
+    "colorsname": ["dark purple", "dark blue"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "blue", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Mystic",
+    "colors": ["#757F9A", "#D7DDE8"],
+    "colorsname": ["dark gray", "light purple"],
+    "keywords": [
+      ["dark", "gray", "mystical", "serious"],
+      ["light", "purple", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Midnight City",
+    "colors": ["#232526", "#414345"],
+    "colorsname": ["dark gray", "dark gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Sea Blizz",
+    "colors": ["#1CD8D2", "#93EDC7"],
+    "colorsname": ["bright cyan", "light green"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Opa",
+    "colors": ["#3D7EAA", "#FFE47A"],
+    "colorsname": ["dark blue", "light yellow"],
+    "keywords": [
+      ["dark", "blue", "depth", "cool"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Titanium",
+    "colors": ["#283048", "#859398"],
+    "colorsname": ["dark gray", "light gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Mantle",
+    "colors": ["#24C6DC", "#514A9D"],
+    "colorsname": ["bright cyan", "dark purple"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Dracula",
+    "colors": ["#DC2424", "#4A569D"],
+    "colorsname": ["bright red", "dark blue"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Peach",
+    "colors": ["#ED4264", "#FFEDBC"],
+    "colorsname": ["light pink", "light yellow"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Moonrise",
+    "colors": ["#DAE2F8", "#D6A4A4"],
+    "colorsname": ["light blue", "light pink"],
+    "keywords": [
+      ["light", "blue", "cool", "refreshing"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Clouds",
+    "colors": ["#ECE9E6", "#FFFFFF"],
+    "colorsname": ["light gray", "white"],
+    "keywords": [
+      ["light", "gray", "neutral", "calm"],
+      ["light", "white", "pure", "clean"]
+    ]
+  },
+  {
+    "name": "Stellar",
+    "colors": ["#7474BF", "#348AC7"],
+    "colorsname": ["dark blue", "bright blue"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["bright", "blue", "trust", "calm"]
+    ]
+  },
+  {
+    "name": "Bourbon",
+    "colors": ["#EC6F66", "#F3A183"],
+    "colorsname": ["light red", "light brown"],
+    "keywords": [
+      ["light", "red", "warm", "soft"],
+      ["light", "brown", "warm", "earthy"]
+    ]
+  },
+  {
+    "name": "Calm Darya",
+    "colors": ["#5f2c82", "#49a09d"],
+    "colorsname": ["dark purple", "dark teal"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "teal", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Influenza",
+    "colors": ["#C04848", "#480048"],
+    "colorsname": ["dark red", "dark magenta"],
+    "keywords": [
+      ["dark", "red", "energy", "vibrant"],
+      ["dark", "magenta", "bold", "confident"]
+    ]
+  },
+  {
+    "name": "Shrimpy",
+    "colors": ["#e43a15", "#e65245"],
+    "colorsname": ["bright red", "light red"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "red", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Army",
+    "colors": ["#414d0b", "#727a17"],
+    "colorsname": ["dark olive", "dark green"],
+    "keywords": [
+      ["dark", "olive", "earthy", "natural"],
+      ["dark", "green", "nature", "fresh"]
+    ]
+  },
+  {
+    "name": "Miaka",
+    "colors": ["#FC354C", "#0ABFBC"],
+    "colorsname": ["bright red", "light cyan"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "cyan", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Pinot Noir",
+    "colors": ["#4b6cb7", "#182848"],
+    "colorsname": ["dark blue", "dark blue"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Day Tripper",
+    "colors": ["#f857a6", "#ff5858"],
+    "colorsname": ["bright pink", "bright red"],
+    "keywords": [
+      ["bright", "pink", "romantic", "soft"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Namn",
+    "colors": ["#a73737", "#7a2828"],
+    "colorsname": ["dark red", "dark red"],
+    "keywords": [
+      ["dark", "red", "energy", "vibrant"],
+      ["dark", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Blurry Beach",
+    "colors": ["#d53369", "#cbad6d"],
+    "colorsname": ["light pink", "light brown"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "brown", "warm", "earthy"]
+    ]
+  },
+  {
+    "name": "Vasily",
+    "colors": ["#e9d362", "#333333"],
+    "colorsname": ["light yellow", "dark gray"],
+    "keywords": [
+      ["light", "yellow", "cheerful", "sunny"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "A Lost Memory",
+    "colors": ["#DE6262", "#FFB88C"],
+    "colorsname": ["bright red", "light peach"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "peach", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Petrichor",
+    "colors": ["#666600", "#999966"],
+    "colorsname": ["dark olive", "light olive"],
+    "keywords": [
+      ["dark", "olive", "earthy", "natural"],
+      ["light", "olive", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Jonquil",
+    "colors": ["#FFEEEE", "#DDEFBB"],
+    "colorsname": ["light yellow", "light green"],
+    "keywords": [
+      ["light", "yellow", "cheerful", "sunny"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Sirius Tamed",
+    "colors": ["#EFEFBB", "#D4D3DD"],
+    "colorsname": ["light yellow", "light gray"],
+    "keywords": [
+      ["light", "yellow", "cheerful", "sunny"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Kyoto",
+    "colors": ["#c21500", "#ffc500"],
+    "colorsname": ["bright red", "bright yellow"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["bright", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Misty Meadow",
+    "colors": ["#215f00", "#e4e4d9"],
+    "colorsname": ["dark green", "light gray"],
+    "keywords": [
+      ["dark", "green", "nature", "fresh"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Aqualicious",
+    "colors": ["#50C9C3", "#96DEDA"],
+    "colorsname": ["bright teal", "light cyan"],
+    "keywords": [
+      ["bright", "teal", "fresh", "cool"],
+      ["light", "cyan", "refreshing", "calm"]
+    ]
+  },
+  {
+    "name": "Moor",
+    "colors": ["#616161", "#9bc5c3"],
+    "colorsname": ["dark gray", "light cyan"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "cyan", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Almost",
+    "colors": ["#ddd6f3", "#faaca8"],
+    "colorsname": ["light purple", "light peach"],
+    "keywords": [
+      ["light", "purple", "romantic", "soft"],
+      ["light", "peach", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Forever Lost",
+    "colors": ["#5D4157", "#A8CABA"],
+    "colorsname": ["dark gray", "light gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Winter",
+    "colors": ["#E6DADA", "#274046"],
+    "colorsname": ["light gray", "dark teal"],
+    "keywords": [
+      ["light", "gray", "neutral", "calm"],
+      ["dark", "teal", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Nelson",
+    "colors": ["#f2709c", "#ff9472"],
+    "colorsname": ["bright pink", "light orange"],
+    "keywords": [
+      ["bright", "pink", "romantic", "soft"],
+      ["light", "orange", "cheerful", "warm"]
+    ]
+  },
+  {
+    "name": "Autumn",
+    "colors": ["#DAD299", "#B0DAB9"],
+    "colorsname": ["light yellow", "light green"],
+    "keywords": [
+      ["light", "yellow", "cheerful", "sunny"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Candy",
+    "colors": ["#D3959B", "#BFE6BA"],
+    "colorsname": ["light pink", "light green"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Reef",
+    "colors": ["#00d2ff", "#3a7bd5"],
+    "colorsname": ["bright cyan", "dark blue"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "The Strain",
+    "colors": ["#870000", "#190A05"],
+    "colorsname": ["dark red", "black"],
+    "keywords": [
+      ["dark", "red", "energy", "vibrant"],
+      ["dark", "black", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Dirty Fog",
+    "colors": ["#B993D6", "#8CA6DB"],
+    "colorsname": ["light purple", "light blue"],
+    "keywords": [
+      ["light", "purple", "romantic", "soft"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Earthly",
+    "colors": ["#649173", "#DBD5A4"],
+    "colorsname": ["dark green", "light beige"],
+    "keywords": [
+      ["dark", "green", "nature", "fresh"],
+      ["light", "beige", "neutral", "warm"]
+    ]
+  },
+  {
+    "name": "Virgin",
+    "colors": ["#C9FFBF", "#FFAFBD"],
+    "colorsname": ["light green", "light pink"],
+    "keywords": [
+      ["light", "green", "fresh", "nature"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Ash",
+    "colors": ["#606c88", "#3f4c6b"],
+    "colorsname": ["dark gray", "dark blue"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["dark", "blue", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Cherryblossoms",
+    "colors": ["#FBD3E9", "#BB377D"],
+    "colorsname": ["light pink", "dark pink"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["dark", "pink", "bold", "vibrant"]
+    ]
+  },
+  {
+    "name": "Parklife",
+    "colors": ["#ADD100", "#7B920A"],
+    "colorsname": ["light green", "dark green"],
+    "keywords": [
+      ["light", "green", "fresh", "nature"],
+      ["dark", "green", "nature", "fresh"]
+    ]
+  },
+  {
+    "name": "Dance To Forget",
+    "colors": ["#FF4E50", "#F9D423"],
+    "colorsname": ["bright red", "light yellow"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Starfall",
+    "colors": ["#F0C27B", "#4B1248"],
+    "colorsname": ["light brown", "dark purple"],
+    "keywords": [
+      ["light", "brown", "warm", "earthy"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Red Mist",
+    "colors": ["#000000", "#e74c3c"],
+    "colorsname": ["black", "bright red"],
+    "keywords": [
+      ["dark", "black", "depth", "serious"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Teal Love",
+    "colors": ["#AAFFA9", "#11FFBD"],
+    "colorsname": ["light teal", "light cyan"],
+    "keywords": [
+      ["light", "teal", "fresh", "cool"],
+      ["light", "cyan", "refreshing", "calm"]
+    ]
+  },
+  {
+    "name": "Neon Life",
+    "colors": ["#B3FFAB", "#12FFF7"],
+    "colorsname": ["bright green", "bright cyan"],
+    "keywords": [
+      ["bright", "green", "fresh", "nature"],
+      ["bright", "cyan", "refreshing", "cool"]
+    ]
+  },
+  {
+    "name": "Man of Steel",
+    "colors": ["#780206", "#061161"],
+    "colorsname": ["dark red", "dark blue"],
+    "keywords": [
+      ["dark", "red", "energy", "vibrant"],
+      ["dark", "blue", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Amethyst",
+    "colors": ["#9D50BB", "#6E48AA"],
+    "colorsname": ["bright purple", "dark purple"],
+    "keywords": [
+      ["bright", "purple", "romantic", "mystery"],
+      ["dark", "purple", "serious", "royalty"]
+    ]
+  },
+  {
+    "name": "Cheer Up Emo Kid",
+    "colors": ["#556270", "#FF6B6B"],
+    "colorsname": ["dark gray", "bright red"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Shore",
+    "colors": ["#70e1f5", "#ffd194"],
+    "colorsname": ["light blue", "light yellow"],
+    "keywords": [
+      ["light", "blue", "cool", "refreshing"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Facebook Messenger",
+    "colors": ["#00c6ff", "#0072ff"],
+    "colorsname": ["bright blue", "bright blue"],
+    "keywords": [
+      ["bright", "blue", "trust", "cool"],
+      ["bright", "blue", "trust", "cool"]
+    ]
+  },
+  {
+    "name": "SoundCloud",
+    "colors": ["#fe8c00", "#f83600"],
+    "colorsname": ["bright orange", "bright red"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Behongo",
+    "colors": ["#52c234", "#061700"],
+    "colorsname": ["bright green", "dark green"],
+    "keywords": [
+      ["bright", "green", "fresh", "nature"],
+      ["dark", "green", "earthy", "natural"]
+    ]
+  },
+  {
+    "name": "ServQuick",
+    "colors": ["#485563", "#29323c"],
+    "colorsname": ["dark gray", "dark gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Friday",
+    "colors": ["#83a4d4", "#b6fbff"],
+    "colorsname": ["light blue", "light cyan"],
+    "keywords": [
+      ["light", "blue", "cool", "refreshing"],
+      ["light", "cyan", "fresh", "calm"]
+    ]
+  },
+  {
+    "name": "Martini",
+    "colors": ["#FDFC47", "#24FE41"],
+    "colorsname": ["bright yellow", "bright green"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["bright", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Metallic Toad",
+    "colors": ["#abbaab", "#ffffff"],
+    "colorsname": ["light gray", "white"],
+    "keywords": [
+      ["light", "gray", "neutral", "calm"],
+      ["light", "white", "pure", "clean"]
+    ]
+  },
+  {
+    "name": "Between The Clouds",
+    "colors": ["#73C8A9", "#373B44"],
+    "colorsname": ["light teal", "dark gray"],
+    "keywords": [
+      ["light", "teal", "fresh", "cool"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Crazy Orange I",
+    "colors": ["#D38312", "#A83279"],
+    "colorsname": ["bright orange", "dark pink"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["dark", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Hersheys",
+    "colors": ["#1e130c", "#9a8478"],
+    "colorsname": ["dark brown", "light brown"],
+    "keywords": [
+      ["dark", "brown", "earthy", "natural"],
+      ["light", "brown", "warm", "earthy"]
+    ]
+  },
+  {
+    "name": "Talking To Mice Elf",
+    "colors": ["#948E99", "#2E1437"],
+    "colorsname": ["dark gray", "dark purple"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Purple Bliss",
+    "colors": ["#360033", "#0b8793"],
+    "colorsname": ["dark purple", "dark teal"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "teal", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Predawn",
+    "colors": ["#FFA17F", "#00223E"],
+    "colorsname": ["light orange", "dark blue"],
+    "keywords": [
+      ["light", "orange", "warm", "soft"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Endless River",
+    "colors": ["#43cea2", "#185a9d"],
+    "colorsname": ["bright teal", "dark blue"],
+    "keywords": [
+      ["bright", "teal", "fresh", "cool"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Pastel Orange at the Sun",
+    "colors": ["#ffb347", "#ffcc33"],
+    "colorsname": ["light orange", "light yellow"],
+    "keywords": [
+      ["light", "orange", "warm", "soft"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Twitch",
+    "colors": ["#6441A5", "#2a0845"],
+    "colorsname": ["dark purple", "dark purple"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Atlas",
+    "colors": ["#FEAC5E", "#C779D0", "#4BC0C8"],
+    "colorsname": ["light orange", "light purple", "light blue"],
+    "keywords": [
+      ["light", "orange", "warm", "soft"],
+      ["light", "purple", "romantic", "soft"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Instagram",
+    "colors": ["#833ab4", "#fd1d1d", "#fcb045"],
+    "colorsname": ["dark purple", "bright red", "light orange"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "orange", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Flickr",
+    "colors": ["#ff0084", "#33001b"],
+    "colorsname": ["bright pink", "dark red"],
+    "keywords": [
+      ["bright", "pink", "romantic", "soft"],
+      ["dark", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Vine",
+    "colors": ["#00bf8f", "#001510"],
+    "colorsname": ["bright teal", "black"],
+    "keywords": [
+      ["bright", "teal", "fresh", "cool"],
+      ["dark", "black", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Turquoise flow",
+    "colors": ["#136a8a", "#267871"],
+    "colorsname": ["dark cyan", "dark teal"],
+    "keywords": [
+      ["dark", "cyan", "cool", "refreshing"],
+      ["dark", "teal", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Portrait",
+    "colors": ["#8e9eab", "#eef2f3"],
+    "colorsname": ["dark gray", "light gray"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Virgin America",
+    "colors": ["#7b4397", "#dc2430"],
+    "colorsname": ["dark purple", "bright red"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Koko Caramel",
+    "colors": ["#D1913C", "#FFD194"],
+    "colorsname": ["dark brown", "light beige"],
+    "keywords": [
+      ["dark", "brown", "earthy", "natural"],
+      ["light", "beige", "neutral", "warm"]
+    ]
+  },
+  {
+    "name": "Fresh Turboscent",
+    "colors": ["#F1F2B5", "#135058"],
+    "colorsname": ["light yellow", "dark teal"],
+    "keywords": [
+      ["light", "yellow", "cheerful", "sunny"],
+      ["dark", "teal", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Green to dark",
+    "colors": ["#6A9113", "#141517"],
+    "colorsname": ["bright green", "dark gray"],
+    "keywords": [
+      ["bright", "green", "fresh", "nature"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Ukraine",
+    "colors": ["#004FF9", "#FFF94C"],
+    "colorsname": ["bright blue", "bright yellow"],
+    "keywords": [
+      ["bright", "blue", "trust", "cool"],
+      ["bright", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Curiosity blue",
+    "colors": ["#525252", "#3d72b4"],
+    "colorsname": ["dark gray", "dark blue"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["dark", "blue", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Dark Knight",
+    "colors": ["#BA8B02", "#181818"],
+    "colorsname": ["gold", "black"],
+    "keywords": [
+      ["gold", "warm", "rich", "luxury"],
+      ["dark", "black", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Piglet",
+    "colors": ["#ee9ca7", "#ffdde1"],
+    "colorsname": ["light pink", "light pink"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Lizard",
+    "colors": ["#304352", "#d7d2cc"],
+    "colorsname": ["dark teal", "light gray"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Sage Persuasion",
+    "colors": ["#CCCCB2", "#757519"],
+    "colorsname": ["light olive", "dark olive"],
+    "keywords": [
+      ["light", "olive", "fresh", "nature"],
+      ["dark", "olive", "earthy", "natural"]
+    ]
+  },
+  {
+    "name": "Between Night and Day",
+    "colors": ["#2c3e50", "#3498db"],
+    "colorsname": ["dark gray", "bright blue"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["bright", "blue", "trust", "calm"]
+    ]
+  },
+  {
+    "name": "Timber",
+    "colors": ["#fc00ff", "#00dbde"],
+    "colorsname": ["bright purple", "light blue"],
+    "keywords": [
+      ["bright", "purple", "romantic", "mystery"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Passion",
+    "colors": ["#e53935", "#e35d5b"],
+    "colorsname": ["bright red", "light red"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "red", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Clear Sky",
+    "colors": ["#005C97", "#363795"],
+    "colorsname": ["dark blue", "dark blue"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Master Card",
+    "colors": ["#f46b45", "#eea849"],
+    "colorsname": ["bright orange", "bright yellow"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["bright", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Back To Earth",
+    "colors": ["#00C9FF", "#92FE9D"],
+    "colorsname": ["bright cyan", "light green"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Deep Purple",
+    "colors": ["#673AB7", "#512DA8"],
+    "colorsname": ["dark purple", "dark purple"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Little Leaf",
+    "colors": ["#76b852", "#8DC26F"],
+    "colorsname": ["bright green", "light green"],
+    "keywords": [
+      ["bright", "green", "fresh", "nature"],
+      ["light", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Netflix",
+    "colors": ["#8E0E00", "#1F1C18"],
+    "colorsname": ["bright red", "black"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["dark", "black", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Light Orange",
+    "colors": ["#FFB75E", "#ED8F03"],
+    "colorsname": ["bright orange", "dark orange"],
+    "keywords": [
+      ["bright", "orange", "warm", "soft"],
+      ["dark", "orange", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Green and Blue",
+    "colors": ["#c2e59c", "#64b3f4"],
+    "colorsname": ["light green", "light blue"],
+    "keywords": [
+      ["light", "green", "fresh", "nature"],
+      ["light", "blue", "cool", "refreshing"]
+    ]
+  },
+  {
+    "name": "Poncho",
+    "colors": ["#403A3E", "#BE5869"],
+    "colorsname": ["dark gray", "light pink"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Back to the Future",
+    "colors": ["#C02425", "#F0CB35"],
+    "colorsname": ["bright red", "light yellow"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Blush",
+    "colors": ["#B24592", "#F15F79"],
+    "colorsname": ["dark pink", "light pink"],
+    "keywords": [
+      ["dark", "pink", "romantic", "soft"],
+      ["light", "pink", "cheerful", "soft"]
+    ]
+  },
+  {
+    "name": "Inbox",
+    "colors": ["#457fca", "#5691c8"],
+    "colorsname": ["bright blue", "bright blue"],
+    "keywords": [
+      ["bright", "blue", "trust", "cool"],
+      ["bright", "blue", "trust", "cool"]
+    ]
+  },
+  {
+    "name": "Purplin",
+    "colors": ["#6a3093", "#a044ff"],
+    "colorsname": ["dark purple", "bright purple"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["bright", "purple", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Pale Wood",
+    "colors": ["#eacda3", "#d6ae7b"],
+    "colorsname": ["light beige", "light brown"],
+    "keywords": [
+      ["light", "beige", "neutral", "warm"],
+      ["light", "brown", "warm", "earthy"]
+    ]
+  },
+  {
+    "name": "Haikus",
+    "colors": ["#fd746c", "#ff9068"],
+    "colorsname": ["light pink", "light orange"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "orange", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Pizelex",
+    "colors": ["#114357", "#F29492"],
+    "colorsname": ["dark teal", "light pink"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Joomla",
+    "colors": ["#1e3c72", "#2a5298"],
+    "colorsname": ["dark blue", "dark blue"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Christmas",
+    "colors": ["#2F7336", "#AA3A38"],
+    "colorsname": ["dark green", "dark red"],
+    "keywords": [
+      ["dark", "green", "nature", "fresh"],
+      ["dark", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Minnesota Vikings",
+    "colors": ["#5614B0", "#DBD65C"],
+    "colorsname": ["dark purple", "light yellow"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Miami Dolphins",
+    "colors": ["#4DA0B0", "#D39D38"],
+    "colorsname": ["dark teal", "light orange"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["light", "orange", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Forest",
+    "colors": ["#5A3F37", "#2C7744"],
+    "colorsname": ["dark brown", "dark green"],
+    "keywords": [
+      ["dark", "brown", "earthy", "natural"],
+      ["dark", "green", "nature", "fresh"]
+    ]
+  },
+  {
+    "name": "Nighthawk",
+    "colors": ["#2980b9", "#2c3e50"],
+    "colorsname": ["dark blue", "dark gray"],
+    "keywords": [
+      ["dark", "blue", "depth", "cool"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Superman",
+    "colors": ["#0099F7", "#F11712"],
+    "colorsname": ["bright blue", "bright red"],
+    "keywords": [
+      ["bright", "blue", "trust", "cool"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Suzy",
+    "colors": ["#834d9b", "#d04ed6"],
+    "colorsname": ["dark purple", "bright pink"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["bright", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Dark Skies",
+    "colors": ["#4B79A1", "#283E51"],
+    "colorsname": ["dark blue", "dark gray"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Deep Space",
+    "colors": ["#000000", "#434343"],
+    "colorsname": ["black", "dark gray"],
+    "keywords": [
+      ["dark", "black", "depth", "serious"],
+      ["dark", "gray", "serious", "calm"]
+    ]
+  },
+  {
+    "name": "Decent",
+    "colors": ["#4CA1AF", "#C4E0E5"],
+    "colorsname": ["dark teal", "light gray"],
+    "keywords": [
+      ["dark", "teal", "depth", "cool"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Colors Of Sky",
+    "colors": ["#E0EAFC", "#CFDEF3"],
+    "colorsname": ["light blue", "light gray"],
+    "keywords": [
+      ["light", "blue", "cool", "refreshing"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Purple White",
+    "colors": ["#BA5370", "#F4E2D8"],
+    "colorsname": ["dark pink", "light pink"],
+    "keywords": [
+      ["dark", "pink", "romantic", "soft"],
+      ["light", "pink", "cheerful", "soft"]
+    ]
+  },
+  {
+    "name": "Ali",
+    "colors": ["#ff4b1f", "#1fddff"],
+    "colorsname": ["bright red", "bright cyan"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["bright", "cyan", "fresh", "cool"]
+    ]
+  },
+  {
+    "name": "Alihossein",
+    "colors": ["#f7ff00", "#db36a4"],
+    "colorsname": ["bright yellow", "bright pink"],
+    "keywords": [
+      ["bright", "yellow", "cheerful", "sunny"],
+      ["bright", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Shahabi",
+    "colors": ["#a80077", "#66ff00"],
+    "colorsname": ["dark pink", "bright green"],
+    "keywords": [
+      ["dark", "pink", "romantic", "soft"],
+      ["bright", "green", "fresh", "nature"]
+    ]
+  },
+  {
+    "name": "Red Ocean",
+    "colors": ["#1D4350", "#A43931"],
+    "colorsname": ["dark blue", "dark red"],
+    "keywords": [
+      ["dark", "blue", "depth", "cool"],
+      ["dark", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Tranquil",
+    "colors": ["#EECDA3", "#EF629F"],
+    "colorsname": ["light beige", "light pink"],
+    "keywords": [
+      ["light", "beige", "neutral", "warm"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Transfile",
+    "colors": ["#16BFFD", "#CB3066"],
+    "colorsname": ["bright cyan", "dark pink"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["dark", "pink", "bold", "vibrant"]
+    ]
+  },
+  {
+    "name": "Sylvia",
+    "colors": ["#ff4b1f", "#ff9068"],
+    "colorsname": ["bright red", "light orange"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["light", "orange", "warm", "soft"]
+    ]
+  },
+  {
+    "name": "Sweet Morning",
+    "colors": ["#FF5F6D", "#FFC371"],
+    "colorsname": ["light pink", "light yellow"],
+    "keywords": [
+      ["light", "pink", "romantic", "soft"],
+      ["light", "yellow", "cheerful", "sunny"]
+    ]
+  },
+  {
+    "name": "Politics",
+    "colors": ["#2196f3", "#f44336"],
+    "colorsname": ["bright blue", "bright red"],
+    "keywords": [
+      ["bright", "blue", "trust", "calm"],
+      ["bright", "red", "energy", "vibrant"]
+    ]
+  },
+  {
+    "name": "Bright Vault",
+    "colors": ["#00d2ff", "#928DAB"],
+    "colorsname": ["bright cyan", "light gray"],
+    "keywords": [
+      ["bright", "cyan", "fresh", "cool"],
+      ["light", "gray", "neutral", "calm"]
+    ]
+  },
+  {
+    "name": "Solid Vault",
+    "colors": ["#3a7bd5", "#3a6073"],
+    "colorsname": ["bright blue", "dark blue"],
+    "keywords": [
+      ["bright", "blue", "trust", "calm"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Sunset",
+    "colors": ["#0B486B", "#F56217"],
+    "colorsname": ["dark blue", "bright orange"],
+    "keywords": [
+      ["dark", "blue", "depth", "cool"],
+      ["bright", "orange", "warm", "energy"]
+    ]
+  },
+  {
+    "name": "Grapefruit Sunset",
+    "colors": ["#e96443", "#904e95"],
+    "colorsname": ["bright orange", "dark purple"],
+    "keywords": [
+      ["bright", "orange", "vibrant", "energy"],
+      ["dark", "purple", "mystery", "royalty"]
+    ]
+  },
+  {
+    "name": "Deep Sea Space",
+    "colors": ["#2C3E50", "#4CA1AF"],
+    "colorsname": ["dark blue", "dark teal"],
+    "keywords": [
+      ["dark", "blue", "depth", "cool"],
+      ["dark", "teal", "depth", "cool"]
+    ]
+  },
+  {
+    "name": "Dusk",
+    "colors": ["#2C3E50", "#FD746C"],
+    "colorsname": ["dark gray", "light pink"],
+    "keywords": [
+      ["dark", "gray", "serious", "calm"],
+      ["light", "pink", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Minimal Red",
+    "colors": ["#F00000", "#DC281E"],
+    "colorsname": ["bright red", "dark red"],
+    "keywords": [
+      ["bright", "red", "energy", "vibrant"],
+      ["dark", "red", "serious", "bold"]
+    ]
+  },
+  {
+    "name": "Royal",
+    "colors": ["#141E30", "#243B55"],
+    "colorsname": ["dark blue", "dark blue"],
+    "keywords": [
+      ["dark", "blue", "depth", "serious"],
+      ["dark", "blue", "depth", "serious"]
+    ]
+  },
+  {
+    "name": "Mauve",
+    "colors": ["#42275a", "#734b6d"],
+    "colorsname": ["dark purple", "dark pink"],
+    "keywords": [
+      ["dark", "purple", "mystery", "royalty"],
+      ["dark", "pink", "romantic", "soft"]
+    ]
+  },
+  [
+    {
+      "name": "Forest",
+      "colors": ["#5A3F37", "#2C7744"],
+      "colorsname": ["dark brown", "dark green"],
+      "keywords": [
+        ["dark", "brown", "earthy", "natural"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Nighthawk",
+      "colors": ["#2980b9", "#2c3e50"],
+      "colorsname": ["dark blue", "dark gray"],
+      "keywords": [
+        ["dark", "blue", "depth", "cool"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Superman",
+      "colors": ["#0099F7", "#F11712"],
+      "colorsname": ["bright blue", "bright red"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Suzy",
+      "colors": ["#834d9b", "#d04ed6"],
+      "colorsname": ["dark purple", "bright pink"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["bright", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Dark Skies",
+      "colors": ["#4B79A1", "#283E51"],
+      "colorsname": ["dark blue", "dark gray"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Deep Space",
+      "colors": ["#000000", "#434343"],
+      "colorsname": ["black", "dark gray"],
+      "keywords": [
+        ["dark", "black", "depth", "serious"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Decent",
+      "colors": ["#4CA1AF", "#C4E0E5"],
+      "colorsname": ["dark teal", "light gray"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Colors Of Sky",
+      "colors": ["#E0EAFC", "#CFDEF3"],
+      "colorsname": ["light blue", "light gray"],
+      "keywords": [
+        ["light", "blue", "cool", "refreshing"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Purple White",
+      "colors": ["#BA5370", "#F4E2D8"],
+      "colorsname": ["dark pink", "light pink"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["light", "pink", "cheerful", "soft"]
+      ]
+    },
+    {
+      "name": "Ali",
+      "colors": ["#ff4b1f", "#1fddff"],
+      "colorsname": ["bright red", "bright cyan"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["bright", "cyan", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Alihossein",
+      "colors": ["#f7ff00", "#db36a4"],
+      "colorsname": ["bright yellow", "bright pink"],
+      "keywords": [
+        ["bright", "yellow", "cheerful", "sunny"],
+        ["bright", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Shahabi",
+      "colors": ["#a80077", "#66ff00"],
+      "colorsname": ["dark pink", "bright green"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["bright", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Red Ocean",
+      "colors": ["#1D4350", "#A43931"],
+      "colorsname": ["dark blue", "dark red"],
+      "keywords": [
+        ["dark", "blue", "depth", "cool"],
+        ["dark", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Tranquil",
+      "colors": ["#EECDA3", "#EF629F"],
+      "colorsname": ["light beige", "light pink"],
+      "keywords": [
+        ["light", "beige", "neutral", "warm"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Transfile",
+      "colors": ["#16BFFD", "#CB3066"],
+      "colorsname": ["bright cyan", "dark pink"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["dark", "pink", "bold", "vibrant"]
+      ]
+    },
+    {
+      "name": "Sylvia",
+      "colors": ["#ff4b1f", "#ff9068"],
+      "colorsname": ["bright red", "light orange"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Sweet Morning",
+      "colors": ["#FF5F6D", "#FFC371"],
+      "colorsname": ["light pink", "light yellow"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Politics",
+      "colors": ["#2196f3", "#f44336"],
+      "colorsname": ["bright blue", "bright red"],
+      "keywords": [
+        ["bright", "blue", "trust", "calm"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Bright Vault",
+      "colors": ["#00d2ff", "#928DAB"],
+      "colorsname": ["bright cyan", "light gray"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Solid Vault",
+      "colors": ["#3a7bd5", "#3a6073"],
+      "colorsname": ["bright blue", "dark blue"],
+      "keywords": [
+        ["bright", "blue", "trust", "calm"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Sunset",
+      "colors": ["#0B486B", "#F56217"],
+      "colorsname": ["dark blue", "bright orange"],
+      "keywords": [
+        ["dark", "blue", "depth", "cool"],
+        ["bright", "orange", "warm", "energy"]
+      ]
+    },
+    {
+      "name": "Grapefruit Sunset",
+      "colors": ["#e96443", "#904e95"],
+      "colorsname": ["bright orange", "dark purple"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Deep Sea Space",
+      "colors": ["#2C3E50", "#4CA1AF"],
+      "colorsname": ["dark blue", "dark teal"],
+      "keywords": [
+        ["dark", "blue", "depth", "cool"],
+        ["dark", "teal", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "Dusk",
+      "colors": ["#2C3E50", "#FD746C"],
+      "colorsname": ["dark gray", "light pink"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Minimal Red",
+      "colors": ["#F00000", "#DC281E"],
+      "colorsname": ["bright red", "dark red"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["dark", "red", "serious", "bold"]
+      ]
+    },
+    {
+      "name": "Royal",
+      "colors": ["#141E30", "#243B55"],
+      "colorsname": ["dark blue", "dark blue"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Mauve",
+      "colors": ["#42275a", "#734b6d"],
+      "colorsname": ["dark purple", "dark pink"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["dark", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Frost",
+      "colors": ["#000428", "#004e92"],
+      "colorsname": ["black", "dark blue"],
+      "keywords": [
+        ["dark", "black", "depth", "serious"],
+        ["dark", "blue", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "Lush",
+      "colors": ["#56ab2f", "#a8e063"],
+      "colorsname": ["bright green", "light green"],
+      "keywords": [
+        ["bright", "green", "fresh", "nature"],
+        ["light", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Firewatch",
+      "colors": ["#cb2d3e", "#ef473a"],
+      "colorsname": ["bright red", "light red"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["light", "red", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Sherbert",
+      "colors": ["#f79d00", "#64f38c"],
+      "colorsname": ["bright orange", "light green"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["light", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Blood Red",
+      "colors": ["#f85032", "#e73827"],
+      "colorsname": ["bright red", "dark red"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["dark", "red", "serious", "bold"]
+      ]
+    },
+    {
+      "name": "Sun on the Horizon",
+      "colors": ["#fceabb", "#f8b500"],
+      "colorsname": ["light yellow", "light orange"],
+      "keywords": [
+        ["light", "yellow", "cheerful", "sunny"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "IIIT Delhi",
+      "colors": ["#808080", "#3fada8"],
+      "colorsname": ["gray", "teal"],
+      "keywords": [
+        ["gray", "neutral", "calm"],
+        ["teal", "fresh", "vibrant"]
+      ]
+    },
+    {
+      "name": "Jupiter",
+      "colors": ["#ffd89b", "#19547b"],
+      "colorsname": ["light yellow", "dark blue"],
+      "keywords": [
+        ["light", "yellow", "cheerful", "sunny"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "50 Shades of Grey",
+      "colors": ["#bdc3c7", "#2c3e50"],
+      "colorsname": ["light gray", "dark gray"],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Dania",
+      "colors": ["#BE93C5", "#7BC6CC"],
+      "colorsname": ["light pink", "light teal"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["light", "teal", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Limeade",
+      "colors": ["#A1FFCE", "#FAFFD1"],
+      "colorsname": ["bright teal", "light yellow"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Disco",
+      "colors": ["#4ECDC4", "#556270"],
+      "colorsname": ["bright teal", "dark gray"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Love Couple",
+      "colors": ["#3a6186", "#89253e"],
+      "colorsname": ["dark teal", "dark pink"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Azure Pop",
+      "colors": ["#ef32d9", "#89fffd"],
+      "colorsname": ["bright purple", "bright cyan"],
+      "keywords": [
+        ["bright", "purple", "romantic", "mystery"],
+        ["bright", "cyan", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Nepal",
+      "colors": ["#de6161", "#2657eb"],
+      "colorsname": ["bright red", "bright blue"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["bright", "blue", "trust", "cool"]
+      ]
+    },
+    {
+      "name": "Cosmic Fusion",
+      "colors": ["#ff00cc", "#333399"],
+      "colorsname": ["bright pink", "dark blue"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Snapchat",
+      "colors": ["#fffc00", "#ffffff"],
+      "colorsname": ["bright yellow", "white"],
+      "keywords": [
+        ["bright", "yellow", "cheerful", "sunny"],
+        ["light", "white", "pure", "clean"]
+      ]
+    },
+    {
+      "name": "Ed's Sunset Gradient",
+      "colors": ["#ff7e5f", "#feb47b"],
+      "colorsname": ["light orange", "light pink"],
+      "keywords": [
+        ["light", "orange", "warm", "soft"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Brady Brady Fun Fun",
+      "colors": ["#00c3ff", "#ffff1c"],
+      "colorsname": ["bright cyan", "bright yellow"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["bright", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Black Rosé",
+      "colors": ["#f4c4f3", "#fc67fa"],
+      "colorsname": ["light pink", "bright pink"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["bright", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "80's Purple",
+      "colors": ["#41295a", "#2F0743"],
+      "colorsname": ["dark purple", "dark purple"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Radar",
+      "colors": ["#A770EF", "#CF8BF3", "#FDB99B"],
+      "colorsname": ["light purple", "light pink", "light yellow"],
+      "keywords": [
+        ["light", "purple", "romantic", "soft"],
+        ["light", "pink", "cheerful", "soft"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Ibiza Sunset",
+      "colors": ["#ee0979", "#ff6a00"],
+      "colorsname": ["bright pink", "bright orange"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["bright", "orange", "vibrant", "energy"]
+      ]
+    },
+    {
+      "name": "Dawn",
+      "colors": ["#F3904F", "#3B4371"],
+      "colorsname": ["light orange", "dark blue"],
+      "keywords": [
+        ["light", "orange", "warm", "soft"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Mild",
+      "colors": ["#67B26F", "#4ca2cd"],
+      "colorsname": ["bright green", "light blue"],
+      "keywords": [
+        ["bright", "green", "fresh", "nature"],
+        ["light", "blue", "cool", "refreshing"]
+      ]
+    },
+    {
+      "name": "Vice City",
+      "colors": ["#3494E6", "#EC6EAD"],
+      "colorsname": ["bright blue", "light pink"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Jaipur",
+      "colors": ["#DBE6F6", "#C5796D"],
+      "colorsname": ["light blue", "dark pink"],
+      "keywords": [
+        ["light", "blue", "cool", "refreshing"],
+        ["dark", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Jodhpur",
+      "colors": ["#9CECFB", "#65C7F7", "#0052D4"],
+      "colorsname": ["light cyan", "light blue", "dark blue"],
+      "keywords": [
+        ["light", "cyan", "fresh", "cool"],
+        ["light", "blue", "trust", "calm"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Cocoaa Ice",
+      "colors": ["#c0c0aa", "#1cefff"],
+      "colorsname": ["light gray", "bright cyan"],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["bright", "cyan", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "EasyMed",
+      "colors": ["#DCE35B", "#45B649"],
+      "colorsname": ["light yellow", "dark green"],
+      "keywords": [
+        ["light", "yellow", "cheerful", "sunny"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Rose Colored Lenses",
+      "colors": ["#E8CBC0", "#636FA4"],
+      "colorsname": ["light pink", "dark purple"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "What lies Beyond",
+      "colors": ["#F0F2F0", "#000C40"],
+      "colorsname": ["light gray", "dark blue"],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Roseanna",
+      "colors": ["#FFAFBD", "#ffc3a0"],
+      "colorsname": ["light pink", "light beige"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["light", "beige", "neutral", "warm"]
+      ]
+    },
+    {
+      "name": "Honey Dew",
+      "colors": ["#43C6AC", "#F8FFAE"],
+      "colorsname": ["bright teal", "light yellow"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Under the Lake",
+      "colors": ["#093028", "#237A57"],
+      "colorsname": ["dark green", "dark teal"],
+      "keywords": [
+        ["dark", "green", "nature", "fresh"],
+        ["dark", "teal", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "The Blue Lagoon",
+      "colors": ["#43C6AC", "#191654"],
+      "colorsname": ["bright teal", "dark blue"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Can You Feel The Love Tonight",
+      "colors": ["#4568DC", "#B06AB3"],
+      "colorsname": ["dark blue", "light purple"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["light", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Very Blue",
+      "colors": ["#0575E6", "#021B79"],
+      "colorsname": ["bright blue", "dark blue"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Love and Liberty",
+      "colors": ["#200122", "#6f0000"],
+      "colorsname": ["dark purple", "dark red"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["dark", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Orca",
+      "colors": ["#44A08D", "#093637"],
+      "colorsname": ["dark teal", "dark cyan"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "cyan", "cool", "refreshing"]
+      ]
+    },
+    {
+      "name": "Venice",
+      "colors": ["#6190E8", "#A7BFE8"],
+      "colorsname": ["light blue", "light gray"],
+      "keywords": [
+        ["light", "blue", "cool", "refreshing"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Pacific Dream",
+      "colors": ["#34e89e", "#0f3443"],
+      "colorsname": ["bright teal", "dark teal"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["dark", "teal", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "Learning and Leading",
+      "colors": ["#F7971E", "#FFD200"],
+      "colorsname": ["bright orange", "bright yellow"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["bright", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Celestial",
+      "colors": ["#C33764", "#1D2671"],
+      "colorsname": ["dark pink", "dark blue"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Purplepine",
+      "colors": ["#20002c", "#cbb4d4"],
+      "colorsname": ["dark purple", "light purple"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["light", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Sha la la",
+      "colors": ["#D66D75", "#E29587"],
+      "colorsname": ["dark pink", "light pink"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["light", "pink", "cheerful", "soft"]
+      ]
+    },
+    {
+      "name": "Mini",
+      "colors": ["#30E8BF", "#FF8235"],
+      "colorsname": ["bright teal", "bright orange"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["bright", "orange", "vibrant", "energy"]
+      ]
+    },
+    {
+      "name": "Maldives",
+      "colors": ["#B2FEFA", "#0ED2F7"],
+      "colorsname": ["light cyan", "bright cyan"],
+      "keywords": [
+        ["light", "cyan", "fresh", "cool"],
+        ["bright", "cyan", "refreshing", "calm"]
+      ]
+    },
+    {
+      "name": "Cinnamint",
+      "colors": ["#4AC29A", "#BDFFF3"],
+      "colorsname": ["bright teal", "light green"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Html",
+      "colors": ["#E44D26", "#F16529"],
+      "colorsname": ["bright red", "orange"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["orange", "warm", "cheerful", "soft"]
+      ]
+    },
+    {
+      "name": "Coal",
+      "colors": ["#EB5757", "#000000"],
+      "colorsname": ["bright red", "black"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["dark", "black", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Sunkist",
+      "colors": ["#F2994A", "#F2C94C"],
+      "colorsname": ["bright orange", "light yellow"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Blue Skies",
+      "colors": ["#56CCF2", "#2F80ED"],
+      "colorsname": ["light blue", "bright blue"],
+      "keywords": [
+        ["light", "blue", "cool", "refreshing"],
+        ["bright", "blue", "trust", "calm"]
+      ]
+    },
+    {
+      "name": "Chitty Chitty Bang Bang",
+      "colors": ["#007991", "#78ffd6"],
+      "colorsname": ["bright teal", "light cyan"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "cyan", "refreshing", "calm"]
+      ]
+    },
+    {
+      "name": "Visions of Grandeur",
+      "colors": ["#000046", "#1CB5E0"],
+      "colorsname": ["dark blue", "bright cyan"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["bright", "cyan", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Crystal Clear",
+      "colors": ["#159957", "#155799"],
+      "colorsname": ["dark teal", "dark blue"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "blue", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "Mello",
+      "colors": ["#c0392b", "#8e44ad"],
+      "colorsname": ["bright red", "dark purple"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Compare Now",
+      "colors": ["#EF3B36", "#FFFFFF"],
+      "colorsname": ["bright red", "white"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["light", "white", "pure", "clean"]
+      ]
+    },
+    {
+      "name": "Meridian",
+      "colors": ["#283c86", "#45a247"],
+      "colorsname": ["dark blue", "dark green"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Relay",
+      "colors": ["#3A1C71", "#D76D77", "#FFAF7B"],
+      "colorsname": ["dark purple", "light pink", "light peach"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["light", "pink", "romantic", "soft"],
+        ["light", "peach", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Alive",
+      "colors": ["#CB356B", "#BD3F32"],
+      "colorsname": ["dark pink", "dark red"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["dark", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Scooter",
+      "colors": ["#36D1DC", "#5B86E5"],
+      "colorsname": ["bright teal", "bright blue"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["bright", "blue", "trust", "calm"]
+      ]
+    },
+    {
+      "name": "Terminal",
+      "colors": ["#000000", "#0f9b0f"],
+      "colorsname": ["black", "dark green"],
+      "keywords": [
+        ["dark", "black", "depth", "serious"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Telegram",
+      "colors": ["#1c92d2", "#f2fcfe"],
+      "colorsname": ["bright cyan", "light cyan"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["light", "cyan", "refreshing", "calm"]
+      ]
+    },
+    {
+      "name": "Crimson Tide",
+      "colors": ["#642B73", "#C6426E"],
+      "colorsname": ["dark purple", "dark pink"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["dark", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Socialive",
+      "colors": ["#06beb6", "#48b1bf"],
+      "colorsname": ["bright teal", "dark teal"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["dark", "teal", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "Subu",
+      "colors": ["#0cebeb", "#20e3b2", "#29ffc6"],
+      "colorsname": ["bright cyan", "light teal"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["light", "teal", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Broken Hearts",
+      "colors": ["#d9a7c7", "#fffcdc"],
+      "colorsname": ["light pink", "light beige"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["light", "beige", "neutral", "warm"]
+      ]
+    },
+    {
+      "name": "Kimoby Is The New Blue",
+      "colors": ["#396afc", "#2948ff"],
+      "colorsname": ["bright blue", "dark blue"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Dull",
+      "colors": ["#C9D6FF", "#E2E2E2"],
+      "colorsname": ["light blue", "light gray"],
+      "keywords": [
+        ["light", "blue", "calm", "soft"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Purpink",
+      "colors": ["#7F00FF", "#E100FF"],
+      "colorsname": ["bright purple", "bright pink"],
+      "keywords": [
+        ["bright", "purple", "romantic", "mystery"],
+        ["bright", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Orange Coral",
+      "colors": ["#ff9966", "#ff5e62"],
+      "colorsname": ["bright orange", "light red"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["light", "red", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Summer",
+      "colors": ["#22c1c3", "#fdbb2d"],
+      "colorsname": ["bright teal", "light orange"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "King Yna",
+      "colors": ["#1a2a6c", "#b21f1f", "#fdbb2d"],
+      "colorsname": ["dark blue", "dark red", "light orange"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "red", "energy", "vibrant"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Velvet Sun",
+      "colors": ["#e1eec3", "#f05053"],
+      "colorsname": ["light beige", "bright red"],
+      "keywords": [
+        ["light", "beige", "neutral", "warm"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Zinc",
+      "colors": ["#ADA996", "#F2F2F2", "#DBDBDB", "#EAEAEA"],
+      "colorsname": ["light gray", "light gray"],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Hydrogen",
+      "colors": ["#667db6", "#0082c8", "#0082c8", "#667db6"],
+      "colorsname": ["dark blue", "bright blue"],
+      "keywords": [
+        ["dark", "blue", "depth", "cool"],
+        ["bright", "blue", "trust", "calm"]
+      ]
+    },
+    {
+      "name": "Argon",
+      "colors": ["#03001e", "#7303c0", "#ec38bc", "#fdeff9"],
+      "colorsname": ["dark purple", "bright purple"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["bright", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Lithium",
+      "colors": ["#6D6027", "#D3CBB8"],
+      "colorsname": ["dark brown", "light beige"],
+      "keywords": [
+        ["dark", "brown", "earthy", "natural"],
+        ["light", "beige", "neutral", "warm"]
+      ]
+    },
+    {
+      "name": "Digital Water",
+      "colors": ["#74ebd5", "#ACB6E5"],
+      "colorsname": ["light cyan", "light purple"],
+      "keywords": [
+        ["light", "cyan", "fresh", "cool"],
+        ["light", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Orange Fun",
+      "colors": ["#fc4a1a", "#f7b733"],
+      "colorsname": ["bright orange", "light yellow"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Rainbow Blue",
+      "colors": ["#00F260", "#0575E6"],
+      "colorsname": ["bright teal", "bright blue"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["bright", "blue", "trust", "calm"]
+      ]
+    },
+    {
+      "name": "Pink Flavour",
+      "colors": ["#800080", "#ffc0cb"],
+      "colorsname": ["dark purple", "light pink"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Sulphur",
+      "colors": ["#CAC531", "#F3F9A7"],
+      "colorsname": ["light olive", "light yellow"],
+      "keywords": [
+        ["light", "olive", "fresh", "nature"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Selenium",
+      "colors": ["#3C3B3F", "#605C3C"],
+      "colorsname": ["dark gray", "dark green"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Delicate",
+      "colors": ["#D3CCE3", "#E9E4F0"],
+      "colorsname": ["light gray", "light purple"],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["light", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Ohhappiness",
+      "colors": ["#00b09b", "#96c93d"],
+      "colorsname": ["bright teal", "light green"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Lawrencium",
+      "colors": ["#0f0c29", "#302b63", "#24243e"],
+      "colorsname": ["dark purple", "dark blue", "black"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["dark", "blue", "depth", "serious"],
+        ["black", "dark", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Relaxing red",
+      "colors": ["#fffbd5", "#b20a2c"],
+      "colorsname": ["light yellow", "dark red"],
+      "keywords": [
+        ["light", "yellow", "cheerful", "sunny"],
+        ["dark", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Taran Tado",
+      "colors": ["#23074d", "#cc5333"],
+      "colorsname": ["dark purple", "dark red"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["dark", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Bighead",
+      "colors": ["#c94b4b", "#4b134f"],
+      "colorsname": ["bright red", "dark purple"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Sublime Vivid",
+      "colors": ["#FC466B", "#3F5EFB"],
+      "colorsname": ["bright pink", "bright blue"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["bright", "blue", "trust", "calm"]
+      ]
+    },
+    {
+      "name": "Sublime Light",
+      "colors": ["#FC5C7D", "#6A82FB"],
+      "colorsname": ["light pink", "light blue"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["light", "blue", "cool", "refreshing"]
+      ]
+    },
+    {
+      "name": "Pun Yeta",
+      "colors": ["#108dc7", "#ef8e38"],
+      "colorsname": ["bright blue", "light orange"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Quepal",
+      "colors": ["#11998e", "#38ef7d"],
+      "colorsname": ["bright teal", "bright green"],
+      "keywords": [
+        ["bright", "teal", "fresh", "cool"],
+        ["bright", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Sand to Blue",
+      "colors": ["#3E5151", "#DECBA4"],
+      "colorsname": ["dark teal", "light beige"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["light", "beige", "neutral", "warm"]
+      ]
+    },
+    {
+      "name": "Wedding Day Blues",
+      "colors": ["#40E0D0", "#FF8C00", "#FF0080"],
+      "colorsname": ["bright cyan", "bright orange", "bright pink"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["bright", "orange", "vibrant", "energy"],
+        ["bright", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Shifter",
+      "colors": ["#bc4e9c", "#f80759"],
+      "colorsname": ["dark pink", "bright pink"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["bright", "pink", "cheerful", "soft"]
+      ]
+    },
+    {
+      "name": "Red Sunset",
+      "colors": ["#355C7D", "#6C5B7B", "#C06C84"],
+      "colorsname": ["dark blue", "dark pink", "light pink"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "pink", "romantic", "soft"],
+        ["light", "pink", "cheerful", "soft"]
+      ]
+    },
+    {
+      "name": "Moon Purple",
+      "colors": ["#4e54c8", "#8f94fb"],
+      "colorsname": ["dark blue", "light purple"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["light", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Pure Lust",
+      "colors": ["#333333", "#dd1818"],
+      "colorsname": ["black", "bright red"],
+      "keywords": [
+        ["dark", "black", "depth", "serious"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Slight Ocean View",
+      "colors": ["#a8c0ff", "#3f2b96"],
+      "colorsname": ["light blue", "dark purple"],
+      "keywords": [
+        ["light", "blue", "cool", "refreshing"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "eXpresso",
+      "colors": ["#ad5389", "#3c1053"],
+      "colorsname": ["dark pink", "dark purple"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Shifty",
+      "colors": ["#636363", "#a2ab58"],
+      "colorsname": ["dark gray", "light olive"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["light", "olive", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Vanusa",
+      "colors": ["#DA4453", "#89216B"],
+      "colorsname": ["dark pink", "dark purple"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Evening Night",
+      "colors": ["#005AA7", "#FFFDE4"],
+      "colorsname": ["dark blue", "light beige"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["light", "beige", "neutral", "warm"]
+      ]
+    },
+    {
+      "name": "Magic",
+      "colors": ["#59C173", "#a17fe0", "#5D26C1"],
+      "colorsname": ["bright green", "light purple", "dark purple"],
+      "keywords": [
+        ["bright", "green", "fresh", "nature"],
+        ["light", "purple", "romantic", "soft"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Margo",
+      "colors": ["#FFEFBA", "#FFFFFF"],
+      "colorsname": ["light yellow", "white"],
+      "keywords": [
+        ["light", "yellow", "cheerful", "sunny"],
+        ["light", "white", "pure", "clean"]
+      ]
+    },
+    {
+      "name": "Blue Raspberry",
+      "colors": ["#00B4DB", "#0083B0"],
+      "colorsname": ["bright cyan", "dark blue"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Citrus Peel",
+      "colors": ["#FDC830", "#F37335"],
+      "colorsname": ["bright yellow", "bright orange"],
+      "keywords": [
+        ["bright", "yellow", "cheerful", "sunny"],
+        ["bright", "orange", "vibrant", "energy"]
+      ]
+    },
+    {
+      "name": "Sin City Red",
+      "colors": ["#ED213A", "#93291E"],
+      "colorsname": ["bright red", "dark red"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["dark", "red", "serious", "bold"]
+      ]
+    },
+    {
+      "name": "Rastafari",
+      "colors": ["#1E9600", "#FFF200", "#FF0000"],
+      "colorsname": ["bright green", "bright yellow", "bright red"],
+      "keywords": [
+        ["bright", "green", "fresh", "nature"],
+        ["bright", "yellow", "cheerful", "sunny"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Summer Dog",
+      "colors": ["#a8ff78", "#78ffd6"],
+      "colorsname": ["light green", "light teal"],
+      "keywords": [
+        ["light", "green", "fresh", "nature"],
+        ["light", "teal", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Wiretap",
+      "colors": ["#8A2387", "#E94057", "#F27121"],
+      "colorsname": ["dark pink", "bright pink", "bright orange"],
+      "keywords": [
+        ["dark", "pink", "mystery", "royalty"],
+        ["bright", "pink", "romantic", "soft"],
+        ["bright", "orange", "vibrant", "energy"]
+      ]
+    },
+    {
+      "name": "Burning Orange",
+      "colors": ["#FF416C", "#FF4B2B"],
+      "colorsname": ["bright pink", "bright red"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Ultra Voilet",
+      "colors": ["#654ea3", "#eaafc8"],
+      "colorsname": ["dark purple", "light purple"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["light", "purple", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "By Design",
+      "colors": ["#009FFF", "#ec2F4B"],
+      "colorsname": ["bright blue", "bright red"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Kyoo Tah",
+      "colors": ["#544a7d", "#ffd452"],
+      "colorsname": ["dark blue", "light yellow"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Kye Meh",
+      "colors": ["#8360c3", "#2ebf91"],
+      "colorsname": ["dark purple", "bright teal"],
+      "keywords": [
+        ["dark", "purple", "mystery", "royalty"],
+        ["bright", "teal", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Kyoo Pal",
+      "colors": ["#dd3e54", "#6be585"],
+      "colorsname": ["bright pink", "bright green"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["bright", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Metapolis",
+      "colors": ["#659999", "#f4791f"],
+      "colorsname": ["dark teal", "bright orange"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["bright", "orange", "vibrant", "energy"]
+      ]
+    },
+    {
+      "name": "Flare",
+      "colors": ["#f12711", "#f5af19"],
+      "colorsname": ["bright red", "light orange"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Witching Hour",
+      "colors": ["#c31432", "#240b36"],
+      "colorsname": ["dark red", "dark purple"],
+      "keywords": [
+        ["dark", "red", "energy", "vibrant"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Azur Lane",
+      "colors": ["#7F7FD5", "#86A8E7", "#91EAE4"],
+      "colorsname": ["light purple", "light blue", "light cyan"],
+      "keywords": [
+        ["light", "purple", "romantic", "soft"],
+        ["light", "blue", "cool", "refreshing"],
+        ["light", "cyan", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Neuromancer",
+      "colors": ["#f953c6", "#b91d73"],
+      "colorsname": ["bright pink", "dark pink"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["dark", "pink", "bold", "vibrant"]
+      ]
+    },
+    {
+      "name": "Harvey",
+      "colors": ["#1f4037", "#99f2c8"],
+      "colorsname": ["dark teal", "light teal"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["light", "teal", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Amin",
+      "colors": ["#8E2DE2", "#4A00E0"],
+      "colorsname": ["bright purple", "dark purple"],
+      "keywords": [
+        ["bright", "purple", "romantic", "mystery"],
+        ["dark", "purple", "mystery", "royalty"]
+      ]
+    },
+    {
+      "name": "Memariani",
+      "colors": ["#aa4b6b", "#6b6b83", "#3b8d99"],
+      "colorsname": ["dark pink", "dark gray", "dark teal"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["dark", "gray", "serious", "calm"],
+        ["dark", "teal", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "Yoda",
+      "colors": ["#FF0099", "#493240"],
+      "colorsname": ["bright pink", "dark brown"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["dark", "brown", "earthy", "natural"]
+      ]
+    },
+    {
+      "name": "Cool Sky",
+      "colors": ["#2980B9", "#6DD5FA", "#FFFFFF"],
+      "colorsname": ["dark blue", "light blue", "white"],
+      "keywords": [
+        ["dark", "blue", "depth", "cool"],
+        ["light", "blue", "fresh", "cool"],
+        ["light", "white", "pure", "clean"]
+      ]
+    },
+    {
+      "name": "Dark Ocean",
+      "colors": ["#373B44", "#4286f4"],
+      "colorsname": ["dark gray", "bright blue"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["bright", "blue", "trust", "cool"]
+      ]
+    },
+    {
+      "name": "Evening Sunshine",
+      "colors": ["#b92b27", "#1565C0"],
+      "colorsname": ["dark red", "dark blue"],
+      "keywords": [
+        ["dark", "red", "energy", "vibrant"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "JShine",
+      "colors": ["#12c2e9", "#c471ed", "#f64f59"],
+      "colorsname": ["bright cyan", "light purple", "dark pink"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["light", "purple", "romantic", "soft"],
+        ["dark", "pink", "bold", "vibrant"]
+      ]
+    },
+    {
+      "name": "Moonlit Asteroid",
+      "colors": ["#0F2027", "#203A43", "#2C5364"],
+      "colorsname": ["dark teal", "dark gray", "dark blue"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "gray", "serious", "calm"],
+        ["dark", "blue", "depth", "cool"]
+      ]
+    },
+    {
+      "name": "MegaTron",
+      "colors": ["#C6FFDD", "#FBD786", "#f7797d"],
+      "colorsname": ["light cyan", "light yellow", "bright red"],
+      "keywords": [
+        ["light", "cyan", "fresh", "cool"],
+        ["light", "yellow", "cheerful", "sunny"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Cool Blues",
+      "colors": ["#2193b0", "#6dd5ed"],
+      "colorsname": ["bright blue", "light blue"],
+      "keywords": [
+        ["bright", "blue", "trust", "calm"],
+        ["light", "blue", "cool", "refreshing"]
+      ]
+    },
+    {
+      "name": "Piggy Pink",
+      "colors": ["#ee9ca7", "#ffdde1"],
+      "colorsname": ["light pink", "light pink"],
+      "keywords": [
+        ["light", "pink", "romantic", "soft"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Grade Grey",
+      "colors": ["#bdc3c7", "#2c3e50"],
+      "colorsname": ["light gray", "dark gray"],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Telko",
+      "colors": ["#F36222", "#5CB644", "#007FC3"],
+      "colorsname": ["bright orange", "dark green", "bright blue"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["dark", "green", "nature", "fresh"],
+        ["bright", "blue", "trust", "cool"]
+      ]
+    },
+    {
+      "name": "Zenta",
+      "colors": ["#2A2D3E", "#FECB6E"],
+      "colorsname": ["dark gray", "light yellow"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Electric Peacock",
+      "colors": ["#8a2be2", "#0000cd", "#228b22", "#ccff00"],
+      "colorsname": [
+        "bright purple",
+        "dark blue",
+        "dark green",
+        "bright yellow"
+      ],
+      "keywords": [
+        ["bright", "purple", "romantic", "mystery"],
+        ["dark", "blue", "depth", "cool"],
+        ["dark", "green", "nature", "fresh"],
+        ["bright", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Under Blue Green",
+      "colors": ["#051937", "#004d7a", "#008793", "#00bf72", "#a8eb12"],
+      "colorsname": [
+        "dark teal",
+        "dark blue",
+        "bright cyan",
+        "bright green",
+        "light yellow"
+      ],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "blue", "depth", "cool"],
+        ["bright", "cyan", "fresh", "cool"],
+        ["bright", "green", "fresh", "nature"],
+        ["light", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Lensod",
+      "colors": ["#6025F5", "#FF5555"],
+      "colorsname": ["bright purple", "bright red"],
+      "keywords": [
+        ["bright", "purple", "romantic", "mystery"],
+        ["bright", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Newspaper",
+      "colors": ["#8a2be2", "#ffa500", "#f8f8ff"],
+      "colorsname": ["bright purple", "bright orange", "light gray"],
+      "keywords": [
+        ["bright", "purple", "romantic", "mystery"],
+        ["bright", "orange", "vibrant", "energy"],
+        ["light", "gray", "neutral", "calm"]
+      ]
+    },
+    {
+      "name": "Dark Blue Gradient",
+      "colors": ["#2774ae", "#002E5D"],
+      "colorsname": ["dark blue", "dark blue"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Dark Blu Two",
+      "colors": ["#004680", "#4484BA"],
+      "colorsname": ["dark blue", "light blue"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["light", "blue", "cool", "refreshing"]
+      ]
+    },
+    {
+      "name": "Lemon Lime",
+      "colors": ["#7ec6bc", "#ebe717"],
+      "colorsname": ["light teal", "bright yellow"],
+      "keywords": [
+        ["light", "teal", "fresh", "cool"],
+        ["bright", "yellow", "cheerful", "sunny"]
+      ]
+    },
+    {
+      "name": "Beleko",
+      "colors": ["#ff1e56", "#f9c942", "#1e90ff"],
+      "colorsname": ["bright pink", "light yellow", "bright blue"],
+      "keywords": [
+        ["bright", "pink", "romantic", "soft"],
+        ["light", "yellow", "cheerful", "sunny"],
+        ["bright", "blue", "trust", "cool"]
+      ]
+    },
+    {
+      "name": "Mango Papaya",
+      "colors": ["#de8a41", "#2ada53"],
+      "colorsname": ["bright orange", "bright green"],
+      "keywords": [
+        ["bright", "orange", "vibrant", "energy"],
+        ["bright", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Unicorn Rainbow",
+      "colors": ["#f7f0ac", "#acf7f0", "#f0acf7"],
+      "colorsname": ["light yellow", "light cyan", "light pink"],
+      "keywords": [
+        ["light", "yellow", "cheerful", "sunny"],
+        ["light", "cyan", "fresh", "cool"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Flame",
+      "colors": ["#ff0000", "#fdcf58"],
+      "colorsname": ["bright red", "light orange"],
+      "keywords": [
+        ["bright", "red", "energy", "vibrant"],
+        ["light", "orange", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Blue Red",
+      "colors": ["#36B1C7", "#960B33"],
+      "colorsname": ["bright cyan", "dark red"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["dark", "red", "serious", "bold"]
+      ]
+    },
+    {
+      "name": "Twitter",
+      "colors": ["#1DA1F2", "#009ffc"],
+      "colorsname": ["bright blue", "bright blue"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["bright", "blue", "trust", "cool"]
+      ]
+    },
+    {
+      "name": "Blooze",
+      "colors": ["#6da6be", "#4b859e", "#6da6be"],
+      "colorsname": ["bright blue", "dark blue"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Blue Slate",
+      "colors": ["#B5B9FF", "#2B2C49"],
+      "colorsname": ["light blue", "dark gray"],
+      "keywords": [
+        ["light", "blue", "cool", "refreshing"],
+        ["dark", "gray", "serious", "calm"]
+      ]
+    },
+    {
+      "name": "Space Light Green",
+      "colors": ["#9FA0A8", "#5C7852"],
+      "colorsname": ["dark gray", "dark green"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Flower",
+      "colors": ["#DCFFBD", "#CC86D1"],
+      "colorsname": ["light green", "light pink"],
+      "keywords": [
+        ["light", "green", "fresh", "nature"],
+        ["light", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Elate The Euge",
+      "colors": ["#8BDEDA", "#43ADD0", "#998EE0", "#E17DC2", "#EF9393"],
+      "colorsname": [
+        "light cyan",
+        "bright teal",
+        "light purple",
+        "dark pink",
+        "light red"
+      ],
+      "keywords": [
+        ["light", "cyan", "fresh", "cool"],
+        ["bright", "teal", "fresh", "cool"],
+        ["light", "purple", "romantic", "soft"],
+        ["dark", "pink", "bold", "vibrant"],
+        ["light", "red", "warm", "soft"]
+      ]
+    },
+    {
+      "name": "Peach Sea",
+      "colors": ["#E6AE8C", "#A8CECF"],
+      "colorsname": ["light orange", "light teal"],
+      "keywords": [
+        ["light", "orange", "warm", "soft"],
+        ["light", "teal", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Abbas",
+      "colors": ["#00fff0", "#0083fe"],
+      "colorsname": ["bright cyan", "bright blue"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["bright", "blue", "trust", "cool"]
+      ]
+    },
+    {
+      "name": "Winter Woods",
+      "colors": ["#333333", "#a2ab58", "#A43931"],
+      "colorsname": ["dark gray", "light olive", "dark red"],
+      "keywords": [
+        ["dark", "gray", "serious", "calm"],
+        ["light", "olive", "fresh", "nature"],
+        ["dark", "red", "energy", "vibrant"]
+      ]
+    },
+    {
+      "name": "Ameena",
+      "colors": ["#0c0c6d", "#de512b", "#98d0c1", "#5bb226", "#023c0d"],
+      "colorsname": [
+        "dark blue",
+        "dark red",
+        "light cyan",
+        "bright green",
+        "dark green"
+      ],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["dark", "red", "energy", "vibrant"],
+        ["light", "cyan", "fresh", "cool"],
+        ["bright", "green", "fresh", "nature"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Emerald Sea",
+      "colors": ["#05386b", "#5cdb95"],
+      "colorsname": ["dark blue", "light green"],
+      "keywords": [
+        ["dark", "blue", "depth", "serious"],
+        ["light", "green", "fresh", "nature"]
+      ]
+    },
+    {
+      "name": "Bleem",
+      "colors": ["#4284DB", "#29EAC4"],
+      "colorsname": ["bright blue", "bright teal"],
+      "keywords": [
+        ["bright", "blue", "trust", "cool"],
+        ["bright", "teal", "fresh", "cool"]
+      ]
+    },
+    {
+      "name": "Coffee Gold",
+      "colors": ["#554023", "#c99846"],
+      "colorsname": ["dark brown", "light brown"],
+      "keywords": [
+        ["dark", "brown", "earthy", "natural"],
+        ["light", "brown", "warm", "earthy"]
+      ]
+    },
+    {
+      "name": "Compass",
+      "colors": ["#516b8b", "#056b3b"],
+      "colorsname": ["dark teal", "dark green"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "green", "nature", "fresh"]
+      ]
+    },
+    {
+      "name": "Andreuzza's",
+      "colors": ["#D70652", "#FF025E"],
+      "colorsname": ["dark pink", "bright pink"],
+      "keywords": [
+        ["dark", "pink", "romantic", "soft"],
+        ["bright", "pink", "romantic", "soft"]
+      ]
+    },
+    {
+      "name": "Moonwalker",
+      "colors": ["#152331", "#000000"],
+      "colorsname": ["dark teal", "black"],
+      "keywords": [
+        ["dark", "teal", "depth", "cool"],
+        ["dark", "black", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Whinehouse",
+      "colors": ["#f7f7f7", "#b9a0a0", "#794747", "#4e2020", "#111111"],
+      "colorsname": [
+        "light gray",
+        "dark gray",
+        "dark red",
+        "dark gray",
+        "black"
+      ],
+      "keywords": [
+        ["light", "gray", "neutral", "calm"],
+        ["dark", "gray", "serious", "calm"],
+        ["dark", "red", "energy", "vibrant"],
+        ["dark", "gray", "serious", "calm"],
+        ["dark", "black", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "Hyper Blue",
+      "colors": ["#59CDE9", "#0A2A88"],
+      "colorsname": ["bright cyan", "dark blue"],
+      "keywords": [
+        ["bright", "cyan", "fresh", "cool"],
+        ["dark", "blue", "depth", "serious"]
+      ]
+    },
+    {
+      "name": "My New Gradient",
+      "colors": ["#FF00FF", "#00FF00"],
+      "colorsname": ["bright pink", "bright green"],
+      "keywords": [
+        ["bright", "pink", "vibrant", "modern"],
+        ["bright", "green", "fresh", "energetic"]
+      ]
+    }
+  ],
+  {
+    "name": "Neon Cyberpunk",
+    "colors": ["#FF006E", "#8338EC", "#3A86FF"],
+    "colorsname": ["bright pink", "purple", "bright blue"],
+    "keywords": [
+      ["bright", "pink", "neon", "futuristic"],
+      ["purple", "electric", "modern", "tech"],
+      ["bright", "blue", "cyber", "digital"]
+    ]
+  },
+  {
+    "name": "Sunset Vibes",
+    "colors": ["#FF9500", "#FF5722", "#E91E63"],
+    "colorsname": ["orange", "red orange", "pink"],
+    "keywords": [
+      ["orange", "warm", "sunset", "vibrant"],
+      ["red", "orange", "energy", "bold"],
+      ["pink", "romantic", "evening", "soft"]
+    ]
+  },
+  {
+    "name": "Ocean Depths",
+    "colors": ["#006A6B", "#0891B2", "#33D4FF"],
+    "colorsname": ["dark teal", "blue", "light blue"],
+    "keywords": [
+      ["dark", "teal", "ocean", "deep"],
+      ["blue", "water", "calm", "serene"],
+      ["light", "blue", "sky", "fresh"]
+    ]
+  },
+  {
+    "name": "Forest Mist",
+    "colors": ["#134E5E", "#71B280", "#A8E6CF"],
+    "colorsname": ["dark green", "green", "light green"],
+    "keywords": [
+      ["dark", "green", "forest", "nature"],
+      ["green", "fresh", "natural", "organic"],
+      ["light", "green", "mint", "peaceful"]
+    ]
+  },
+  {
+    "name": "Purple Haze",
+    "colors": ["#667eea", "#764ba2", "#f093fb"],
+    "colorsname": ["blue purple", "purple", "light pink"],
+    "keywords": [
+      ["blue", "purple", "dreamy", "mystical"],
+      ["purple", "royal", "elegant", "sophisticated"],
+      ["light", "pink", "soft", "ethereal"]
+    ]
+  },
+  {
+    "name": "Golden Hour",
+    "colors": ["#FFD700", "#FFA500", "#FF6347"],
+    "colorsname": ["gold", "orange", "red orange"],
+    "keywords": [
+      ["gold", "luxury", "warm", "precious"],
+      ["orange", "sunset", "energetic", "vibrant"],
+      ["red", "orange", "fire", "passionate"]
+    ]
+  },
+  {
+    "name": "Arctic Aurora",
+    "colors": ["#00F5FF", "#00CED1", "#20B2AA"],
+    "colorsname": ["cyan", "turquoise", "light sea green"],
+    "keywords": [
+      ["cyan", "ice", "arctic", "cool"],
+      ["turquoise", "aurora", "magical", "northern"],
+      ["light", "sea", "green", "mystical"]
+    ]
+  },
+  {
+    "name": "Cosmic Dust",
+    "colors": ["#2E0249", "#570A57", "#A91079"],
+    "colorsname": ["dark purple", "purple", "magenta"],
+    "keywords": [
+      ["dark", "purple", "space", "cosmic"],
+      ["purple", "galaxy", "mysterious", "deep"],
+      ["magenta", "nebula", "bright", "stellar"]
+    ]
+  },
+  {
+    "name": "Tropical Paradise",
+    "colors": ["#00B4DB", "#0083B0", "#00A8CC"],
+    "colorsname": ["light blue", "blue", "cyan"],
+    "keywords": [
+      ["light", "blue", "tropical", "paradise"],
+      ["blue", "ocean", "vacation", "relaxing"],
+      ["cyan", "lagoon", "crystal", "clear"]
+    ]
+  },
+  {
+    "name": "Velvet Dreams",
+    "colors": ["#8E2DE2", "#4A00E0", "#FF006E"],
+    "colorsname": ["purple", "dark purple", "pink"],
+    "keywords": [
+      ["purple", "velvet", "luxury", "rich"],
+      ["dark", "purple", "deep", "mysterious"],
+      ["pink", "dreams", "romantic", "soft"]
+    ]
+  },
+  {
+    "name": "Emerald City",
+    "colors": ["#11998e", "#38ef7d", "#7fefb2"],
+    "colorsname": ["teal", "green", "light green"],
+    "keywords": [
+      ["teal", "emerald", "precious", "sophisticated"],
+      ["green", "city", "modern", "fresh"],
+      ["light", "green", "nature", "peaceful"]
+    ]
+  },
+  {
+    "name": "Fire Storm",
+    "colors": ["#FF4B1F", "#FF9068", "#FFAD68"],
+    "colorsname": ["red", "orange", "light orange"],
+    "keywords": [
+      ["red", "fire", "intense", "powerful"],
+      ["orange", "storm", "energy", "dynamic"],
+      ["light", "orange", "warm", "glowing"]
+    ]
+  },
+  {
+    "name": "Midnight Blue",
+    "colors": ["#191654", "#43C6AC", "#F8FFAE"],
+    "colorsname": ["dark blue", "teal", "light yellow"],
+    "keywords": [
+      ["dark", "blue", "midnight", "deep"],
+      ["teal", "ocean", "calm", "serene"],
+      ["light", "yellow", "moon", "gentle"]
+    ]
+  },
+  {
+    "name": "Rose Gold",
+    "colors": ["#ED4264", "#FFEDBC", "#FFD700"],
+    "colorsname": ["pink", "cream", "gold"],
+    "keywords": [
+      ["pink", "rose", "romantic", "elegant"],
+      ["cream", "soft", "luxurious", "smooth"],
+      ["gold", "precious", "valuable", "rich"]
+    ]
+  },
+  {
+    "name": "Electric Lime",
+    "colors": ["#8EE000", "#32CD32", "#00FF7F"],
+    "colorsname": ["lime", "green", "spring green"],
+    "keywords": [
+      ["lime", "electric", "bright", "energetic"],
+      ["green", "nature", "fresh", "vibrant"],
+      ["spring", "green", "new", "growth"]
+    ]
+  },
+  {
+    "name": "Lavender Fields",
+    "colors": ["#E6E6FA", "#DDA0DD", "#9370DB"],
+    "colorsname": ["lavender", "plum", "medium orchid"],
+    "keywords": [
+      ["lavender", "fields", "peaceful", "calming"],
+      ["plum", "soft", "gentle", "soothing"],
+      ["medium", "orchid", "floral", "elegant"]
+    ]
+  },
+  {
+    "name": "Coral Reef",
+    "colors": ["#FF7F7F", "#FF6B6B", "#FF5722"],
+    "colorsname": ["coral", "salmon", "red orange"],
+    "keywords": [
+      ["coral", "reef", "ocean", "vibrant"],
+      ["salmon", "warm", "tropical", "lively"],
+      ["red", "orange", "energetic", "bold"]
+    ]
+  },
+  {
+    "name": "Steel Blue",
+    "colors": ["#4682B4", "#5F9EA0", "#87CEEB"],
+    "colorsname": ["steel blue", "cadet blue", "sky blue"],
+    "keywords": [
+      ["steel", "blue", "strong", "industrial"],
+      ["cadet", "blue", "professional", "reliable"],
+      ["sky", "blue", "open", "free"]
+    ]
+  },
+  {
+    "name": "Mint Chocolate",
+    "colors": ["#98FB98", "#3CB371", "#2E8B57"],
+    "colorsname": ["pale green", "medium sea green", "sea green"],
+    "keywords": [
+      ["pale", "green", "mint", "fresh"],
+      ["medium", "sea", "green", "natural"],
+      ["sea", "green", "chocolate", "rich"]
+    ]
+  },
+  {
+    "name": "Sunset Orange",
+    "colors": ["#FF8C00", "#FF7F50", "#FF6347"],
+    "colorsname": ["dark orange", "coral", "tomato"],
+    "keywords": [
+      ["dark", "orange", "sunset", "warm"],
+      ["coral", "tropical", "vibrant", "lively"],
+      ["tomato", "fresh", "natural", "organic"]
+    ]
+  },
+  {
+    "name": "Deep Ocean",
+    "colors": ["#000080", "#191970", "#4169E1"],
+    "colorsname": ["navy", "midnight blue", "royal blue"],
+    "keywords": [
+      ["navy", "deep", "ocean", "mysterious"],
+      ["midnight", "blue", "dark", "profound"],
+      ["royal", "blue", "majestic", "elegant"]
+    ]
+  },
+  {
+    "name": "Cherry Blossom",
+    "colors": ["#FFB6C1", "#FFC0CB", "#FF69B4"],
+    "colorsname": ["light pink", "pink", "hot pink"],
+    "keywords": [
+      ["light", "pink", "cherry", "blossom"],
+      ["pink", "spring", "delicate", "beautiful"],
+      ["hot", "pink", "vibrant", "bold"]
+    ]
+  },
+  {
+    "name": "Autumn Leaves",
+    "colors": ["#FF4500", "#FF6347", "#FFD700"],
+    "colorsname": ["orange red", "tomato", "gold"],
+    "keywords": [
+      ["orange", "red", "autumn", "leaves"],
+      ["tomato", "fall", "seasonal", "warm"],
+      ["gold", "harvest", "rich", "abundant"]
+    ]
+  },
+  {
+    "name": "Glacier Ice",
+    "colors": ["#F0F8FF", "#E0FFFF", "#B0E0E6"],
+    "colorsname": ["alice blue", "light cyan", "powder blue"],
+    "keywords": [
+      ["alice", "blue", "glacier", "ice"],
+      ["light", "cyan", "frozen", "pure"],
+      ["powder", "blue", "arctic", "clean"]
+    ]
+  },
+  {
+    "name": "Neon Nights",
+    "colors": ["#FF1493", "#00FFFF", "#ADFF2F"],
+    "colorsname": ["deep pink", "cyan", "green yellow"],
+    "keywords": [
+      ["deep", "pink", "neon", "nights"],
+      ["cyan", "electric", "bright", "glowing"],
+      ["green", "yellow", "vibrant", "energetic"]
+    ]
+  }
+]

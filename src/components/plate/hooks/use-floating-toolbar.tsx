@@ -16,7 +16,6 @@ import {
 } from "platejs/react";
 import React from "react";
 import { type MyEditor } from "../editor-kit";
-import { MultiDndPlugin } from "../plugins/dnd-kit";
 
 export type FloatingToolbarState = {
   floatingOptions?: UseVirtualFloatingOptions;
@@ -52,12 +51,6 @@ export const useFloatingToolbarState = ({
 
   // Check if dragging is active
   const isDragging = usePluginOption(DndPlugin, "isDragging");
-
-  // Check if mouse is down (prevents toolbar from showing during mouse down phase)
-  const isDragMouseDown = usePluginOption(
-    MultiDndPlugin,
-    "isMouseDown",
-  ) as boolean;
 
   const readOnly = useEditorReadOnly();
   const focused = useFocused();
@@ -137,7 +130,7 @@ export const useFloatingToolbarState = ({
     hasBlockSelection,
     enableBlockSelection,
     isDragging,
-    isDragMouseDown,
+
     setMousedown,
     setOpen,
     setWaitForCollapsedSelection,
@@ -159,7 +152,7 @@ export const useFloatingToolbar = ({
   selectionText,
   hasBlockSelection,
   isDragging,
-  isDragMouseDown,
+
   setMousedown,
   setOpen,
   setWaitForCollapsedSelection,
@@ -167,6 +160,7 @@ export const useFloatingToolbar = ({
   waitForCollapsedSelection,
   selectedIds,
 }: ReturnType<typeof useFloatingToolbarState>) => {
+  const editor = useEditorRef<MyEditor>();
   // On refocus, the editor keeps the previous selection,
   // so we need to wait it's collapsed at the new position before displaying the floating toolbar.
   React.useEffect(() => {
@@ -208,8 +202,7 @@ export const useFloatingToolbar = ({
       (mousedown && !open) ||
       hideToolbar ||
       (readOnly && !showWhenReadOnly) ||
-      isDragging || // Hide toolbar when dragging is active
-      isDragMouseDown // Hide toolbar when mouse is down (prevents showing during mouse down phase)
+      isDragging // Hide toolbar when dragging is active
     ) {
       setOpen(false);
     }
@@ -217,8 +210,7 @@ export const useFloatingToolbar = ({
     else if (
       hasAnySelection &&
       (!waitForCollapsedSelection || readOnly || hasBlockSelection) &&
-      !isDragging && // Don't show if dragging is active
-      !isDragMouseDown // Don't show if mouse is down
+      !isDragging // Don't show if dragging is active
     ) {
       setOpen(true);
     }
@@ -236,7 +228,6 @@ export const useFloatingToolbar = ({
     open,
     readOnly,
     isDragging, // Add isDragging to dependencies
-    isDragMouseDown, // Add isDragMouseDown to dependencies
   ]);
 
   const { update } = floating;
@@ -247,6 +238,7 @@ export const useFloatingToolbar = ({
 
   const clickOutsideRef = useOnClickOutside(
     () => {
+      editor.api.blockSelection.deselect();
       setOpen(false);
     },
     {

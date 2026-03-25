@@ -11,6 +11,9 @@ export function previewSignature(slide: unknown): string {
       layoutType?: unknown;
       width?: unknown;
       rootImage?: unknown;
+      bgColor?: unknown;
+      formatCategory?: unknown;
+      aspectRatio?: unknown;
     };
     return JSON.stringify({
       id: s?.id,
@@ -19,6 +22,9 @@ export function previewSignature(slide: unknown): string {
       layoutType: s?.layoutType,
       width: s?.width,
       rootImage: s?.rootImage,
+      bgColor: s?.bgColor,
+      formatCategory: s?.formatCategory,
+      aspectRatio: s?.aspectRatio,
     });
   } catch {
     return "";

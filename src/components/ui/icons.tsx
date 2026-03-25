@@ -4,6 +4,7 @@ import {
   CandlestickChart,
   Circle,
   CircleDot,
+  ClipboardListIcon,
   Cloud,
   Command,
   Diamond,
@@ -28,9 +29,8 @@ import {
   Triangle,
   User,
   Youtube,
-  type LucideProps,
 } from "lucide-react";
-import { forwardRef } from "react";
+import { forwardRef, type SVGProps } from "react";
 
 interface Props {
   className?: string;
@@ -76,6 +76,7 @@ export const ICON_MAP = {
   "circle-dot": CircleDot,
   website: PanelsTopLeft,
   mail: Mail,
+  clipboard: ClipboardListIcon,
 };
 
 export type Icons = keyof typeof ICON_MAP;
@@ -89,7 +90,7 @@ export function FontColor(props: { className?: string }) {
           fill="currentColor"
         ></path>
       </svg>
-      <div className="h-2 w-full rounded-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+      <div className="h-2 w-full rounded-full bg-linear-to-r from-red-500 via-yellow-500 to-blue-500"></div>
     </div>
   );
 }
@@ -142,7 +143,7 @@ export function Temple(props: { className?: string }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       className={cn(
-        "relative mr-0.5 mt-[-.125em] inline-block size-[1em] shrink-0 transform-cpu text-[1.25em]",
+        "relative mt-[-.125em] mr-0.5 inline-block size-[1em] shrink-0 transform-cpu text-[1.25em]",
         props.className,
       )}
     >
@@ -163,7 +164,7 @@ export function Museum(props: { className?: string }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       className={cn(
-        "relative mr-0.5 mt-[-.125em] inline-block size-[1em] shrink-0 transform-cpu text-[1.25em]",
+        "relative mt-[-.125em] mr-0.5 inline-block size-[1em] shrink-0 transform-cpu text-[1.25em]",
         props.className,
       )}
     >
@@ -416,7 +417,9 @@ export function GoogleIcon({ className }: Props) {
   );
 }
 
-export const MindMapIcon = forwardRef<SVGSVGElement, LucideProps>(
+type IconSvgProps = SVGProps<SVGSVGElement>;
+
+export const MindMapIcon = forwardRef<SVGSVGElement, IconSvgProps>(
   (props, ref) => {
     return (
       <svg
@@ -469,7 +472,7 @@ export const MindMapIcon = forwardRef<SVGSVGElement, LucideProps>(
 );
 MindMapIcon.displayName = "MindMapIcon";
 
-export const LogicChartIcon = forwardRef<SVGSVGElement, LucideProps>(
+export const LogicChartIcon = forwardRef<SVGSVGElement, IconSvgProps>(
   (props, ref) => {
     return (
       <svg
@@ -507,7 +510,7 @@ export const LogicChartIcon = forwardRef<SVGSVGElement, LucideProps>(
   },
 );
 LogicChartIcon.displayName = "LogicChartIcon";
-export const ReverseLogicChartIcon = forwardRef<SVGSVGElement, LucideProps>(
+export const ReverseLogicChartIcon = forwardRef<SVGSVGElement, IconSvgProps>(
   (props, ref) => {
     return (
       <svg
@@ -546,7 +549,7 @@ export const ReverseLogicChartIcon = forwardRef<SVGSVGElement, LucideProps>(
 );
 ReverseLogicChartIcon.displayName = "ReverseLogicChartIcon";
 
-export const TreeChartIcon = forwardRef<SVGSVGElement, LucideProps>(
+export const TreeChartIcon = forwardRef<SVGSVGElement, IconSvgProps>(
   (props, ref) => {
     return (
       <svg
@@ -574,7 +577,7 @@ export const TreeChartIcon = forwardRef<SVGSVGElement, LucideProps>(
 );
 TreeChartIcon.displayName = "TreeChartIcon";
 
-export const TimelineChartIcon = forwardRef<SVGSVGElement, LucideProps>(
+export const TimelineChartIcon = forwardRef<SVGSVGElement, IconSvgProps>(
   (props, ref) => {
     return (
       <svg
@@ -631,7 +634,7 @@ export const TimelineChartIcon = forwardRef<SVGSVGElement, LucideProps>(
 );
 TimelineChartIcon.displayName = "TimelineChartIcon";
 
-export const FishboneChartIcon = forwardRef<SVGSVGElement, LucideProps>(
+export const FishboneChartIcon = forwardRef<SVGSVGElement, IconSvgProps>(
   (props, ref) => {
     return (
       <svg

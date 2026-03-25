@@ -1,13 +1,18 @@
-"use client";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
+import { Arrow } from "@radix-ui/react-tooltip";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
 import { Spinner } from "./spinner";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap ring-offset-background transition-all duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-hidden active:scale-95 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -20,14 +25,14 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 p-0 m-0 underline",
+        link: "m-0 p-0 text-primary underline underline-offset-4",
         loading:
-          "bg-primary text-primary-foreground flex justify-center items-center disabled",
-        noBackground: "bg-transparent p-0 m-0 text-sm text-inherit",
+          "disabled flex items-center justify-center bg-primary text-primary-foreground",
+        noBackground: "m-0 bg-transparent p-0 text-sm text-inherit",
         outlineLoading:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground flex justify-center items-center disabled",
+          "disabled flex items-center justify-center border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         noBackgroundLoading:
-          "bg-transparent p-0 m-0 text-sm text-inherit flex justify-center items-center disabled",
+          "disabled m-0 flex items-center justify-center bg-transparent p-0 text-sm text-inherit",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -45,31 +50,100 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+    const ChildComponent = () => {
+      if (variant !== "loading") {
+        return children;
+      }
+      if (
+        variant === "loading" ||
+        variant === "outlineLoading" ||
+        variant === "noBackgroundLoading"
+      ) {
+        return <Spinner className="h-4 w-4"></Spinner>;
+      }
+      return children;
+    };
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       >
-        {variant !== "loading" && props.children}
-
-        {(variant === "loading" ||
-          variant === "outlineLoading" ||
-          variant === "noBackgroundLoading") && (
-          <Spinner className="h-4 w-4"></Spinner>
-        )}
+        {ChildComponent()}
       </Comp>
     );
   },
 );
 Button.displayName = "Button";
+// TooltipButton should have exactly the same type as Button, with a couple tooltip props
+export interface TooltipButtonProps
+  extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
+  tooltipText?: string;
+  tooltipSide?: "top" | "right" | "bottom" | "left";
+  tooltipAlign?: "start" | "center" | "end";
+  tooltipOffset?: number;
+  tooltipAlignOffset?: number;
+  delayDuration?: number;
+  arrow?: boolean;
+  asChild?: boolean;
+}
 
-export { Button, buttonVariants };
+const TooltipButton = React.forwardRef<HTMLButtonElement, TooltipButtonProps>(
+  (
+    {
+      tooltipText,
+      tooltipSide = "top",
+      tooltipAlign = "center",
+      tooltipOffset = 4,
+      tooltipAlignOffset = 0,
+      delayDuration = 0,
+      arrow = true,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
+    // No tooltip: just Button
+    if (!tooltipText) {
+      return (
+        <Button ref={ref} {...props}>
+          {children}
+        </Button>
+      );
+    }
+    // With tooltip
+    return (
+      <TooltipProvider>
+        <Tooltip delayDuration={delayDuration}>
+          <TooltipTrigger asChild suppressHydrationWarning>
+            <Button ref={ref} {...props}>
+              {children}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            side={tooltipSide}
+            align={tooltipAlign}
+            sideOffset={tooltipOffset}
+            alignOffset={tooltipAlignOffset}
+          >
+            {arrow && <Arrow className="fill-primary" />}
+            <p>{tooltipText}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  },
+);
+
+TooltipButton.displayName = "TooltipButton";
+
+export { Button, buttonVariants, TooltipButton };

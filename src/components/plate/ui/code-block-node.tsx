@@ -59,7 +59,7 @@ export function CodeBlockElement(props: PlateElementProps<TCodeBlockElement>) {
         </pre>
 
         <div
-          className="absolute right-1 top-1 z-10 flex select-none gap-0.5"
+          className="absolute top-1 right-1 z-10 flex gap-0.5 select-none"
           contentEditable={false}
         >
           {isLangSupported(element.lang) && (
@@ -70,7 +70,7 @@ export function CodeBlockElement(props: PlateElementProps<TCodeBlockElement>) {
               onClick={() => formatCodeBlock(editor, { element })}
               title="Format code"
             >
-              <BracesIcon className="!size-3.5 text-muted-foreground" />
+              <BracesIcon className="size-3.5! text-muted-foreground" />
             </Button>
           )}
 
@@ -114,7 +114,7 @@ function CodeBlockCombobox() {
         <Button
           size="sm"
           variant="ghost"
-          className="h-6 select-none justify-between gap-1 px-2 text-xs text-muted-foreground"
+          className="h-6 justify-between gap-1 px-2 text-xs text-muted-foreground select-none"
           aria-expanded={open}
           role="combobox"
         >
@@ -143,8 +143,8 @@ function CodeBlockCombobox() {
                   className="cursor-pointer"
                   value={language.value}
                   onSelect={(value) => {
-                    editor.tf.setNodes<TCodeBlockElement>(
-                      { lang: value },
+                    editor.tf.setNodes(
+                      { lang: value } as Partial<TCodeBlockElement>,
                       { at: element },
                     );
                     setSearchValue(value);
@@ -194,9 +194,9 @@ function CopyButton({
     >
       <span className="sr-only">Copy</span>
       {hasCopied ? (
-        <CheckIcon className="!size-3" />
+        <CheckIcon className="size-3!" />
       ) : (
-        <CopyIcon className="!size-3" />
+        <CopyIcon className="size-3!" />
       )}
     </Button>
   );

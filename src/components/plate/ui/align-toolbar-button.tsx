@@ -63,7 +63,10 @@ export function AlignToolbarButton(props: DropdownMenuProps) {
         </ToolbarButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="min-w-0" align="start">
+      <DropdownMenuContent
+        className="ignore-click-outside/toolbar min-w-0"
+        align="start"
+      >
         <DropdownMenuRadioGroup
           value={value}
           onValueChange={(value) => {
@@ -74,7 +77,7 @@ export function AlignToolbarButton(props: DropdownMenuProps) {
           {items.map(({ icon: Icon, value: itemValue }) => (
             <DropdownMenuRadioItem
               key={itemValue}
-              className="*:first:[span]:hidden pl-2 data-[state=checked]:bg-accent"
+              className="pl-2 data-[state=checked]:bg-accent *:first:[span]:hidden"
               value={itemValue}
             >
               <Icon />

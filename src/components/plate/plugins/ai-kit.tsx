@@ -1,12 +1,21 @@
 "use client";
 
 import { type AIChatPluginConfig } from "@platejs/ai/react";
-import { type UseChatOptions } from "ai/react";
 
-import { streamInsertChunk, withAIBatch } from "@platejs/ai";
-import { AIChatPlugin, AIPlugin, useChatChunk } from "@platejs/ai/react";
-import { KEYS, PathApi } from "platejs";
+import { withAIBatch } from "@platejs/ai";
+import {
+  AIChatPlugin,
+  AIPlugin,
+  applyAISuggestions,
+  useChatChunk,
+} from "@platejs/ai/react";
+import { type UseChatHelpers, useChat } from "@ai-sdk/react";
+import { type UIMessage } from "ai";
+import { DefaultChatTransport } from "ai";
+import { getPluginType, KEYS, PathApi } from "platejs";
 import { usePluginOption } from "platejs/react";
+import { useEffect, useMemo } from "react";
+import { streamInsertChunk } from "@platejs/ai/react";
 
 import { AILoadingBar, AIMenu } from "@/components/plate/ui/ai-menu";
 import { AIAnchorElement, AILeaf } from "@/components/plate/ui/ai-node";
@@ -14,27 +23,18 @@ import { AIAnchorElement, AILeaf } from "@/components/plate/ui/ai-node";
 import { CursorOverlayKit } from "./cursor-overlay-kit";
 import { MarkdownKit } from "./markdown-kit";
 
+type PlateChatMessageData = {
+  toolName: "comment" | "edit" | "generate";
+  comment?: {
+    blockId: string;
+    comment: string;
+    content: string;
+  };
+};
+
+type PlateChatMessage = UIMessage<{}, PlateChatMessageData>;
+
 export const aiChatPlugin = AIChatPlugin.extend({
-  options: {
-    chatOptions: {
-      api: "/api/ai/command",
-      body: {},
-    } as UseChatOptions,
-    promptTemplate: ({ isBlockSelecting, isSelecting }) => {
-      return isBlockSelecting
-        ? PROMPT_TEMPLATES.userBlockSelecting
-        : isSelecting
-          ? PROMPT_TEMPLATES.userSelecting
-          : PROMPT_TEMPLATES.userDefault;
-    },
-    systemTemplate: ({ isBlockSelecting, isSelecting }) => {
-      return isBlockSelecting
-        ? PROMPT_TEMPLATES.systemBlockSelecting
-        : isSelecting
-          ? PROMPT_TEMPLATES.systemSelecting
-          : PROMPT_TEMPLATES.systemDefault;
-    },
-  },
   render: {
     afterContainer: AILoadingBar,
     afterEditable: AIMenu,
@@ -42,22 +42,76 @@ export const aiChatPlugin = AIChatPlugin.extend({
   },
   shortcuts: { show: { keys: "mod+j" } },
   useHooks: ({ editor, getOption }) => {
+    const rawChat = useChat<PlateChatMessage>({
+      transport: new DefaultChatTransport({
+        api: "/api/ai/command",
+      }),
+    });
+    const chat = useMemo<UseChatHelpers<PlateChatMessage>>(
+      () => ({
+        id: rawChat.id,
+        messages: rawChat.messages,
+        setMessages: rawChat.setMessages,
+        error: rawChat.error,
+        sendMessage: rawChat.sendMessage,
+        regenerate: rawChat.regenerate,
+        stop: rawChat.stop,
+        resumeStream: rawChat.resumeStream,
+        addToolResult: rawChat.addToolResult,
+        addToolOutput: rawChat.addToolOutput,
+        addToolApprovalResponse: rawChat.addToolApprovalResponse,
+        status: rawChat.status,
+        clearError: rawChat.clearError,
+      }),
+      [
+        rawChat.id,
+        rawChat.messages,
+        rawChat.setMessages,
+        rawChat.error,
+        rawChat.sendMessage,
+        rawChat.regenerate,
+        rawChat.stop,
+        rawChat.resumeStream,
+        rawChat.addToolResult,
+        rawChat.addToolOutput,
+        rawChat.addToolApprovalResponse,
+        rawChat.status,
+        rawChat.clearError,
+      ],
+    );
     const mode = usePluginOption(
       { key: KEYS.aiChat } as AIChatPluginConfig,
       "mode",
     );
+    const toolName = usePluginOption(
+      { key: KEYS.aiChat } as AIChatPluginConfig,
+      "toolName",
+    );
+
+    useEffect(() => {
+      if (editor.getOption(AIChatPlugin, "chat") === chat) {
+        return;
+      }
+
+      editor.setOption(AIChatPlugin, "chat", chat);
+    }, [chat, editor]);
 
     useChatChunk({
-      onChunk: ({ chunk, isFirst, nodes }) => {
+      onChunk: ({ chunk, isFirst, nodes, text }) => {
         if (isFirst && mode == "insert") {
+          const focusPath = editor.selection?.focus.path;
+          const insertPath = focusPath
+            ? PathApi.next(focusPath.slice(0, 1))
+            : [editor.children.length];
+
           editor.tf.withoutSaving(() => {
             editor.tf.insertNodes(
               {
                 children: [{ text: "" }],
-                type: KEYS.aiChat,
+                type: getPluginType(editor, KEYS.aiChat),
               },
               {
-                at: PathApi.next(editor.selection!.focus.path.slice(0, 1)),
+                at: insertPath,
               },
             );
           });
@@ -72,10 +126,20 @@ export const aiChatPlugin = AIChatPlugin.extend({
               editor.tf.withScrolling(() => {
                 streamInsertChunk(editor, chunk, {
                   textProps: {
-                    ai: true,
+                    [getPluginType(editor, KEYS.ai)]: true,
                   },
                 });
               });
+            },
+            { split: isFirst },
+          );
+        }
+
+        if (toolName === "edit" && mode === "chat") {
+          withAIBatch(
+            editor,
+            () => {
+              applyAISuggestions(editor, text);
             },
             { split: isFirst },
           );
@@ -85,6 +149,7 @@ export const aiChatPlugin = AIChatPlugin.extend({
         editor.setOption(AIChatPlugin, "streaming", false);
         editor.setOption(AIChatPlugin, "_blockChunks", "");
         editor.setOption(AIChatPlugin, "_blockPath", null);
+        editor.setOption(AIChatPlugin, "_mdxName", null);
       },
     });
   },

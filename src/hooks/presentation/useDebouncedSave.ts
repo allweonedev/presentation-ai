@@ -1,7 +1,8 @@
-import { updatePresentation } from "@/app/_actions/presentation/presentationActions";
+import { updatePresentation } from "@/app/_actions/notebook/presentation/presentationActions";
+import { buildPresentationCustomization } from "@/lib/presentation/customization";
 import { usePresentationState } from "@/states/presentation-state";
 import debounce from "lodash.debounce";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 
 interface UseDebouncedSaveOptions {
   /**
@@ -21,7 +22,7 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
   const { setSavingStatus } = usePresentationState();
 
   // Create debounced save function
-  const debouncedSave = useRef(
+  const debouncedSave = useCallback(
     debounce(
       async () => {
         // Get the latest state directly from the store
@@ -33,8 +34,14 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
           imageSource,
           presentationStyle,
           language,
-          config,
+          pageBackground,
           thumbnailUrl,
+          customThemeData,
+          pageStyle,
+          textContent,
+          tone,
+          audience,
+          scenario,
         } = usePresentationState.getState();
 
         // Don't save if there's no presentation or slides
@@ -46,7 +53,6 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
             id: currentPresentationId,
             content: {
               slides,
-              config,
             },
             title: currentPresentationTitle ?? "",
             outline,
@@ -54,6 +60,16 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
             presentationStyle,
             language,
             thumbnailUrl,
+            customization: buildPresentationCustomization({
+              customThemeData,
+              pageStyle,
+              presentationStyle: presentationStyle ?? "",
+              textContent,
+              tone,
+              audience,
+              scenario,
+              pageBackground,
+            }),
           });
 
           setSavingStatus("saved");
@@ -69,7 +85,8 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
       delay,
       { maxWait: delay * 2 },
     ),
-  ).current;
+    [],
+  );
 
   // Cleanup debounce on unmount
   useEffect(() => {
@@ -91,8 +108,14 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
       imageSource,
       presentationStyle,
       language,
-      config,
+      pageBackground,
       thumbnailUrl,
+      customThemeData,
+      pageStyle,
+      textContent,
+      tone,
+      audience,
+      scenario,
     } = usePresentationState.getState();
 
     // Don't save if there's no presentation
@@ -105,7 +128,6 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
         id: currentPresentationId,
         content: {
           slides,
-          config,
         },
         title: currentPresentationTitle ?? "",
         outline,
@@ -113,6 +135,16 @@ export const useDebouncedSave = (options: UseDebouncedSaveOptions = {}) => {
         imageSource,
         presentationStyle,
         thumbnailUrl,
+        customization: buildPresentationCustomization({
+          customThemeData,
+          pageStyle,
+          presentationStyle: presentationStyle ?? "",
+          textContent,
+          tone,
+          audience,
+          scenario,
+          pageBackground,
+        }),
       });
 
       setSavingStatus("saved");

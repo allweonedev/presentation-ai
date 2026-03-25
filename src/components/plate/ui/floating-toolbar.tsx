@@ -15,7 +15,10 @@ import {
 
 import { cn } from "@/lib/utils";
 
-import { BLOCKS } from "@/components/presentation/editor/lib";
+import {
+  ANTV_INFOGRAPHIC,
+  BLOCKS,
+} from "@/components/notebook/presentation/editor/lib";
 import { type MyEditor } from "../editor-kit";
 import {
   useFloatingToolbar,
@@ -41,15 +44,20 @@ export function FloatingToolbar({
   const selectedIds = usePluginOption(BlockSelectionPlugin, "selectedIds");
   const hasBlockSelection = selectedIds && selectedIds.size > 0;
 
-  // Check if the selected blocks are layout blocks
+  // Check if the selected blocks are layout blocks or image elements
   const isLayoutBlockSelected = React.useMemo(() => {
     if (!hasBlockSelection || !selectedIds) return false;
 
-    // Check if any of the selected blocks are layout blocks
+    // Check if any of the selected blocks are layout blocks or images
     for (const blockId of selectedIds) {
       const block = editor.api.node({ id: blockId, at: [] });
       if (block?.[0]) {
         const blockType = block[0].type as string;
+        // Hide for image elements (they use layout floating toolbar)
+        if (blockType === "img" || blockType === ANTV_INFOGRAPHIC) {
+          return true;
+        }
+
         if (BLOCKS.some((block) => block.type === blockType)) {
           return true;
         }
@@ -80,6 +88,7 @@ export function FloatingToolbar({
         }),
       ],
       placement: "top",
+      strategy: "fixed",
       ...state?.floatingOptions,
     },
   });
@@ -103,7 +112,7 @@ export function FloatingToolbar({
         {...rootProps}
         ref={ref}
         className={cn(
-          "absolute z-50 overflow-x-auto whitespace-nowrap rounded-md border bg-popover p-1 opacity-100 shadow-md scrollbar-hide print:hidden",
+          "z-99999 scrollbar-hide overflow-x-auto rounded-md border bg-popover p-1 whitespace-nowrap opacity-100 shadow-md print:hidden",
           "max-w-[80vw]",
           className,
         )}

@@ -1,6 +1,4 @@
-import { type SlateElementProps } from "platejs";
-
-import { SlateElement } from "platejs";
+import { type SlateElementProps, SlateElement } from "platejs/static";
 
 import { cn } from "@/lib/utils";
 
@@ -19,14 +17,14 @@ export function CalloutElementStatic({
     >
       <div className="flex w-full gap-2 rounded-md">
         <div
-          className="size-6 select-none text-[18px]"
+          className="size-6 text-[18px] select-none"
           style={{
             fontFamily:
               '"Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols',
           }}
         >
           <span data-plate-prevent-deserialization>
-            {(props.element.icon as string) || "💡"}
+            {(props.element.icon as string) || "Ã°Å¸â€™Â¡"}
           </span>
         </div>
         <div className="w-full">{children}</div>
@@ -34,3 +32,5 @@ export function CalloutElementStatic({
     </SlateElement>
   );
 }
+
+

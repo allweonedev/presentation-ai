@@ -44,11 +44,7 @@ function List(props: PlateElementProps) {
   const List = isOrderedList(props.element) ? "ol" : "ul";
 
   return (
-    <List
-      className="relative m-0 p-0"
-      style={{ listStyleType }}
-      start={listStart}
-    >
+    <List className="relative m-0" style={{ listStyleType }} start={listStart}>
       {Marker && <Marker {...props} />}
       {Li ? <Li {...props} /> : <li>{props.children}</li>}
     </List>
@@ -64,7 +60,7 @@ function TodoMarker(props: PlateElementProps) {
     <div contentEditable={false}>
       <Checkbox
         className={cn(
-          "absolute -left-6 top-1",
+          "absolute top-1 -left-6",
           readOnly && "pointer-events-none",
         )}
         {...checkboxProps}

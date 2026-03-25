@@ -5,9 +5,9 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Plate JS](https://img.shields.io/badge/Plate.js-3B82F6?logoColor=white)](https://platejs.org)
 
-> ⭐ **Help us reach more developers and grow the ALLWEONE community. Star this repo!**
+⭐ **Help us reach more developers and grow the ALLWEONE community. Star this repo!**
 
-An open-source, AI-powered presentation generator inspired by Gamma.app that creates beautiful, customizable slides in minutes. This tool is part of the broader ALLWEONE AI platform.
+An open-source, AI-powered presentation generator alternative to Gamma.app that creates beautiful, customizable slides in minutes. This tool is part of the broader ALLWEONE AI platform.
 
 <https://github.com/user-attachments/assets/a21dbd49-75b8-4822-bcec-a75b581d9c60>
 
@@ -272,7 +272,8 @@ presentation/
 | Presentation analytics       | 🔴 Not Started    | Track views, engagement, and presentation performance                                       |
 | AI presenter notes           | 🔴 Not Started    | Auto-generate speaker notes for each slide                                                  |
 | Custom font uploads          | 🔴 Not Started    | Allow users to upload and use their own fonts                                               |
-| Plugin system                | 🔴 Not Started    | Allow community to build and share extensions                                               |
+| Plugin system                | 🔴 Not Started    | Allow community to build and share extensions
+| API                          | 🔴 Not Started    | Allow developers to use the allweone presentation to generate content in their own applications. 
 
 > 📝 **Note**: This roadmap is subject to change based on community feedback and priorities. Want to contribute to any of these features? Check out our [Contributing Guidelines](CONTRIBUTING.md)!
 
@@ -325,17 +326,22 @@ Special thanks to the following projects and organizations:
 - [Next.js](https://nextjs.org/) for the React framework
 - All our open-source [contributors](https://github.com/allweonedev/presentation-ai/graphs/contributors)
 
-## 💬 Support
+## 💬 Support and Sponsors
+
+https://github.com/sponsors/allweonedev
 
 Need help or have questions?
 
-- 💬 [Discord Community](https://discord.gg/wSVNudUBdY)
+- 💬 [Discord Community](https://discord.gg/kZaJjZ7HjR)
 - 🐛 [Report a Bug](https://github.com/allweonedev/presentation-ai/issues)
 - 💡 [Request a Feature](https://github.com/allweonedev/presentation-ai/issues)
 - 📧 Contact us via GitHub Issues or Discord
 
 ---
 
-**Built with ❤️ by the ALLWEONE™ Team**
+**Built with ❤️ by the ALLWEONE® Team**
 
 **[⭐ Star us on GitHub](https://github.com/allweonedev/presentation-ai)**
+
+
+[![Star History Chart](https://api.star-history.com/svg?repos=allweonedev/presentation-ai&type=date&legend=top-left)](https://www.star-history.com/#allweonedev/presentation-ai&type=date&legend=top-left)

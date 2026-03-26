@@ -1,6 +1,7 @@
 "use client";
 
 import { getPresentationMessages } from "@/app/_actions/presentation/getPresentationMessages";
+import { ModelPicker } from "@/components/notebook/presentation/components/ModelPicker";
 import { serializeSlidesToXml } from "@/components/notebook/presentation/utils/slide-serializer";
 import { AILoadingLabel } from "@/components/ui/ai-loading-label";
 import { Button } from "@/components/ui/button";
@@ -276,6 +277,13 @@ export function PresentationAgentPanel() {
               <X className="h-4 w-4" />
             </Button>
           </div>
+        </div>
+
+        <div className="mt-3 space-y-1.5">
+          <ModelPicker />
+          <p className="text-xs text-muted-foreground">
+            Choose the model for the next agent response.
+          </p>
         </div>
 
       </div>

@@ -1,1 +1,1 @@
-export { modelPicker } from "./model-picker";
+export { assertModelIsConfigured, modelPicker } from "./model-picker";

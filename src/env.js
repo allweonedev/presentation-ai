@@ -9,7 +9,7 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
 
-    OPENAI_API_KEY: z.string(),
+    OPENAI_API_KEY: z.string().optional(),
     TOGETHER_AI_API_KEY: z.string(),
     FAL_API_KEY: z.string().optional(),
     PINECONE_API_KEY: z.string().optional(),

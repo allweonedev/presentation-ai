@@ -1,6 +1,7 @@
 import { createPresentationGraph } from "@/ai/agents/presentation/createAgent";
 import { ensureCheckpointerSetup } from "@/ai/lib/postgres";
 import { getLatestUserMessage } from "@/lib/ai/uiMessageParts";
+import { assertModelIsConfigured } from "@/lib/modelPicker";
 import { auth } from "@/server/auth";
 import { toBaseMessages, toUIMessageStream } from "@ai-sdk/langchain";
 import { type HumanMessage } from "@langchain/core/messages";
@@ -15,10 +16,13 @@ type PresentationStreamOptions = Parameters<
 
 export async function POST(req: Request) {
   try {
-    const { id, messages, resumeData } = (await req.json()) as {
+    const { id, messages, resumeData, modelProvider, modelId } =
+      (await req.json()) as {
       id?: string;
       messages?: UIMessage[];
       resumeData?: Record<string, unknown>;
+      modelProvider?: "openai" | "ollama" | "lmstudio";
+      modelId?: string;
     };
 
     if (!id) {
@@ -32,8 +36,19 @@ export async function POST(req: Request) {
     }
 
     await ensureCheckpointerSetup();
+    try {
+      assertModelIsConfigured(modelProvider ?? "openai", modelId);
+    } catch (error) {
+      return new Response(
+        error instanceof Error ? error.message : "Invalid model configuration",
+        { status: 400 },
+      );
+    }
 
-    const graph = createPresentationGraph();
+    const graph = createPresentationGraph({
+      modelProvider,
+      modelId,
+    });
     const streamOptions: PresentationStreamOptions = {
       streamMode: ["values", "messages"],
       interruptBefore: ["tools"],

@@ -4,7 +4,15 @@ import { presentationTools } from "@/ai/tools/presentation/tools";
 import { modelPicker } from "@/lib/modelPicker";
 import { createAgent, createMiddleware, trimMessages } from "langchain";
 
-export function createPresentationGraph() {
+interface CreatePresentationGraphOptions {
+  modelProvider?: "openai" | "ollama" | "lmstudio";
+  modelId?: string;
+}
+
+export function createPresentationGraph({
+  modelProvider = "openai",
+  modelId,
+}: CreatePresentationGraphOptions = {}) {
   const trimMessageHistory = createMiddleware({
     name: "TrimMessages",
     wrapModelCall: async (request, handler) => {
@@ -24,7 +32,10 @@ export function createPresentationGraph() {
   });
 
   return createAgent({
-    model: modelPicker("gpt-4o-mini").withConfig({
+    model: modelPicker(
+      modelProvider,
+      modelProvider === "openai" ? (modelId || "gpt-4o-mini") : modelId,
+    ).withConfig({
       parallel_tool_calls: false,
     }),
     tools: [...presentationTools],

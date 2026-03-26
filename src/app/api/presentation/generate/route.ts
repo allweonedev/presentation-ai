@@ -1,4 +1,4 @@
-import { modelPicker } from "@/lib/modelPicker";
+import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
 import { auth } from "@/server/auth";
 import { toUIMessageStream } from "@ai-sdk/langchain";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -483,6 +483,19 @@ export async function POST(req: Request) {
     });
 
     const prompt = PromptTemplate.fromTemplate(SLIDES_TEMPLATE);
+    try {
+      assertModelIsConfigured(modelProvider, modelId);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Invalid model configuration",
+        },
+        { status: 400 },
+      );
+    }
     const model = modelPicker(modelProvider, modelId);
     const chain = RunnableSequence.from([prompt, model]);
 

@@ -22,7 +22,7 @@ import { DefaultChatTransport, type FileUIPart } from "ai";
 import { useQuery } from "@tanstack/react-query";
 import { Bot, BrushCleaning, Loader2, Paperclip, Send, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AIMessageComponent from "./AIMessage";
 import HumanMessageComponent from "./HumanMessage";
 import ToolMessageComponent from "./ToolMessage";
@@ -37,6 +37,8 @@ export function PresentationAgentPanel() {
   const pendingAgentMessage = usePresentationState(
     (state) => state.pendingAgentMessage,
   );
+  const modelProvider = usePresentationState((state) => state.modelProvider);
+  const modelId = usePresentationState((state) => state.modelId);
   const setPendingAgentMessage = usePresentationState(
     (state) => state.setPendingAgentMessage,
   );
@@ -47,6 +49,14 @@ export function PresentationAgentPanel() {
         api: "/api/agent/presentation",
       }),
     [],
+  );
+
+  const getAgentRequestBody = useCallback(
+    () => ({
+      modelProvider,
+      modelId,
+    }),
+    [modelId, modelProvider],
   );
 
   const {
@@ -124,6 +134,7 @@ export function PresentationAgentPanel() {
 
         await regenerate({
           body: {
+            ...getAgentRequestBody(),
             resumeData: {
               messages: resumeMessage,
             },
@@ -134,7 +145,7 @@ export function PresentationAgentPanel() {
         console.error("Error executing tool call:", error);
       }
     })();
-  }, [isStreaming, messages, regenerate]);
+  }, [getAgentRequestBody, isStreaming, messages, regenerate]);
 
   const processedPendingRef = useRef<string | null>(null);
 
@@ -151,9 +162,12 @@ export function PresentationAgentPanel() {
       const { message, slideContext } = pendingAgentMessage;
       setPendingAgentMessage(null);
 
-      void sendMessage({
-        text: `<slide-information>${slideContext}</slide-information>\n\n${message}`,
-      });
+      void sendMessage(
+        {
+          text: `<slide-information>${slideContext}</slide-information>\n\n${message}`,
+        },
+        { body: getAgentRequestBody() },
+      );
     } else if (!pendingAgentMessage) {
       processedPendingRef.current = null;
     }
@@ -213,7 +227,9 @@ export function PresentationAgentPanel() {
           }))
         : undefined;
 
-    void sendMessage(files ? { text: prompt, files } : { text: prompt });
+    void sendMessage(files ? { text: prompt, files } : { text: prompt }, {
+      body: getAgentRequestBody(),
+    });
   };
 
   const handleClear = () => {
@@ -228,37 +244,40 @@ export function PresentationAgentPanel() {
 
   return (
     <div className="flex h-full min-w-0 flex-col bg-background">
-      <div className="flex items-center justify-between border-b p-3 backdrop-blur-xs supports-backdrop-filter:bg-background/60">
-        <div className="flex items-center gap-2">
-          <Bot className="h-4 w-4" />
-          <h2 className="text-sm font-semibold tracking-wide">Agent</h2>
+      <div className="border-b p-3 backdrop-blur-xs supports-backdrop-filter:bg-background/60">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Bot className="h-4 w-4" />
+            <h2 className="text-sm font-semibold tracking-wide">Agent</h2>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClear}
+              className="h-8 items-center gap-1 px-2 hover:bg-muted"
+              disabled={isStreaming || isLoading || isPending}
+            >
+              {isLoading || isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <BrushCleaning className="h-4 w-4" />
+              )}
+              Clear
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setActiveRightPanel(null)}
+              className="h-8 w-8 hover:bg-muted"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleClear}
-            className="h-8 items-center gap-1 px-2 hover:bg-muted"
-            disabled={isStreaming || isLoading || isPending}
-          >
-            {isLoading || isPending ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <BrushCleaning className="h-4 w-4" />
-            )}
-            Clear
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setActiveRightPanel(null)}
-            className="h-8 w-8 hover:bg-muted"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
       </div>
 
       <ScrollArea className="max-h-full flex-1 px-3 py-4">

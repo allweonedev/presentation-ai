@@ -1,5 +1,5 @@
 import { createUIMessageStreamResponse } from "ai";
-import { modelPicker } from "@/lib/modelPicker";
+import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
 import { toUIMessageStream } from "@ai-sdk/langchain";
 import { auth } from "@/server/auth";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -265,6 +265,19 @@ export async function POST(req: Request) {
     if (!prompt) {
       return NextResponse.json(
         { error: "Missing required prompt field" },
+        { status: 400 },
+      );
+    }
+    try {
+      assertModelIsConfigured("gpt-4o-mini");
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Invalid model configuration",
+        },
         { status: 400 },
       );
     }

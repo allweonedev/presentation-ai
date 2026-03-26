@@ -3,7 +3,7 @@ import {
   getLatestUserMessage,
   getMessageText,
 } from "@/lib/ai/uiMessageParts";
-import { modelPicker } from "@/lib/modelPicker";
+import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
 import { logger } from "@/lib/observability/server/logger";
 import { auth } from "@/server/auth";
 import { toBaseMessages, toUIMessageStream } from "@ai-sdk/langchain";
@@ -199,6 +199,19 @@ export async function POST(req: Request) {
       month: "long",
       day: "numeric",
     });
+    try {
+      assertModelIsConfigured(modelProvider, modelId);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Invalid model configuration",
+        },
+        { status: 400 },
+      );
+    }
 
     const agent = createAgent({
       model: modelPicker(modelProvider, modelId),

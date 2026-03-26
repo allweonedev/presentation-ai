@@ -5,12 +5,9 @@ import { ChatOpenAI } from "@langchain/openai";
  * Supports OpenAI and OpenAI-compatible local endpoints.
  */
 export function modelPicker(modelProvider: string, modelId?: string) {
-  const provider = modelId ? modelProvider : "openai";
-  const resolvedModelId = modelId ?? modelProvider ?? "gpt-4o-mini";
-
-  if (provider === "lmstudio") {
+  if (modelProvider === "lmstudio" && modelId) {
     return new ChatOpenAI({
-      model: resolvedModelId,
+      model: modelId,
       apiKey: "lmstudio",
       configuration: {
         baseURL: "http://localhost:1234/v1",
@@ -18,9 +15,9 @@ export function modelPicker(modelProvider: string, modelId?: string) {
     });
   }
 
-  if (provider === "ollama") {
+  if (modelProvider === "ollama" && modelId) {
     return new ChatOpenAI({
-      model: resolvedModelId,
+      model: modelId,
       apiKey: "ollama",
       configuration: {
         baseURL: "http://localhost:11434/v1",
@@ -28,7 +25,13 @@ export function modelPicker(modelProvider: string, modelId?: string) {
     });
   }
 
+  if (modelProvider === "openai") {
+    return new ChatOpenAI({
+      model: "gpt-4o-mini",
+    });
+  }
+
   return new ChatOpenAI({
-    model: resolvedModelId,
+    model: modelProvider || "gpt-4o-mini",
   });
 }

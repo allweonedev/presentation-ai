@@ -12,6 +12,8 @@ interface SlidesRequest {
   outline: string[];
   language: string;
   tone: string;
+  modelId?: string;
+  modelProvider?: "openai" | "ollama" | "lmstudio";
   searchResults?: Array<{ query: string; results: unknown[] }>;
   textContent?: "minimal" | "concise" | "detailed" | "extensive";
   audience?: string;
@@ -260,8 +262,6 @@ Now generate the complete XML presentation with exactly {TOTAL_SLIDES} slides.
 // HELPER FUNCTIONS
 // ============================================================================
 
-const model = modelPicker("gpt-4o-mini");
-
 function formatSearchResults(
   searchResults?: Array<{ query: string; results: unknown[] }>,
 ): string {
@@ -389,7 +389,7 @@ function buildPerSlideRequirements(
   const hints = Object.entries(outlineTemplateHints)
     .map(
       ([index, templateName]) =>
-        `- **Slide ${parseInt(index) + 1}**: Use "${templateName}" layout (MANDATORY)`,
+        `- **Slide ${parseInt(index, 10) + 1}**: Use "${templateName}" layout (MANDATORY)`,
     )
     .join("\n");
 
@@ -453,6 +453,8 @@ export async function POST(req: Request) {
       outline,
       language,
       tone,
+      modelId,
+      modelProvider = "openai",
       searchResults,
       textContent,
       audience,
@@ -481,6 +483,7 @@ export async function POST(req: Request) {
     });
 
     const prompt = PromptTemplate.fromTemplate(SLIDES_TEMPLATE);
+    const model = modelPicker(modelProvider, modelId);
     const chain = RunnableSequence.from([prompt, model]);
 
     const stream = await chain.stream({

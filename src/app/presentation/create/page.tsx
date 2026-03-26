@@ -80,6 +80,8 @@ export default function Page() {
     const presentationState = usePresentationState.getState();
     const queryRequest = {
       language,
+      modelId: presentationState.modelId,
+      modelProvider: presentationState.modelProvider,
       numSlides: noOfSlides,
       prompt,
       webSearchEnabled,
@@ -94,7 +96,7 @@ export default function Page() {
       return;
     }
 
-    const requestKey = `${request.language}:${request.numSlides}:${request.webSearchEnabled}:${request.prompt}`;
+    const requestKey = `${request.language}:${request.modelProvider}:${request.modelId}:${request.numSlides}:${request.webSearchEnabled}:${request.prompt}`;
     if (handledRequestRef.current === requestKey) {
       return;
     }
@@ -105,6 +107,8 @@ export default function Page() {
     setPresentationLanguage(request.language);
     setNumSlides(request.numSlides);
     setWebSearchEnabled(request.webSearchEnabled);
+    presentationState.setModelProvider(request.modelProvider);
+    presentationState.setModelId(request.modelId);
 
     void handleDirectGeneration(request.prompt, request.language);
   }, [

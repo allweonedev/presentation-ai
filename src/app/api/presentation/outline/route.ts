@@ -21,6 +21,8 @@ interface OutlineRequest {
 interface OutlineMessageMetadata {
   numberOfCards?: number;
   language?: string;
+  modelId?: string;
+  modelProvider?: "openai" | "ollama" | "lmstudio";
   webSearch?: boolean;
   textContent?: "minimal" | "concise" | "detailed" | "extensive";
   tone?: string;
@@ -154,6 +156,8 @@ export async function POST(req: Request) {
       (latestUserMessage?.metadata as OutlineMessageMetadata | undefined) ?? {};
     const numberOfCards = metadata.numberOfCards ?? 0;
     const language = metadata.language ?? "";
+    const modelProvider = metadata.modelProvider ?? "openai";
+    const modelId = metadata.modelId;
     const webSearch = Boolean(metadata.webSearch);
 
     span.annotate({
@@ -197,7 +201,7 @@ export async function POST(req: Request) {
     });
 
     const agent = createAgent({
-      model: modelPicker("gpt-4o-mini"),
+      model: modelPicker(modelProvider, modelId),
       tools: webSearch ? [search_tool] : [],
       systemPrompt:
         buildOutlineSystemPrompt({

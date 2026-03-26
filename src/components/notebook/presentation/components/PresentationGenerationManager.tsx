@@ -30,6 +30,8 @@ import {
 interface PresentationOutlineMessageMetadata {
   numberOfCards: number;
   language: string;
+  modelId: string;
+  modelProvider: "openai" | "ollama" | "lmstudio";
   webSearch: boolean;
   presentationId: string | null;
   textContent: "minimal" | "concise" | "detailed" | "extensive";
@@ -93,6 +95,8 @@ export function PresentationGenerationManager() {
   const {
     numSlides,
     language,
+    modelId,
+    modelProvider,
     presentationInput,
     shouldStartOutlineGeneration,
     shouldStartPresentationGeneration,
@@ -122,7 +126,6 @@ export function PresentationGenerationManager() {
     tone,
     audience,
     scenario,
-    theme,
   } = usePresentationState();
 
   // Persist slide updates during generation using debounced saves to limit frequency
@@ -410,6 +413,8 @@ export function PresentationGenerationManager() {
             metadata: {
               numberOfCards: numSlides,
               language,
+              modelId,
+              modelProvider,
               webSearch: webSearchEnabled,
               presentationId: currentPresentationId,
               textContent,
@@ -555,6 +560,8 @@ export function PresentationGenerationManager() {
         outline,
         presentationInput,
         language,
+        modelId,
+        modelProvider,
         tone,
         currentPresentationTitle,
         searchResults: stateSearchResults,
@@ -600,6 +607,8 @@ export function PresentationGenerationManager() {
           searchResults: stateSearchResults,
           language,
           tone: tone,
+          modelId,
+          modelProvider,
           textContent,
           audience,
           scenario,
@@ -619,6 +628,8 @@ export function PresentationGenerationManager() {
         outline,
         presentationInput,
         language,
+        modelId,
+        modelProvider,
         currentPresentationTitle,
         setThumbnailUrl,
       } = usePresentationState.getState();
@@ -641,6 +652,8 @@ export function PresentationGenerationManager() {
           prompt: presentationInput ?? "",
           outline,
           language,
+          modelId,
+          modelProvider,
         },
       });
     }

@@ -11,6 +11,8 @@ interface ImageSlidesRequest {
   prompt: string;
   outline: string[];
   language: string;
+  modelId?: string;
+  modelProvider?: "openai" | "ollama" | "lmstudio";
 }
 
 const IMAGE_SLIDES_TEMPLATE = `You are an expert visual presentation designer. Create image-based slides where each slide is a full-screen image with ALL text rendered inside the image itself (no separate text overlays).
@@ -72,8 +74,6 @@ Create detailed, artistic prompts that:
 Now generate the complete XML presentation with exactly {TOTAL_SLIDES} image slides.
 `;
 
-const model = modelPicker("gpt-4o-mini");
-
 export async function POST(req: Request) {
   try {
     const session = await auth();
@@ -92,6 +92,8 @@ export async function POST(req: Request) {
       prompt: userPrompt,
       outline,
       language,
+      modelId,
+      modelProvider = "openai",
     } = (await req.json()) as ImageSlidesRequest;
 
     if (!title || !outline || !Array.isArray(outline) || !language) {
@@ -104,6 +106,7 @@ export async function POST(req: Request) {
     const totalSlides = outline.length;
 
     const prompt = PromptTemplate.fromTemplate(IMAGE_SLIDES_TEMPLATE);
+    const model = modelPicker(modelProvider, modelId);
     const chain = RunnableSequence.from([prompt, model]);
 
     const stream = await chain.stream({

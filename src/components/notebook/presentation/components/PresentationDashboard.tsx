@@ -2,6 +2,7 @@
 
 import { createBlankPresentation } from "@/app/_actions/notebook/presentation/presentationActions";
 import { fetchPresentations } from "@/app/_actions/notebook/presentation/fetchPresentations";
+import { ModelPicker } from "@/components/notebook/presentation/components/ModelPicker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -46,6 +47,8 @@ export function PresentationDashboard() {
     setPresentationInput,
     language,
     setLanguage,
+    modelId,
+    modelProvider,
     numSlides,
     setNumSlides,
     webSearchEnabled,
@@ -80,6 +83,8 @@ export function PresentationDashboard() {
         setPendingCreateRequest({
           prompt,
           language: selectedLanguage,
+          modelId,
+          modelProvider,
           numSlides: selectedNumSlides,
           webSearchEnabled: selectedWebSearchEnabled,
         });
@@ -132,7 +137,9 @@ export function PresentationDashboard() {
               className="min-h-36 resize-none"
             />
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <ModelPicker />
+
               <div className="space-y-2">
                 <div className="text-sm font-medium">Slides</div>
                 <Select

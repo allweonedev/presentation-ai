@@ -1,5 +1,6 @@
 import { createUIMessageStreamResponse } from "ai";
 import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
+import { createLogger } from "@/lib/observability/logger";
 import { toUIMessageStream } from "@ai-sdk/langchain";
 import { auth } from "@/server/auth";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -75,12 +76,22 @@ Now generate the complete XML presentation with exactly {TOTAL_SLIDES} image sli
 `;
 
 export async function POST(req: Request) {
+  const requestId = crypto.randomUUID();
+  const routeLogger = createLogger("api:presentation-generate-image-slides");
+
   try {
+    routeLogger.info("Image slide generation request received", { requestId });
     const session = await auth();
     if (!session) {
+      routeLogger.warn("Image slide generation request rejected: unauthorized", {
+        requestId,
+      });
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     if (!session.user.isAdmin) {
+      routeLogger.warn("Image slide generation request rejected: non-admin user", {
+        requestId,
+      });
       return NextResponse.json(
         { error: "This feature is only available for admin users" },
         { status: 403 },
@@ -97,6 +108,15 @@ export async function POST(req: Request) {
     } = (await req.json()) as ImageSlidesRequest;
 
     if (!title || !outline || !Array.isArray(outline) || !language) {
+      routeLogger.warn(
+        "Image slide generation request rejected: missing required fields",
+        {
+          requestId,
+          hasTitle: Boolean(title),
+          hasOutline: Array.isArray(outline),
+          language,
+        },
+      );
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -106,9 +126,26 @@ export async function POST(req: Request) {
     const totalSlides = outline.length;
 
     const prompt = PromptTemplate.fromTemplate(IMAGE_SLIDES_TEMPLATE);
+    routeLogger.info("Validated image slide generation request", {
+      requestId,
+      title,
+      totalSlides,
+      language,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+    });
     try {
       assertModelIsConfigured(modelProvider, modelId);
     } catch (error) {
+      routeLogger.error(
+        "Image slide generation request rejected: invalid model configuration",
+        error,
+        {
+          requestId,
+          modelProvider,
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
       return NextResponse.json(
         {
           error:
@@ -122,6 +159,13 @@ export async function POST(req: Request) {
     const model = modelPicker(modelProvider, modelId);
     const chain = RunnableSequence.from([prompt, model]);
 
+    routeLogger.info("Image slide generation started", {
+      requestId,
+      title,
+      totalSlides,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+    });
     const stream = await chain.stream({
       TITLE: title,
       PROMPT: userPrompt || "No specific prompt provided",
@@ -130,11 +174,16 @@ export async function POST(req: Request) {
       TOTAL_SLIDES: totalSlides,
     });
 
+    routeLogger.info("Image slide generation stream created", {
+      requestId,
+      title,
+      totalSlides,
+    });
     return createUIMessageStreamResponse({
       stream: toUIMessageStream(stream),
     });
   } catch (error) {
-    console.error("Error in image slides generation:", error);
+    routeLogger.error("Image slide generation failed", error, { requestId });
     return NextResponse.json(
       { error: "Failed to generate image slides" },
       { status: 500 },

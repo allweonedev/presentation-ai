@@ -1,5 +1,6 @@
 "use client";
 
+import { createLogger } from "@/lib/observability/logger";
 import {
   Select,
   SelectContent,
@@ -18,6 +19,8 @@ import { usePresentationState } from "@/states/presentation-state";
 import { Bot, Cpu, Loader2, Monitor } from "lucide-react";
 import { useEffect, useRef } from "react";
 
+const modelPickerLogger = createLogger("client:model-picker");
+
 export function ModelPicker({
   shouldShowLabel = true,
 }: {
@@ -33,6 +36,10 @@ export function ModelPicker({
     if (!hasRestoredFromStorage.current) {
       const savedModel = getSelectedModel();
       if (savedModel) {
+        modelPickerLogger.info("Restoring previously selected model", {
+          modelProvider: savedModel.modelProvider,
+          modelId: savedModel.modelId || "gpt-4o-mini",
+        });
         setModelProvider(
           savedModel.modelProvider as "openai" | "ollama" | "lmstudio",
         );
@@ -124,6 +131,10 @@ export function ModelPicker({
 
   const handleModelChange = (value: string) => {
     if (value === "openai") {
+      modelPickerLogger.info("Selected OpenAI model", {
+        modelProvider: "openai",
+        modelId: "gpt-4o-mini",
+      });
       setModelProvider("openai");
       setModelId("");
       setSelectedModel("openai", "");
@@ -132,6 +143,23 @@ export function ModelPicker({
 
     if (value.startsWith("ollama-")) {
       const model = value.replace("ollama-", "");
+      const isDownloadableSelection = downloadableModels.some(
+        (candidate) => candidate.id === value,
+      );
+      modelPickerLogger.info("Selected Ollama model", {
+        modelProvider: "ollama",
+        modelId: model,
+        isDownloadableSelection,
+      });
+      if (isDownloadableSelection) {
+        modelPickerLogger.warn(
+          "Selected a downloadable Ollama model suggestion; the app does not download it automatically yet",
+          {
+            modelProvider: "ollama",
+            modelId: model,
+          },
+        );
+      }
       setModelProvider("ollama");
       setModelId(model);
       setSelectedModel("ollama", model);
@@ -140,6 +168,10 @@ export function ModelPicker({
 
     if (value.startsWith("lmstudio-")) {
       const model = value.replace("lmstudio-", "");
+      modelPickerLogger.info("Selected LM Studio model", {
+        modelProvider: "lmstudio",
+        modelId: model,
+      });
       setModelProvider("lmstudio");
       setModelId(model);
       setSelectedModel("lmstudio", model);

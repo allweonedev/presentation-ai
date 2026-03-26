@@ -1,5 +1,6 @@
 "use client";
 
+import { createLogger } from "@/lib/observability/logger";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -17,6 +18,8 @@ interface LMStudioResponse {
   data?: Array<{ id: string }>;
 }
 
+const localModelLogger = createLogger("client:local-models");
+
 async function fetchOllamaModels(): Promise<ModelInfo[]> {
   try {
     const response = await fetch("http://localhost:11434/api/tags");
@@ -29,13 +32,22 @@ async function fetchOllamaModels(): Promise<ModelInfo[]> {
       return [];
     }
 
-    return data.models.map((model) => ({
+    const models = data.models.map((model) => ({
       id: `ollama-${model.name}`,
       name: model.name,
       provider: "ollama" as const,
     }));
+
+    localModelLogger.info("Discovered Ollama models", {
+      count: models.length,
+      models: models.map((model) => model.name),
+    });
+
+    return models;
   } catch (error) {
-    console.log("Ollama not available:", error);
+    localModelLogger.warn("Ollama is not available", {
+      error: error instanceof Error ? error.message : String(error),
+    });
     return [];
   }
 }
@@ -52,13 +64,22 @@ async function fetchLMStudioModels(): Promise<ModelInfo[]> {
       return [];
     }
 
-    return data.data.map((model) => ({
+    const models = data.data.map((model) => ({
       id: `lmstudio-${model.id}`,
       name: model.id,
       provider: "lmstudio" as const,
     }));
+
+    localModelLogger.info("Discovered LM Studio models", {
+      count: models.length,
+      models: models.map((model) => model.name),
+    });
+
+    return models;
   } catch (error) {
-    console.log("LM Studio not available:", error);
+    localModelLogger.warn("LM Studio is not available", {
+      error: error instanceof Error ? error.message : String(error),
+    });
     return [];
   }
 }
@@ -69,7 +90,22 @@ async function fetchLocalModels(): Promise<ModelInfo[]> {
     fetchLMStudioModels(),
   ]);
 
-  return [...ollamaModels, ...lmStudioModels];
+  const models = [...ollamaModels, ...lmStudioModels];
+
+  if (models.length === 0) {
+    localModelLogger.warn(
+      "No live local models detected; falling back to downloadable Ollama suggestions",
+      {
+        downloadableModels: downloadableModels.map((model) => model.name),
+      },
+    );
+  } else {
+    localModelLogger.info("Local model discovery completed", {
+      total: models.length,
+    });
+  }
+
+  return models;
 }
 
 export const downloadableModels: ModelInfo[] = [
@@ -181,7 +217,10 @@ export function getSelectedModel(): {
       ? (JSON.parse(selected) as { modelProvider: string; modelId: string })
       : null;
   } catch (error) {
-    console.error("Error getting selected model from localStorage:", error);
+    localModelLogger.error(
+      "Failed to read selected model from localStorage",
+      error,
+    );
     return null;
   }
 }
@@ -197,7 +236,7 @@ export function setSelectedModel(modelProvider: string, modelId: string): void {
       JSON.stringify({ modelProvider, modelId }),
     );
   } catch (error) {
-    console.error("Error saving model to localStorage:", error);
+    localModelLogger.error("Failed to save selected model to localStorage", error);
   }
 }
 
@@ -208,6 +247,7 @@ export function useLocalModels() {
   const query = useQuery({
     queryKey: ["local-models"],
     queryFn: async () => {
+      localModelLogger.info("Refreshing local model list");
       const freshModels = await fetchLocalModels();
       setCachedModels(freshModels);
       return freshModels;

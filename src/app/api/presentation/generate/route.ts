@@ -1,4 +1,5 @@
 import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
+import { createLogger } from "@/lib/observability/logger";
 import { auth } from "@/server/auth";
 import { toUIMessageStream } from "@ai-sdk/langchain";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -441,9 +442,16 @@ function buildCriticalRules(
 }
 
 export async function POST(req: Request) {
+  const requestId = crypto.randomUUID();
+  const routeLogger = createLogger("api:presentation-generate");
+
   try {
+    routeLogger.info("Presentation generation request received", { requestId });
     const session = await auth();
     if (!session) {
+      routeLogger.warn("Presentation generation request rejected: unauthorized", {
+        requestId,
+      });
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -466,6 +474,15 @@ export async function POST(req: Request) {
     } = (await req.json()) as SlidesRequest;
 
     if (!title || !outline || !Array.isArray(outline) || !language) {
+      routeLogger.warn(
+        "Presentation generation request rejected: missing required fields",
+        {
+          requestId,
+          hasTitle: Boolean(title),
+          hasOutline: Array.isArray(outline),
+          language,
+        },
+      );
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -483,9 +500,29 @@ export async function POST(req: Request) {
     });
 
     const prompt = PromptTemplate.fromTemplate(SLIDES_TEMPLATE);
+    routeLogger.info("Validated presentation generation request", {
+      requestId,
+      title,
+      totalSlides,
+      language,
+      tone,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+      imageSource: imageSource || "automatic",
+      templateCount,
+    });
     try {
       assertModelIsConfigured(modelProvider, modelId);
     } catch (error) {
+      routeLogger.error(
+        "Presentation generation request rejected: invalid model configuration",
+        error,
+        {
+          requestId,
+          modelProvider,
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
       return NextResponse.json(
         {
           error:
@@ -499,6 +536,13 @@ export async function POST(req: Request) {
     const model = modelPicker(modelProvider, modelId);
     const chain = RunnableSequence.from([prompt, model]);
 
+    routeLogger.info("Presentation generation started", {
+      requestId,
+      title,
+      totalSlides,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+    });
     const stream = await chain.stream({
       TITLE: title,
       PROMPT: userPrompt || "No specific prompt provided",
@@ -529,9 +573,14 @@ export async function POST(req: Request) {
       ),
     });
 
+    routeLogger.info("Presentation generation stream created", {
+      requestId,
+      title,
+      totalSlides,
+    });
     return createUIMessageStreamResponse({ stream: toUIMessageStream(stream) });
   } catch (error) {
-    console.error("Error in presentation generation:", error);
+    routeLogger.error("Presentation generation failed", error, { requestId });
     return NextResponse.json(
       { error: "Failed to generate presentation slides" },
       { status: 500 },

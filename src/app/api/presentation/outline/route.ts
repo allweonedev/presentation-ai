@@ -4,6 +4,7 @@ import {
   getMessageText,
 } from "@/lib/ai/uiMessageParts";
 import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
+import { createLogger } from "@/lib/observability/logger";
 import { logger } from "@/lib/observability/server/logger";
 import { auth } from "@/server/auth";
 import { toBaseMessages, toUIMessageStream } from "@ai-sdk/langchain";
@@ -129,6 +130,8 @@ function buildOutlineSystemPrompt({
 
 export async function POST(req: Request) {
   const actionName = "presentation.outline.post";
+  const requestId = crypto.randomUUID();
+  const routeLogger = createLogger("api:presentation-outline");
   const span = logger.startSpan(`allweone.api.${actionName}`, {
     attributes: {
       "allweone.scope": "api",
@@ -136,12 +139,15 @@ export async function POST(req: Request) {
       "allweone.action.name": actionName,
       "http.method": "POST",
       "http.route": "/api/presentation/outline",
+      "allweone.request.id": requestId,
     },
   });
 
   try {
+    routeLogger.info("Outline request received", { requestId });
     const session = await auth();
     if (!session) {
+      routeLogger.warn("Outline request rejected: unauthorized", { requestId });
       span.event("allweone.api.request_rejected", {
         "allweone.validation.error": "unauthorized",
       });
@@ -166,8 +172,24 @@ export async function POST(req: Request) {
       "allweone.presentation.language": language,
       "allweone.presentation.web_search": webSearch,
     });
+    routeLogger.info("Validated outline request payload", {
+      requestId,
+      numberOfCards,
+      promptLength: prompt.length,
+      language,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+      webSearch,
+    });
 
     if (!prompt || !numberOfCards || !language || messages.length === 0) {
+      routeLogger.warn("Outline request rejected: missing required fields", {
+        requestId,
+        hasPrompt: Boolean(prompt),
+        numberOfCards,
+        language,
+        messageCount: messages.length,
+      });
       span.event("allweone.api.request_rejected", {
         "allweone.validation.error": "missing_required_fields",
       });
@@ -202,6 +224,11 @@ export async function POST(req: Request) {
     try {
       assertModelIsConfigured(modelProvider, modelId);
     } catch (error) {
+      routeLogger.error("Outline request rejected: invalid model configuration", error, {
+        requestId,
+        modelProvider,
+        modelId: modelId || "gpt-4o-mini",
+      });
       return NextResponse.json(
         {
           error:
@@ -229,6 +256,13 @@ export async function POST(req: Request) {
         }),
     });
 
+    routeLogger.info("Presentation outline generation started", {
+      requestId,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+      numberOfCards,
+      webSearch,
+    });
     const stream = await agent.stream(
       {
         messages: await toBaseMessages(messages),
@@ -238,13 +272,20 @@ export async function POST(req: Request) {
       },
     );
 
+    routeLogger.info("Presentation outline stream created", {
+      requestId,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+    });
     span.event("allweone.api.response_stream_created");
     return createUIMessageStreamResponse({
       stream: toUIMessageStream(stream),
     });
   } catch (error) {
+    routeLogger.error("Presentation outline generation failed", error, {
+      requestId,
+    });
     span.error(error);
-    console.error("Error in outline generation:", error);
     return NextResponse.json(
       { error: "Failed to generate outline" },
       { status: 500 },

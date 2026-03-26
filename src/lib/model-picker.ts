@@ -1,7 +1,9 @@
 import { env } from "@/env";
+import { createLogger } from "@/lib/observability/logger";
 import { ChatOpenAI } from "@langchain/openai";
 
 type ModelProvider = "openai" | "ollama" | "lmstudio";
+const modelLogger = createLogger("model-picker");
 
 function isModelProvider(value: string): value is ModelProvider {
   return value === "openai" || value === "ollama" || value === "lmstudio";
@@ -36,18 +38,39 @@ export function assertModelIsConfigured(
   const selectedLocalModel = selection.modelId?.trim();
 
   if (selection.provider === "ollama" && !selectedLocalModel) {
+    modelLogger.error("Model configuration failed", undefined, {
+      provider: selection.provider,
+      reason: "missing_model_id",
+    });
     throw new Error("An Ollama model must be selected before continuing.");
   }
 
   if (selection.provider === "lmstudio" && !selectedLocalModel) {
+    modelLogger.error("Model configuration failed", undefined, {
+      provider: selection.provider,
+      reason: "missing_model_id",
+    });
     throw new Error("An LM Studio model must be selected before continuing.");
   }
 
   if (selection.provider === "openai" && !env.OPENAI_API_KEY?.trim()) {
+    modelLogger.error("Model configuration failed", undefined, {
+      provider: selection.provider,
+      modelId: selectedOpenAIModel,
+      reason: "missing_openai_api_key",
+    });
     throw new Error(
       `OPENAI_API_KEY is required when using the OpenAI model "${selectedOpenAIModel}".`,
     );
   }
+
+  modelLogger.info("Model configuration validated", {
+    provider: selection.provider,
+    modelId:
+      selection.provider === "openai"
+        ? selectedOpenAIModel
+        : selectedLocalModel || undefined,
+  });
 }
 
 /**
@@ -61,6 +84,12 @@ export function modelPicker(modelProviderOrModel: string, modelId?: string) {
     if (!selection.modelId) {
       throw new Error("An LM Studio model must be selected before continuing.");
     }
+
+    modelLogger.info("Creating LM Studio model client", {
+      provider: selection.provider,
+      modelId: selection.modelId,
+      baseUrl: "http://localhost:1234/v1",
+    });
 
     return new ChatOpenAI({
       model: selection.modelId,
@@ -76,6 +105,12 @@ export function modelPicker(modelProviderOrModel: string, modelId?: string) {
       throw new Error("An Ollama model must be selected before continuing.");
     }
 
+    modelLogger.info("Creating Ollama model client", {
+      provider: selection.provider,
+      modelId: selection.modelId,
+      baseUrl: "http://localhost:11434/v1",
+    });
+
     return new ChatOpenAI({
       model: selection.modelId,
       apiKey: "ollama",
@@ -87,6 +122,12 @@ export function modelPicker(modelProviderOrModel: string, modelId?: string) {
 
   const selectedOpenAIModel = selection.modelId || "gpt-4o-mini";
   const openAIApiKey = env.OPENAI_API_KEY?.trim();
+
+  modelLogger.info("Creating OpenAI model client", {
+    provider: selection.provider,
+    modelId: selectedOpenAIModel,
+    hasApiKey: Boolean(openAIApiKey),
+  });
 
   return new ChatOpenAI({
     model: selectedOpenAIModel,

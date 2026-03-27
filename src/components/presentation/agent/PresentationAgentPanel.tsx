@@ -17,11 +17,20 @@ import {
   getToolState,
   isToolPart,
 } from "@/lib/ai/uiMessageParts";
+import { cn } from "@/lib/utils";
 import { usePresentationState } from "@/states/presentation-state";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type FileUIPart } from "ai";
 import { useQuery } from "@tanstack/react-query";
-import { Bot, BrushCleaning, Loader2, Paperclip, Send, X } from "lucide-react";
+import {
+  Bot,
+  BrushCleaning,
+  Loader2,
+  Paperclip,
+  Send,
+  Square,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AIMessageComponent from "./AIMessage";
@@ -65,6 +74,7 @@ export function PresentationAgentPanel() {
     sendMessage,
     setMessages,
     regenerate,
+    stop,
     status,
   } = useChat({
     id: currentPresentationId ?? undefined,
@@ -72,6 +82,8 @@ export function PresentationAgentPanel() {
   });
 
   const isStreaming = status === "submitted" || status === "streaming";
+  const [isExecutingToolCall, setIsExecutingToolCall] = useState(false);
+  const isAgentRunning = isStreaming || isExecutingToolCall;
   const isEmpty = messages.length === 0;
   const { data, isLoading } = useQuery({
     queryKey: ["presentation-chat-messages", currentPresentationId],
@@ -83,6 +95,8 @@ export function PresentationAgentPanel() {
   const hasHydratedRef = useRef(false);
   const processedToolCallIdsRef = useRef<Set<string>>(new Set());
   const scrollTargetRef = useRef<HTMLDivElement>(null);
+  const stopRequestedRef = useRef(false);
+  const executionIdRef = useRef(0);
 
   useEffect(() => {
     if (!hasHydratedRef.current && data && isEmpty) {
@@ -101,7 +115,12 @@ export function PresentationAgentPanel() {
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
 
-    if (!lastMessage || lastMessage.role !== "assistant" || isStreaming) {
+    if (
+      !lastMessage ||
+      lastMessage.role !== "assistant" ||
+      isStreaming ||
+      stopRequestedRef.current
+    ) {
       return;
     }
 
@@ -127,11 +146,21 @@ export function PresentationAgentPanel() {
     processedToolCallIdsRef.current.add(nextToolPart.toolCallId);
 
     void (async () => {
+      const executionId = executionIdRef.current;
+      setIsExecutingToolCall(true);
+
       try {
         const resumeMessage = await executeToolCall({
           name: getToolName(nextToolPart),
           args: getToolInputArgs(nextToolPart),
         });
+
+        if (
+          stopRequestedRef.current ||
+          executionId !== executionIdRef.current
+        ) {
+          return;
+        }
 
         await regenerate({
           body: {
@@ -142,8 +171,17 @@ export function PresentationAgentPanel() {
           },
         });
       } catch (error) {
-        processedToolCallIdsRef.current.delete(nextToolPart.toolCallId);
-        console.error("Error executing tool call:", error);
+        if (
+          !stopRequestedRef.current &&
+          executionId === executionIdRef.current
+        ) {
+          processedToolCallIdsRef.current.delete(nextToolPart.toolCallId);
+          console.error("Error executing tool call:", error);
+        }
+      } finally {
+        if (executionId === executionIdRef.current) {
+          setIsExecutingToolCall(false);
+        }
       }
     })();
   }, [getAgentRequestBody, isStreaming, messages, regenerate]);
@@ -161,6 +199,7 @@ export function PresentationAgentPanel() {
       processedPendingRef.current = messageKey;
 
       const { message, slideContext } = pendingAgentMessage;
+      stopRequestedRef.current = false;
       setPendingAgentMessage(null);
 
       void sendMessage(
@@ -228,10 +267,32 @@ export function PresentationAgentPanel() {
           }))
         : undefined;
 
+    stopRequestedRef.current = false;
+    executionIdRef.current += 1;
     void sendMessage(files ? { text: prompt, files } : { text: prompt }, {
       body: getAgentRequestBody(),
     });
   };
+
+  const handleStop = useCallback(() => {
+    stopRequestedRef.current = true;
+    executionIdRef.current += 1;
+    setIsExecutingToolCall(false);
+
+    for (const message of messages) {
+      if (message.role !== "assistant") {
+        continue;
+      }
+
+      for (const part of message.parts) {
+        if (isToolPart(part) && getToolState(part) === "call") {
+          processedToolCallIdsRef.current.add(part.toolCallId);
+        }
+      }
+    }
+
+    stop();
+  }, [messages, stop]);
 
   const handleClear = () => {
     if (!currentPresentationId) {
@@ -386,7 +447,7 @@ export function PresentationAgentPanel() {
             variant="outline"
             size="icon"
             asChild
-            disabled={images.length >= MAX_IMAGES || isStreaming}
+            disabled={images.length >= MAX_IMAGES || isAgentRunning}
             className="rounded-xl"
           >
             <label htmlFor="presentation-agent-file-input" className="cursor-pointer">
@@ -402,7 +463,7 @@ export function PresentationAgentPanel() {
             accept="image/*"
             multiple
             onChange={handleFileChange}
-            disabled={images.length >= MAX_IMAGES || isStreaming}
+            disabled={images.length >= MAX_IMAGES || isAgentRunning}
           />
 
           <Input
@@ -410,23 +471,32 @@ export function PresentationAgentPanel() {
             onChange={(event) => setInput(event.target.value)}
             placeholder="Ask me to edit..."
             onPaste={handlePaste}
-            disabled={isStreaming}
+            disabled={isAgentRunning}
             className="flex-1 rounded-xl"
           />
 
           <Button
-            type="submit"
+            type={isAgentRunning ? "button" : "submit"}
             size="icon"
+            onClick={isAgentRunning ? handleStop : undefined}
             disabled={
-              (!input.trim() && attachments.length === 0) ||
-              isStreaming ||
-              isLoading ||
-              isPending
+              isAgentRunning
+                ? false
+                : (!input.trim() && attachments.length === 0) ||
+                  isLoading ||
+                  isPending
             }
-            className="rounded-xl"
+            aria-label={isAgentRunning ? "Stop current execution" : "Send message"}
+            className={cn(
+              isAgentRunning ? "h-11 w-16 rounded-full p-1.5" : "rounded-xl",
+              isAgentRunning &&
+                "border border-white/10 bg-neutral-800 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800",
+            )}
           >
-            {isStreaming ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+            {isAgentRunning ? (
+              <span className="flex h-full w-8 items-center justify-center rounded-full bg-white/8">
+                <Square className="h-3.5 w-3.5 fill-current" />
+              </span>
             ) : (
               <Send className="h-4 w-4" />
             )}

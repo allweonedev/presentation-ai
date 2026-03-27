@@ -50,8 +50,8 @@ export function ModelPicker({
   }, [setModelId, setModelProvider]);
 
   const displayData = modelsData || {
-    localModels: fallbackModels,
-    downloadableModels: [],
+    localModels: [],
+    downloadableModels: fallbackModels,
     showDownloadable: true,
   };
 
@@ -282,6 +282,25 @@ export function ModelPicker({
                   </SelectItem>
                 );
               })}
+            </SelectGroup>
+          )}
+
+          {lmStudioModels.length === 0 && (
+            <SelectGroup>
+              <SelectLabel>LM Studio</SelectLabel>
+              <SelectItem value="lmstudio-setup" disabled>
+                <div className="flex items-center gap-3">
+                  <Monitor className="h-4 w-4 flex-shrink-0" />
+                  <div className="flex min-w-0 flex-col">
+                    <span className="truncate text-sm">
+                      Start LM Studio to use local models
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      Turn on the server and load a model to make it selectable
+                    </span>
+                  </div>
+                </div>
+              </SelectItem>
             </SelectGroup>
           )}
 

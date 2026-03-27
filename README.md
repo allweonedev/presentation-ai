@@ -184,7 +184,7 @@ Create personalized themes to match your brand or style:
 4. Save your theme for future use
 
 ## 🧠 Local Models Guide
-You can use either Ollama or LM Studio for using local models in ALLWEONE presentation ai. 
+ALLWEONE Presentation AI now supports both Ollama and LM Studio as local model providers.
 
 ### LM Studio
 
@@ -200,8 +200,8 @@ You can use either Ollama or LM Studio for using local models in ALLWEONE presen
 ### Using Local Models in the App
 
 1. Open the app and open the text model selector.
-2. Chose the model you want to use (it must be downloaded in lm studio or ollama)
-3. Enjoy the generation
+2. Choose the model you want to use. It must already be available in LM Studio or Ollama.
+3. Enjoy the generation.
 
 Notes:
 

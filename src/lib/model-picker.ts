@@ -7,6 +7,12 @@ const modelLogger = createLogger("model-picker");
 const OLLAMA_BASE_URL = "http://localhost:11434";
 const OLLAMA_TAGS_URL = `${OLLAMA_BASE_URL}/api/tags`;
 const OLLAMA_PULL_URL = `${OLLAMA_BASE_URL}/api/pull`;
+const LM_STUDIO_BASE_URL = "http://localhost:1234";
+const LM_STUDIO_API_BASE_URL = `${LM_STUDIO_BASE_URL}/v1`;
+const LM_STUDIO_MODELS_URLS = [
+  `${LM_STUDIO_API_BASE_URL}/models`,
+  `${LM_STUDIO_BASE_URL}/api/v0/models`,
+] as const;
 
 interface OllamaTagsResponse {
   models?: Array<{ name?: string }>;
@@ -17,6 +23,35 @@ interface OllamaPullProgressChunk {
   error?: string;
   completed?: number;
   total?: number;
+}
+
+function extractLMStudioModelIds(payload: unknown): string[] {
+  const candidateArrays: unknown[][] = [
+    Array.isArray((payload as { data?: unknown[] } | null)?.data)
+      ? ((payload as { data: unknown[] }).data ?? [])
+      : [],
+    Array.isArray((payload as { models?: unknown[] } | null)?.models)
+      ? ((payload as { models: unknown[] }).models ?? [])
+      : [],
+    Array.isArray(payload) ? payload : [],
+  ];
+
+  const modelIds = candidateArrays.flatMap((candidates) =>
+    candidates.flatMap((candidate) => {
+      if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+        return [];
+      }
+
+      const record = candidate as Record<string, unknown>;
+      const modelId = [record.id, record.model, record.modelKey, record.name].find(
+        (value) => typeof value === "string" && value.trim().length > 0,
+      );
+
+      return typeof modelId === "string" ? [modelId.trim()] : [];
+    }),
+  );
+
+  return [...new Set(modelIds)];
 }
 
 function isModelProvider(value: string): value is ModelProvider {
@@ -61,6 +96,46 @@ async function fetchInstalledOllamaModels(): Promise<Set<string>> {
   );
 
   return installedModels;
+}
+
+async function fetchInstalledLMStudioModels(): Promise<Set<string>> {
+  let lastError: Error | null = null;
+  let receivedResponse = false;
+
+  for (const url of LM_STUDIO_MODELS_URLS) {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`LM Studio responded with ${response.status}`);
+      }
+
+      receivedResponse = true;
+      const modelIds = extractLMStudioModelIds(await response.json());
+
+      modelLogger.info("Fetched LM Studio model catalog", {
+        provider: "lmstudio",
+        source: url,
+        count: modelIds.length,
+      });
+
+      return new Set(modelIds);
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+    }
+  }
+
+  if (receivedResponse) {
+    return new Set();
+  }
+
+  throw new Error(
+    lastError?.message ??
+      "LM Studio is not available. Start LM Studio and try again.",
+  );
 }
 
 async function ensureOllamaModelIsReady(modelId: string): Promise<void> {
@@ -168,6 +243,28 @@ async function ensureOllamaModelIsReady(modelId: string): Promise<void> {
   });
 }
 
+async function ensureLMStudioModelIsReady(modelId: string): Promise<void> {
+  const availableModels = await fetchInstalledLMStudioModels();
+
+  if (availableModels.has(modelId)) {
+    modelLogger.info("LM Studio model is available", {
+      provider: "lmstudio",
+      modelId,
+    });
+    return;
+  }
+
+  if (availableModels.size === 0) {
+    throw new Error(
+      `LM Studio is running but no models are currently available. Load "${modelId}" in LM Studio and try again.`,
+    );
+  }
+
+  throw new Error(
+    `LM Studio model "${modelId}" is not available. Load it in LM Studio and make sure the local server is running.`,
+  );
+}
+
 export function assertModelIsConfigured(
   modelProviderOrModel: string,
   modelId?: string,
@@ -217,11 +314,18 @@ export async function ensureModelIsReady(
   modelId?: string,
 ) {
   const selection = resolveModelSelection(modelProviderOrModel, modelId);
-  if (selection.provider !== "ollama" || !selection.modelId) {
+  if (!selection.modelId) {
     return;
   }
 
-  await ensureOllamaModelIsReady(selection.modelId);
+  if (selection.provider === "ollama") {
+    await ensureOllamaModelIsReady(selection.modelId);
+    return;
+  }
+
+  if (selection.provider === "lmstudio") {
+    await ensureLMStudioModelIsReady(selection.modelId);
+  }
 }
 
 /**
@@ -239,14 +343,14 @@ export function modelPicker(modelProviderOrModel: string, modelId?: string) {
     modelLogger.info("Creating LM Studio model client", {
       provider: selection.provider,
       modelId: selection.modelId,
-      baseUrl: "http://localhost:1234/v1",
+      baseUrl: LM_STUDIO_API_BASE_URL,
     });
 
     return new ChatOpenAI({
       model: selection.modelId,
       apiKey: "lmstudio",
       configuration: {
-        baseURL: "http://localhost:1234/v1",
+        baseURL: LM_STUDIO_API_BASE_URL,
       },
     });
   }

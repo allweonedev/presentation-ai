@@ -2,12 +2,11 @@
 
 import { utapi } from "@/app/api/uploadthing/core";
 import { env } from "@/env";
+import { requireOptionalIntegration } from "@/lib/env/optional-integrations";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import Together from "together-ai";
 import { UTFile } from "uploadthing/server";
-
-const together = new Together({ apiKey: env.TOGETHER_AI_API_KEY });
 
 export type ImageModelList =
   | "black-forest-labs/FLUX1.1-pro"
@@ -29,6 +28,22 @@ export async function generateImageAction(
   }
 
   try {
+    const togetherConfig = requireOptionalIntegration({
+      integration: "Together AI",
+      envVar: "TOGETHER_AI_API_KEY",
+      value: env.TOGETHER_AI_API_KEY,
+      feature: "AI image generation",
+    });
+
+    if (!togetherConfig.ok) {
+      return {
+        success: false,
+        error: togetherConfig.error,
+      };
+    }
+
+    const together = new Together({ apiKey: togetherConfig.value });
+
     console.log(`Generating image with model: ${model}`);
 
     // Generate the image using Together AI

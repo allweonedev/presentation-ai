@@ -4,6 +4,20 @@ import { ChatOpenAI } from "@langchain/openai";
 
 type ModelProvider = "openai" | "ollama" | "lmstudio";
 const modelLogger = createLogger("model-picker");
+const OLLAMA_BASE_URL = "http://localhost:11434";
+const OLLAMA_TAGS_URL = `${OLLAMA_BASE_URL}/api/tags`;
+const OLLAMA_PULL_URL = `${OLLAMA_BASE_URL}/api/pull`;
+
+interface OllamaTagsResponse {
+  models?: Array<{ name?: string }>;
+}
+
+interface OllamaPullProgressChunk {
+  status?: string;
+  error?: string;
+  completed?: number;
+  total?: number;
+}
 
 function isModelProvider(value: string): value is ModelProvider {
   return value === "openai" || value === "ollama" || value === "lmstudio";
@@ -27,6 +41,131 @@ function resolveModelSelection(
     provider: "openai",
     modelId: modelProviderOrModel,
   };
+}
+
+async function fetchInstalledOllamaModels(): Promise<Set<string>> {
+  const response = await fetch(OLLAMA_TAGS_URL, {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Ollama is not available. Start Ollama and try again.");
+  }
+
+  const data = (await response.json()) as OllamaTagsResponse;
+  const installedModels = new Set(
+    (data.models ?? [])
+      .map((model) => model.name?.trim())
+      .filter((name): name is string => Boolean(name)),
+  );
+
+  return installedModels;
+}
+
+async function ensureOllamaModelIsReady(modelId: string): Promise<void> {
+  const installedModels = await fetchInstalledOllamaModels();
+  if (installedModels.has(modelId)) {
+    modelLogger.info("Ollama model already installed", {
+      provider: "ollama",
+      modelId,
+    });
+    return;
+  }
+
+  modelLogger.info("Ollama model missing; starting download", {
+    provider: "ollama",
+    modelId,
+  });
+
+  const response = await fetch(OLLAMA_PULL_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: modelId,
+      stream: true,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to download Ollama model "${modelId}". Ensure Ollama is running and try again.`,
+    );
+  }
+
+  if (!response.body) {
+    throw new Error(
+      `Ollama did not return a download stream for model "${modelId}".`,
+    );
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let lastStatus: string | undefined;
+  const processProgressLine = (line: string): void => {
+    let chunk: OllamaPullProgressChunk;
+    try {
+      chunk = JSON.parse(line) as OllamaPullProgressChunk;
+    } catch (error) {
+      modelLogger.warn("Failed to parse Ollama pull progress chunk", {
+        provider: "ollama",
+        modelId,
+        line,
+        error: error instanceof Error ? error.message : String(error),
+      });
+      return;
+    }
+
+    if (chunk.error) {
+      throw new Error(
+        `Failed to download Ollama model "${modelId}": ${chunk.error}`,
+      );
+    }
+
+    if (chunk.status) {
+      lastStatus = chunk.status;
+    }
+  };
+
+  while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+      break;
+    }
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? "";
+
+    for (const rawLine of lines) {
+      const line = rawLine.trim();
+      if (!line) {
+        continue;
+      }
+      processProgressLine(line);
+    }
+  }
+
+  if (buffer.trim()) {
+    processProgressLine(buffer.trim());
+  }
+
+  const refreshedModels = await fetchInstalledOllamaModels();
+  if (!refreshedModels.has(modelId)) {
+    throw new Error(
+      `Ollama finished downloading "${modelId}" but the model is still unavailable. Last status: ${lastStatus ?? "unknown"}.`,
+    );
+  }
+
+  modelLogger.info("Ollama model download completed", {
+    provider: "ollama",
+    modelId,
+    lastStatus: lastStatus ?? "unknown",
+  });
 }
 
 export function assertModelIsConfigured(
@@ -73,6 +212,18 @@ export function assertModelIsConfigured(
   });
 }
 
+export async function ensureModelIsReady(
+  modelProviderOrModel: string,
+  modelId?: string,
+) {
+  const selection = resolveModelSelection(modelProviderOrModel, modelId);
+  if (selection.provider !== "ollama" || !selection.modelId) {
+    return;
+  }
+
+  await ensureOllamaModelIsReady(selection.modelId);
+}
+
 /**
  * Centralized model picker for LangChain-based presentation routes.
  * Supports OpenAI and OpenAI-compatible local endpoints.
@@ -108,14 +259,14 @@ export function modelPicker(modelProviderOrModel: string, modelId?: string) {
     modelLogger.info("Creating Ollama model client", {
       provider: selection.provider,
       modelId: selection.modelId,
-      baseUrl: "http://localhost:11434/v1",
+      baseUrl: `${OLLAMA_BASE_URL}/v1`,
     });
 
     return new ChatOpenAI({
       model: selection.modelId,
       apiKey: "ollama",
       configuration: {
-        baseURL: "http://localhost:11434/v1",
+        baseURL: `${OLLAMA_BASE_URL}/v1`,
       },
     });
   }

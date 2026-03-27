@@ -152,8 +152,8 @@ export function ModelPicker({
         isDownloadableSelection,
       });
       if (isDownloadableSelection) {
-        modelPickerLogger.warn(
-          "Selected a downloadable Ollama model suggestion; the app does not download it automatically yet",
+        modelPickerLogger.info(
+          "Selected a downloadable Ollama model suggestion; the server will download it on first use if needed",
           {
             modelProvider: "ollama",
             modelId: model,

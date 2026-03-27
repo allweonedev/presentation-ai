@@ -3,7 +3,11 @@ import {
   getLatestUserMessage,
   getMessageText,
 } from "@/lib/ai/uiMessageParts";
-import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
+import {
+  assertModelIsConfigured,
+  ensureModelIsReady,
+  modelPicker,
+} from "@/lib/modelPicker";
 import { createLogger } from "@/lib/observability/logger";
 import { logger } from "@/lib/observability/server/logger";
 import { auth } from "@/server/auth";
@@ -237,6 +241,28 @@ export async function POST(req: Request) {
               : "Invalid model configuration",
         },
         { status: 400 },
+      );
+    }
+    try {
+      await ensureModelIsReady(modelProvider, modelId);
+    } catch (error) {
+      routeLogger.error(
+        "Outline request rejected: selected model could not be prepared",
+        error,
+        {
+          requestId,
+          modelProvider,
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to prepare selected model",
+        },
+        { status: 503 },
       );
     }
 

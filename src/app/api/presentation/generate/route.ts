@@ -1,4 +1,8 @@
-import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
+import {
+  assertModelIsConfigured,
+  ensureModelIsReady,
+  modelPicker,
+} from "@/lib/modelPicker";
 import { createLogger } from "@/lib/observability/logger";
 import { auth } from "@/server/auth";
 import { toUIMessageStream } from "@ai-sdk/langchain";
@@ -531,6 +535,28 @@ export async function POST(req: Request) {
               : "Invalid model configuration",
         },
         { status: 400 },
+      );
+    }
+    try {
+      await ensureModelIsReady(modelProvider, modelId);
+    } catch (error) {
+      routeLogger.error(
+        "Presentation generation request rejected: selected model could not be prepared",
+        error,
+        {
+          requestId,
+          modelProvider,
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to prepare selected model",
+        },
+        { status: 503 },
       );
     }
     const model = modelPicker(modelProvider, modelId);

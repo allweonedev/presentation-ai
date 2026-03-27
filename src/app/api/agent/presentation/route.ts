@@ -1,7 +1,7 @@
 import { createPresentationGraph } from "@/ai/agents/presentation/createAgent";
 import { ensureCheckpointerSetup } from "@/ai/lib/postgres";
 import { getLatestUserMessage } from "@/lib/ai/uiMessageParts";
-import { assertModelIsConfigured } from "@/lib/modelPicker";
+import { assertModelIsConfigured, ensureModelIsReady } from "@/lib/modelPicker";
 import { createLogger } from "@/lib/observability/logger";
 import { auth } from "@/server/auth";
 import { toBaseMessages, toUIMessageStream } from "@ai-sdk/langchain";
@@ -71,6 +71,26 @@ export async function POST(req: Request) {
       return new Response(
         error instanceof Error ? error.message : "Invalid model configuration",
         { status: 400 },
+      );
+    }
+    try {
+      await ensureModelIsReady(modelProvider ?? "openai", modelId);
+    } catch (error) {
+      routeLogger.error(
+        "Presentation agent request rejected: selected model could not be prepared",
+        error,
+        {
+          requestId,
+          presentationId: id,
+          modelProvider: modelProvider ?? "openai",
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
+      return new Response(
+        error instanceof Error
+          ? error.message
+          : "Failed to prepare selected model",
+        { status: 503 },
       );
     }
 

@@ -231,6 +231,26 @@ const delete_slide = tool(
     }),
   },
 );
+
+const respond_to_user = tool(
+  async (props) => {
+    const { message } = props as { message: string };
+    return message;
+  },
+  {
+    name: "respond_to_user",
+    description:
+      "Use this tool when you need to ask a clarification question or send a direct response without editing slides. Never use this tool to pretend a presentation edit or search already happened.",
+    schema: z.object({
+      message: z
+        .string()
+        .min(1)
+        .describe(
+          "The exact clarification question or direct response to send back to the user.",
+        ),
+    }),
+  },
+);
 // Export all tools as an array
 export const presentationTools = [
   edit_slide_properties,
@@ -240,6 +260,7 @@ export const presentationTools = [
   create_slide,
   delete_slide,
   search_tool,
+  respond_to_user,
 ] as const;
 
 export type PresentationTool =
@@ -249,4 +270,5 @@ export type PresentationTool =
   | "regenerate_slide"
   | "create_slide"
   | "delete_slide"
-  | "webSearch";
+  | "webSearch"
+  | "respond_to_user";

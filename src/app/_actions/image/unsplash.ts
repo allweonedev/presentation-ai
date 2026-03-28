@@ -2,6 +2,7 @@
 
 import { type LayoutType } from "@/components/presentation/utils/parser";
 import { env } from "@/env";
+import { requireOptionalIntegration } from "@/lib/env/optional-integrations";
 import { auth } from "@/server/auth";
 
 export interface UnsplashImage {
@@ -41,6 +42,21 @@ export async function getImageFromUnsplash(
   if (!session?.user?.id) {
     return { success: false, error: "You must be logged in to get images" };
   }
+
+  const unsplashConfig = requireOptionalIntegration({
+    integration: "Unsplash",
+    envVar: "UNSPLASH_ACCESS_KEY",
+    value: env.UNSPLASH_ACCESS_KEY,
+    feature: "stock image search",
+  });
+
+  if (!unsplashConfig.ok) {
+    return {
+      success: false,
+      error: unsplashConfig.error,
+    };
+  }
+
   const orientationQuery =
     layoutType === "vertical"
       ? "&orientation=landscape"
@@ -53,7 +69,7 @@ export async function getImageFromUnsplash(
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&page=1&per_page=1${orientationQuery}`,
       {
         headers: {
-          Authorization: `Client-ID ${env.UNSPLASH_ACCESS_KEY}`,
+          Authorization: `Client-ID ${unsplashConfig.value}`,
         },
       },
     );

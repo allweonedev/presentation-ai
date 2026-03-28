@@ -1,5 +1,6 @@
 import { createUIMessageStreamResponse } from "ai";
-import { modelPicker } from "@/lib/modelPicker";
+import { assertModelIsConfigured, modelPicker } from "@/lib/modelPicker";
+import { createLogger } from "@/lib/observability/logger";
 import { toUIMessageStream } from "@ai-sdk/langchain";
 import { auth } from "@/server/auth";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -247,9 +248,16 @@ function getTextDensityGuidance(density?: string): string {
 }
 
 export async function POST(req: Request) {
+  const requestId = crypto.randomUUID();
+  const routeLogger = createLogger("api:presentation-generate-slide");
+
   try {
+    routeLogger.info("Single slide generation request received", { requestId });
     const session = await auth();
     if (!session) {
+      routeLogger.warn("Single slide generation request rejected: unauthorized", {
+        requestId,
+      });
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -263,8 +271,43 @@ export async function POST(req: Request) {
     } = (await req.json()) as GenerateSlideRequest;
 
     if (!prompt) {
+      routeLogger.warn("Single slide generation request rejected: missing prompt", {
+        requestId,
+      });
       return NextResponse.json(
         { error: "Missing required prompt field" },
+        { status: 400 },
+      );
+    }
+    routeLogger.info("Validated single slide generation request", {
+      requestId,
+      slideType: slideType || "standard",
+      language: language || "en-US",
+      imageStyle: imageStyle || "3D",
+      textDensity: textDensity || "Balanced",
+      promptLength: prompt.length,
+      modelProvider: "openai",
+      modelId: "gpt-4o-mini",
+    });
+    try {
+      assertModelIsConfigured("gpt-4o-mini");
+    } catch (error) {
+      routeLogger.error(
+        "Single slide generation request rejected: invalid model configuration",
+        error,
+        {
+          requestId,
+          modelProvider: "openai",
+          modelId: "gpt-4o-mini",
+        },
+      );
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Invalid model configuration",
+        },
         { status: 400 },
       );
     }
@@ -290,14 +333,22 @@ export async function POST(req: Request) {
           CURRENT_SLIDE: currentSlide || "No current slide context provided.",
           LANGUAGE: language || "en-US",
         };
+    routeLogger.info("Single slide generation started", {
+      requestId,
+      slideType: isImageSlide ? "image" : "standard",
+    });
     // @ts-expect-error types are incorrectly inferred
     const stream = await chain.stream(input);
 
+    routeLogger.info("Single slide generation stream created", {
+      requestId,
+      slideType: isImageSlide ? "image" : "standard",
+    });
     return createUIMessageStreamResponse({
       stream: toUIMessageStream(stream),
     });
   } catch (error) {
-    console.error("Error in single slide generation:", error);
+    routeLogger.error("Single slide generation failed", error, { requestId });
     return NextResponse.json(
       { error: "Failed to generate slide" },
       { status: 500 },

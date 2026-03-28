@@ -2,6 +2,7 @@
 
 import { getImageFromUnsplash as getSingleUnsplashImage } from "@/app/_actions/image/unsplash";
 import { env } from "@/env";
+import { requireOptionalIntegration } from "@/lib/env/optional-integrations";
 
 type UnsplashImageResult = {
   url: string;
@@ -36,12 +37,26 @@ export async function searchUnsplashImages(
   perPage = 30,
   page = 1,
 ): Promise<{ success: boolean; images?: UnsplashImageResult[]; error?: string }> {
+  const unsplashConfig = requireOptionalIntegration({
+    integration: "Unsplash",
+    envVar: "UNSPLASH_ACCESS_KEY",
+    value: env.UNSPLASH_ACCESS_KEY,
+    feature: "Unsplash image search",
+  });
+
+  if (!unsplashConfig.ok) {
+    return {
+      success: false,
+      error: unsplashConfig.error,
+    };
+  }
+
   try {
     const response = await fetch(
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
       {
         headers: {
-          Authorization: `Client-ID ${env.UNSPLASH_ACCESS_KEY}`,
+          Authorization: `Client-ID ${unsplashConfig.value}`,
         },
       },
     );
@@ -74,10 +89,21 @@ export async function searchUnsplashImages(
 }
 
 export async function triggerUnsplashDownload(downloadLocation: string) {
+  const unsplashConfig = requireOptionalIntegration({
+    integration: "Unsplash",
+    envVar: "UNSPLASH_ACCESS_KEY",
+    value: env.UNSPLASH_ACCESS_KEY,
+    feature: "Unsplash download tracking",
+  });
+
+  if (!unsplashConfig.ok) {
+    return { success: false };
+  }
+
   try {
     await fetch(downloadLocation, {
       headers: {
-        Authorization: `Client-ID ${env.UNSPLASH_ACCESS_KEY}`,
+        Authorization: `Client-ID ${unsplashConfig.value}`,
       },
     });
     return { success: true };

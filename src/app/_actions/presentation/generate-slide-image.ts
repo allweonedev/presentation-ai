@@ -2,15 +2,11 @@
 
 import { utapi } from "@/app/api/uploadthing/core";
 import { env } from "@/env";
+import { requireOptionalIntegration } from "@/lib/env/optional-integrations";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { fal } from "@fal-ai/client";
 import { UTFile } from "uploadthing/server";
-
-// Configure fal client with API key
-fal.config({
-  credentials: env.FAL_API_KEY,
-});
 
 // Nano Banana Pro model for presentation slide images
 // const SLIDE_IMAGE_MODEL = "fal-ai/nano-banana-pro";
@@ -38,6 +34,24 @@ export async function generateSlideImageAction(
   }
 
   try {
+    const falConfig = requireOptionalIntegration({
+      integration: "FAL",
+      envVar: "FAL_API_KEY",
+      value: env.FAL_API_KEY,
+      feature: "slide image generation",
+    });
+
+    if (!falConfig.ok) {
+      return {
+        success: false,
+        error: falConfig.error,
+      };
+    }
+
+    fal.config({
+      credentials: falConfig.value,
+    });
+
     console.log(`Generating slide image with model: ${imageModel}`);
 
     const result = await fal.subscribe(imageModel, {

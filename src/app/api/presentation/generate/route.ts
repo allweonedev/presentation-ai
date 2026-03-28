@@ -1,4 +1,9 @@
-import { modelPicker } from "@/lib/modelPicker";
+import {
+  assertModelIsConfigured,
+  ensureModelIsReady,
+  modelPicker,
+} from "@/lib/modelPicker";
+import { createLogger } from "@/lib/observability/logger";
 import { auth } from "@/server/auth";
 import { toUIMessageStream } from "@ai-sdk/langchain";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -12,6 +17,8 @@ interface SlidesRequest {
   outline: string[];
   language: string;
   tone: string;
+  modelId?: string;
+  modelProvider?: "openai" | "ollama" | "lmstudio";
   searchResults?: Array<{ query: string; results: unknown[] }>;
   textContent?: "minimal" | "concise" | "detailed" | "extensive";
   audience?: string;
@@ -260,8 +267,6 @@ Now generate the complete XML presentation with exactly {TOTAL_SLIDES} slides.
 // HELPER FUNCTIONS
 // ============================================================================
 
-const model = modelPicker("gpt-4o-mini");
-
 function formatSearchResults(
   searchResults?: Array<{ query: string; results: unknown[] }>,
 ): string {
@@ -389,7 +394,7 @@ function buildPerSlideRequirements(
   const hints = Object.entries(outlineTemplateHints)
     .map(
       ([index, templateName]) =>
-        `- **Slide ${parseInt(index) + 1}**: Use "${templateName}" layout (MANDATORY)`,
+        `- **Slide ${parseInt(index, 10) + 1}**: Use "${templateName}" layout (MANDATORY)`,
     )
     .join("\n");
 
@@ -441,9 +446,16 @@ function buildCriticalRules(
 }
 
 export async function POST(req: Request) {
+  const requestId = crypto.randomUUID();
+  const routeLogger = createLogger("api:presentation-generate");
+
   try {
+    routeLogger.info("Presentation generation request received", { requestId });
     const session = await auth();
     if (!session) {
+      routeLogger.warn("Presentation generation request rejected: unauthorized", {
+        requestId,
+      });
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -453,6 +465,8 @@ export async function POST(req: Request) {
       outline,
       language,
       tone,
+      modelId,
+      modelProvider = "openai",
       searchResults,
       textContent,
       audience,
@@ -464,6 +478,15 @@ export async function POST(req: Request) {
     } = (await req.json()) as SlidesRequest;
 
     if (!title || !outline || !Array.isArray(outline) || !language) {
+      routeLogger.warn(
+        "Presentation generation request rejected: missing required fields",
+        {
+          requestId,
+          hasTitle: Boolean(title),
+          hasOutline: Array.isArray(outline),
+          language,
+        },
+      );
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -481,8 +504,71 @@ export async function POST(req: Request) {
     });
 
     const prompt = PromptTemplate.fromTemplate(SLIDES_TEMPLATE);
+    routeLogger.info("Validated presentation generation request", {
+      requestId,
+      title,
+      totalSlides,
+      language,
+      tone,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+      imageSource: imageSource || "automatic",
+      templateCount,
+    });
+    try {
+      assertModelIsConfigured(modelProvider, modelId);
+    } catch (error) {
+      routeLogger.error(
+        "Presentation generation request rejected: invalid model configuration",
+        error,
+        {
+          requestId,
+          modelProvider,
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Invalid model configuration",
+        },
+        { status: 400 },
+      );
+    }
+    try {
+      await ensureModelIsReady(modelProvider, modelId);
+    } catch (error) {
+      routeLogger.error(
+        "Presentation generation request rejected: selected model could not be prepared",
+        error,
+        {
+          requestId,
+          modelProvider,
+          modelId: modelId || "gpt-4o-mini",
+        },
+      );
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to prepare selected model",
+        },
+        { status: 503 },
+      );
+    }
+    const model = modelPicker(modelProvider, modelId);
     const chain = RunnableSequence.from([prompt, model]);
 
+    routeLogger.info("Presentation generation started", {
+      requestId,
+      title,
+      totalSlides,
+      modelProvider,
+      modelId: modelId || "gpt-4o-mini",
+    });
     const stream = await chain.stream({
       TITLE: title,
       PROMPT: userPrompt || "No specific prompt provided",
@@ -513,9 +599,14 @@ export async function POST(req: Request) {
       ),
     });
 
+    routeLogger.info("Presentation generation stream created", {
+      requestId,
+      title,
+      totalSlides,
+    });
     return createUIMessageStreamResponse({ stream: toUIMessageStream(stream) });
   } catch (error) {
-    console.error("Error in presentation generation:", error);
+    routeLogger.error("Presentation generation failed", error, { requestId });
     return NextResponse.json(
       { error: "Failed to generate presentation slides" },
       { status: 500 },

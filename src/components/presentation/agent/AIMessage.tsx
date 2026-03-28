@@ -32,6 +32,7 @@ const hiddenTools = [
   "delete_slide",
   "create_slide",
   "webSearch",
+  "respond_to_user",
 ];
 
 const ToolCallComponentMap = {

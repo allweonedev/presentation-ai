@@ -270,6 +270,12 @@ export async function executeToolCall({
       return executeSearchTool((parsedArgs as Record<string, unknown>) ?? {});
     }
 
+    if (name === "respond_to_user") {
+      return typeof (parsedArgs as { message?: unknown })?.message === "string"
+        ? ((parsedArgs as { message: string }).message ?? "").trim()
+        : "";
+    }
+
     const result = executeToolAction({
       action: name,
       ...parsedArgs,

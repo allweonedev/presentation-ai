@@ -153,7 +153,9 @@ Before you begin, ensure you have the following installed:
    pnpm db:push
    ```
 
-2. **Seed built-in themes (optional but recommended)**
+2. **Seed built-in themes (required)**
+
+   This step is required because built-in themes are persisted in the database via Prisma seed data.
 
    ```bash
    SKIP_ENV_VALIDATION=1 pnpm tsx prisma/seed/seed.ts

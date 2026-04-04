@@ -153,13 +153,19 @@ Before you begin, ensure you have the following installed:
    pnpm db:push
    ```
 
-2. **Start the development server**
+2. **Seed built-in themes (optional but recommended)**
+
+   ```bash
+   SKIP_ENV_VALIDATION=1 pnpm tsx prisma/seed/seed.ts
+   ```
+
+3. **Start the development server**
 
    ```bash
    pnpm dev
    ```
 
-3. **Open the application**
+4. **Open the application**
 
    Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -174,6 +180,10 @@ pnpm db:studio # Open Prisma Studio
 pnpm type      # Run TypeScript type-checking
 pnpm check     # Run Biome checks
 pnpm lint      # Run Biome linting
+```
+
+```bash
+SKIP_ENV_VALIDATION=1 pnpm tsx prisma/seed/seed.ts # Seed built-in themes
 ```
 
 ## 💻 Usage

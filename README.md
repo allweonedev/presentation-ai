@@ -176,6 +176,28 @@ pnpm check     # Run Biome checks
 pnpm lint      # Run Biome linting
 ```
 
+### Optional AgentPond tracing
+
+The trusted Next.js server can export OpenInference traces for its LangChain
+presentation-generation calls to
+[AgentPond](https://github.com/marcusschiesser/agentpond). Tracing is disabled
+by default. Prompt and response content is redacted before export; storage
+credentials remain server-side.
+
+For local verification, use the Files SDK filesystem adapter:
+
+```bash
+npx agentpond env init local --provider fs --root "$PWD/.agentpond/envs/local/objects"
+npx agentpond env use local
+eval "$(npx agentpond env get local)"
+AGENTPOND_ENABLED=true pnpm dev
+```
+
+After generating an outline or presentation, run `npx agentpond sync` and
+`npx agentpond traces list --limit 10`. Production deployments should select a
+persistent object store from the
+[Files SDK provider catalog](https://files-sdk.dev/docs/providers).
+
 ## 💻 Usage
 
 ### Creating a Presentation

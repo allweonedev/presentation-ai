@@ -22,6 +22,13 @@ const config = {
       },
     ],
   },
+  serverExternalPackages: [
+    "@agentpond/files-sdk",
+    "@agentpond/otel",
+    "@arizeai/openinference-instrumentation-langchain",
+    "@opentelemetry/sdk-node",
+    "files-sdk",
+  ],
 };
 
 export default config;

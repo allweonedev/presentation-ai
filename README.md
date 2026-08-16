@@ -355,4 +355,4 @@ Need help or have questions?
 
 **[⭐ Star us on GitHub](https://github.com/allweonedev/presentation-ai)**
 
-[![Star History Chart](https://api.star-history.com/svg?repos=allweonedev/presentation-ai&type=date&legend=top-left)](https://www.star-history.com/#allweonedev/presentation-ai&type=date&legend=top-left)
+[![Star History Chart](https://star-history.dera.page/svg?repos=allweonedev/presentation-ai&type=date&legend=top-left)](https://star-history.dera.page/#allweonedev/presentation-ai&type=date&legend=top-left)

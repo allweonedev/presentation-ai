@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <TanStackQueryProvider>
       <NextAuthProvider>
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
           <body className={`${inter.className} antialiased`}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               {children}
